@@ -1,0 +1,142 @@
+
+#include "Account.h"
+#include "Savings.h"
+#include "Printable.h"
+#include "AccountUtilities.h"
+#include <stdio.h>
+#include <cstring>
+#include "MyString/MyString.h"
+#include <algorithm>
+
+
+template<typename T>
+void do_withdraw(T&& account, double amount)
+{
+	account->withdraw(amount);
+}
+
+void Print_IPrintables(const IPrintable& obj)
+{
+	std::cout <<"Iprintable obj: "<<obj << '\n';
+}
+
+
+class Base
+{
+
+public:
+	void display() { std::printf("Base Protected Function \n");}
+	
+protected:
+	int a=0;
+
+};
+
+class Derived :public Base
+{
+protected:
+	void drev_display(){ std::printf("Base Protected Function \n"); }
+};
+
+
+int main()
+{
+	char* cptr = new char[4]('a', 'b', 'c');
+	std::for_each(&cptr[0], &cptr[0] + std::strlen(cptr), [](const auto& c) {std::cout << c << '\n'; });
+
+	std::cout << "cptr length : " << std::strlen(cptr) << '\n';
+
+	MyString s1{ "SALIM" };
+	s1.display();
+
+	MyString temp = -s1;
+	std::cout << "TEMP: ";
+	temp.display();
+
+	temp = temp + s1;
+	std::cout << "temp + s1 = ";
+	temp.display();
+
+	temp += s1;
+	std::cout << "temp+=s1; ";
+	temp.display();
+	//MyString s2{ std::move(s1) };
+	//s2.display();
+
+	//MyString s3{ s2 };
+	//s3.display();
+	//std::cout <<"s3 length: "<<s3.getlength() << '\n';
+
+	//s3 = "Didem";
+	//s3.display();
+
+	//s2 = s3;
+	//s2.display();
+
+	//s2 = nullptr;
+	//s2.display();
+
+
+
+	//char str[] = "salim";
+	//char* pstr = str;
+
+	//char* pnew = new char[std::strlen(pstr)+1];
+	//memcpy(pnew, pstr, std::strlen(pstr) + 1);
+
+	//std::cout << pnew << '\n';
+	//std::cout << std::strlen(pstr) << '\n';
+	//std::cout << sizeof pnew << '\n';
+	//std::cout << sizeof(int64_t)<< '\n';
+
+	//printf("Deleting : %s", (pnew != nullptr ? pnew : "nullptr"));
+
+	//delete[]pnew;
+	
+
+	//Base  b;
+
+	//b.display();
+
+	//Derived d;
+	//d.display();
+	
+	//Savings t;
+	//Account* ref1 = &t;
+	//Account* ref2 = new Savings();
+
+	//std::vector<Account*> AccntList{ ref1, ref2 };
+
+	//display(AccntList);
+
+	//withdraw(AccntList, 500);
+
+	//deposit(AccntList, 2000);
+	//display(AccntList);
+
+	//withdraw(AccntList, 1200);
+	//display(AccntList);
+
+
+ //   ref1->deposit(2000);
+ //   ref2->deposit(150);
+
+	//std::cout << *ref1 << '\n';
+	//std::cout << *ref2 << '\n';
+
+	//ref1->withdraw(5000);
+	//ref2->withdraw(200); 
+
+	//Print_IPrintables(*ref1);
+	//Print_IPrintables(*ref2);
+	//
+	//do_withdraw(std::forward<decltype(ref1)>(ref1), 1000);
+	//do_withdraw(ref2, 200);
+
+	//std::cout << *ref1 << '\n';
+	//std::cout << *ref2 << '\n';
+
+	//delete ref2;
+
+	return 0;
+}

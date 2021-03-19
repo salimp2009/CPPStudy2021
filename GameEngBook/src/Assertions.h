@@ -1,0 +1,23 @@
+#pragma once
+
+#include <assert.h>
+
+
+
+#if ASSERTIONS_ENABLED	
+
+#define debugBreak()	__debugbreak()
+
+#define ASSERT(expr)\
+	if (expr) { }\
+	else \
+	{\
+		printf("%s failed FILE: %s, LINE: %i \n", #expr, __FILE__, __LINE__);\
+		debugBreak();\
+	}
+#else
+	
+#define ASSERT(expr) //evaluates to nothing!!!
+
+
+#endif // 
