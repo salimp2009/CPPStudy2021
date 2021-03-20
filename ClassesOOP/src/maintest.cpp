@@ -53,13 +53,20 @@ int main()
 	std::cout << "TEMP: ";
 	temp.display();
 
-	temp = temp + s1;
+	/* cannot use const char* on the very left side 
+	since + operator is a member function expects left side to be MyString */
 	std::cout << "temp + s1 = ";
+	temp = temp + s1+ "Anything";  
 	temp.display();
 
 	temp += s1;
 	std::cout << "temp+=s1; ";
 	temp.display();
+	
+	std::cout << std::boolalpha;
+	std::cout <<"s1=s1: "<< (s1 == s1) << '\n';
+	std::cout <<"Didem < Demir : "<< (MyString("Didem")<MyString("Didem")) << '\n';
+
 	//MyString s2{ std::move(s1) };
 	//s2.display();
 

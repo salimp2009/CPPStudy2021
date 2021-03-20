@@ -1,6 +1,7 @@
 #include "MyString.h"
 #include <cstring>
 #include <cctype>
+#include <array>
 
 MyString::MyString(): str{nullptr}
 {
@@ -97,4 +98,28 @@ MyString MyString::operator+=(const MyString& rhs)
 {
 	*this = *this + rhs;
 	return *this;
+}
+
+bool MyString::operator==(const MyString& rhs) const
+{
+	return (std::strcmp(str, rhs.str)==0);
+}
+
+bool MyString::operator!=(const MyString& rhs) const
+{
+	return !(str==rhs.str);
+}
+
+/** "lhs<rhs" returns -1;
+	"lsh==rhs" returns 0 ; 
+	"lhs>rhs1" returns 1
+*/
+bool MyString::operator<(const MyString& rhs) const
+{
+	return (std::strcmp(str, rhs.str) < 0 );
+}
+
+bool MyString::operator>(const MyString& rhs) const
+{
+	return (std::strcmp(str, rhs.str) > 0 );
 }

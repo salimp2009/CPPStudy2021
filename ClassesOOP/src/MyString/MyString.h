@@ -23,6 +23,12 @@ public:
 	MyString operator+(const MyString& rhs) const;
 	MyString operator+=(const MyString& rhs);
 
+	bool operator==(const MyString& rhs) const;
+	bool operator!=(const MyString& rhs) const;
+
+	bool operator<(const MyString& rhs) const;
+	bool operator>(const MyString& rhs) const;
+
 	void display() const { std::cout << "MyString: " << str << ", length: " << std::strlen(str) << '\n'; }
 	size_t  getlength() const { return std::strlen(str); }
 

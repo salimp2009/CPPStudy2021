@@ -1,17 +1,12 @@
 #include <stdio.h>
+#include "TupplePairUtilities.hpp"
 #include <utility>
-#include <iostream>
 #include <typeinfo>
 #include <type_traits>
-#include <tuple>
 #include <string>
-#include <complex>
 
-template<typename T1, typename T2>
-std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p)
-{
-	return os <<"["<<p.first << ", " << p.second <<"] \n";
-}
+
+
 
 typedef std::pair<int, float> IntFloatPair;
 
@@ -20,9 +15,7 @@ class Foo
 public:
 	Foo(std::tuple<int, float>) { std::cout << "Constructed Foo from a tuple\n"; };
 
-	Foo(int a, float b) { std::cout << "Constructed Foo from an int and float \n"; };
-
-	
+	Foo(int a, float b) { std::cout << "Constructed Foo from an int and float \n"; };	
 };
 
 void PairTest()
@@ -67,6 +60,20 @@ void TupleTest()
 	std::cout << get<0>(t1) << '\n';
 	std::cout << get<1>(t1) << '\n';
 	std::cout << get<2>(t1) << '\n';
+
+	std::cout <<"\t tuple print utility test: "<< t1 << '\n';
+
+
+	std::tuple<int, float, std::string> t2 = std::make_tuple(2, 23.4f, "Didem");
+
+	std::cout << std::boolalpha;
+	std::cout << (t1 < t2) << '\n';
+
+	std::cout << std::tuple_size<decltype(t2)>::value << '\n';
+	std::cout << typeid(std::tuple_element<1, decltype(t2)>::type).name() << '\n';
+
+	std::tuple<int, double> t3 = { 2, 45.6 };
+	std::cout << t3 << '\n';
 
 	std::cout << "\n----------------------Tuples Test ------------------------------------\n";
 }
