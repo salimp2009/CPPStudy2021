@@ -7,6 +7,8 @@
 #include <cstring>
 #include "MyString/MyString.h"
 #include <algorithm>
+#include <memory>
+
 
 
 template<typename T>
@@ -38,14 +40,20 @@ protected:
 	void drev_display(){ std::printf("Base Protected Function \n"); }
 };
 
-
-int main()
+void TestClassProtected()
 {
-	char* cptr = new char[4]('a', 'b', 'c');
-	std::for_each(&cptr[0], &cptr[0] + std::strlen(cptr), [](const auto& c) {std::cout << c << '\n'; });
 
-	std::cout << "cptr length : " << std::strlen(cptr) << '\n';
+	//Base  b;
+	//b.display();
 
+	//Derived d;
+	//d.display();
+
+}
+
+void TestMyString()
+{
+	
 	MyString s1{ "SALIM" };
 	s1.display();
 
@@ -53,19 +61,19 @@ int main()
 	std::cout << "TEMP: ";
 	temp.display();
 
-	/* cannot use const char* on the very left side 
+	/* cannot use const char* on the very left side
 	since + operator is a member function expects left side to be MyString */
-	std::cout << "temp + s1 = ";
-	temp = temp + s1+ "Anything";  
-	temp.display();
+	//std::cout << "temp + s1 = ";
+	//temp = temp + s1+ "Anything";  
+	//temp.display();
 
 	temp += s1;
 	std::cout << "temp+=s1; ";
 	temp.display();
-	
-	std::cout << std::boolalpha;
-	std::cout <<"s1=s1: "<< (s1 == s1) << '\n';
-	std::cout <<"Didem < Demir : "<< (MyString("Didem")<MyString("Didem")) << '\n';
+
+	//std::cout << std::boolalpha;
+	//std::cout <<"s1=s1: "<< (s1 == s1) << '\n';
+	//std::cout <<"Didem < Demir : "<< (MyString("Didem")<MyString("Didem")) << '\n';
 
 	//MyString s2{ std::move(s1) };
 	//s2.display();
@@ -83,31 +91,21 @@ int main()
 	//s2 = nullptr;
 	//s2.display();
 
+}
 
+void TestAccount()
+{
 
-	//char str[] = "salim";
-	//char* pstr = str;
+	/** Testing a static function declared in base class, implemented in child class
+	Creating pointer type of base class pointing to child class
+	and calling the static function to return an instance of child class on Heap; Testing for Game Engine class
+*/
 
-	//char* pnew = new char[std::strlen(pstr)+1];
-	//memcpy(pnew, pstr, std::strlen(pstr) + 1);
+	std::unique_ptr<Account> uptr1;
+	uptr1.reset(Account::Create());
+	uptr1->deposit(1000);
+	std::cout << *uptr1 << '\n';
 
-	//std::cout << pnew << '\n';
-	//std::cout << std::strlen(pstr) << '\n';
-	//std::cout << sizeof pnew << '\n';
-	//std::cout << sizeof(int64_t)<< '\n';
-
-	//printf("Deleting : %s", (pnew != nullptr ? pnew : "nullptr"));
-
-	//delete[]pnew;
-	
-
-	//Base  b;
-
-	//b.display();
-
-	//Derived d;
-	//d.display();
-	
 	//Savings t;
 	//Account* ref1 = &t;
 	//Account* ref2 = new Savings();
@@ -144,6 +142,39 @@ int main()
 	//std::cout << *ref2 << '\n';
 
 	//delete ref2;
+
+}
+
+void Test_CString()
+{
+	char* cptr = new char[4]('a', 'b', 'c');
+	std::for_each(&cptr[0], &cptr[0] + std::strlen(cptr), [](const auto& c) {std::cout << c << '\n'; });
+
+	std::cout << "cptr length : " << std::strlen(cptr) << '\n';
+
+	//char str[] = "salim";
+	//char* pstr = str;
+
+	//char* pnew = new char[std::strlen(pstr)+1];
+	//memcpy(pnew, pstr, std::strlen(pstr) + 1);
+
+	//std::cout << pnew << '\n';
+	//std::cout << std::strlen(pstr) << '\n';
+	//std::cout << sizeof pnew << '\n';
+	//std::cout << sizeof(int64_t)<< '\n';
+
+	//printf("Deleting : %s", (pnew != nullptr ? pnew : "nullptr"));
+
+	//delete[]pnew;
+
+}
+
+int main()
+{
+	//TestMyString();
+
+	TestAccount();
+	Test_CString();
 
 	return 0;
 }

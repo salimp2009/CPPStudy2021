@@ -4,8 +4,7 @@
 #include <typeinfo>
 #include <type_traits>
 #include <string>
-
-
+#include <vector>
 
 
 typedef std::pair<int, float> IntFloatPair;
@@ -78,13 +77,51 @@ void TupleTest()
 	std::cout << "\n----------------------Tuples Test ------------------------------------\n";
 }
 
+void SmartPointers_Test()
+{
+	std::printf ("\n----------------------Smart Pointers------------------------------------\n\n");
+	
+	std::shared_ptr<std::string> ps1{ new std::string("Salim") };
+	/* faster one allocation instead of 2 ; shared_ptr uses two object; one counter and the pointer/value */
+	std::shared_ptr<std::string> ps2 = std::make_shared<std::string>("Didem"); 
+
+	std::cout <<"ps1: "<< *ps1 << '\n';
+	std::printf("ps2: %s \n", (*ps2).c_str());
+
+	(*ps1)[0] = 'D';
+	ps1->replace(1, 1, "A");
+	std::cout <<"ps1 modified: "<< *ps1 << '\n';
+
+	using ShrdPtr = std::shared_ptr<std::string>;
+
+	std::vector<ShrdPtr> NameList;
+	NameList.push_back(ps1);
+	NameList.emplace_back(std::move(ps2));
+
+
+	std::cout << "NameList: ";
+	for (auto&& names : NameList)
+	{
+		std::cout << *names << " ";
+		std::cout << '\n';
+	}
+
+	std::cout << "Use count of ps1: " << *NameList[0] <<", use count: "<< NameList[0].use_count() << '\n';
+
+	std::cout << "Use count of ps2: " << *NameList[1] << ", use count: " << NameList[1].use_count() << '\n';
+
+	std::printf("\n----------------------Smart Pointers------------------------------------\n");
+}
+
 
 int main()
 {
 	//PairTest();
 
-	TupleTest();
+	//TupleTest();
+	SmartPointers_Test();
 
+	
 
 	return 0;
 }

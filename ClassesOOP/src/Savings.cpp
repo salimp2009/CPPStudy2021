@@ -1,5 +1,11 @@
 #include "Savings.h"
 
+
+Account* Account::Create()
+{
+	return new Savings();
+}
+
 void Savings::deposit(double amount)
 {
 	if (amount >= minAmountforInterest)

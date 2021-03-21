@@ -94,7 +94,7 @@ MyString MyString::operator+(const MyString& rhs) const
 	return temp;
 }
 
-MyString MyString::operator+=(const MyString& rhs)
+MyString& MyString::operator+=(const MyString& rhs)
 {
 	*this = *this + rhs;
 	return *this;
@@ -123,3 +123,7 @@ bool MyString::operator>(const MyString& rhs) const
 {
 	return (std::strcmp(str, rhs.str) > 0 );
 }
+
+
+
+

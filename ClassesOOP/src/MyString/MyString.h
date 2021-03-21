@@ -6,6 +6,7 @@ class MyString
 {
 private:
 	char* str; //
+	
 public:
 	MyString();
 	MyString(const char* s);
@@ -21,7 +22,7 @@ public:
 
 	//Overloaded member functions
 	MyString operator+(const MyString& rhs) const;
-	MyString operator+=(const MyString& rhs);
+	MyString& operator+=(const MyString& rhs);
 
 	bool operator==(const MyString& rhs) const;
 	bool operator!=(const MyString& rhs) const;
@@ -33,6 +34,7 @@ public:
 	size_t  getlength() const { return std::strlen(str); }
 
 	const char* getstr() const { return str; }
+	MyString GetMyString() { return *this; }
 
 	// TODO ; test if this works as move !!!
 	char* getstr() { return std::move(str); }
@@ -41,6 +43,10 @@ public:
 	//const MyString& getstr() const& { return str; }
 	//MyString&& getstr() && { return std::move(str); }
 
-
 };
+
+
+
+
+
 

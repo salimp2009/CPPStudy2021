@@ -19,7 +19,11 @@ public:
 	
 	virtual ~Account() {};
 
+	static Account* Create();
 protected:
 	double AccountBalance=0.0;
 };
+
+
+
 
