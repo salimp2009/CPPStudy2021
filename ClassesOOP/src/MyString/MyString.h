@@ -4,8 +4,15 @@
 
 class MyString
 {
+	friend std::ostream& operator<<(std::ostream& os, const MyString& obj);
+	
+#if HG_20
+	/* TODO: Not works with c++latest ; works with c++17*/
+	friend std::istream& operator>>(std::istream& in, MyString& obj);
+#endif
+
 private:
-	char* str; //
+	char* str;
 	
 public:
 	MyString();
@@ -29,6 +36,9 @@ public:
 
 	bool operator<(const MyString& rhs) const;
 	bool operator>(const MyString& rhs) const;
+
+	MyString& operator++();
+	MyString operator++(int);
 
 	void display() const { std::cout << "MyString: " << str << ", length: " << std::strlen(str) << '\n'; }
 	size_t  getlength() const { return std::strlen(str); }

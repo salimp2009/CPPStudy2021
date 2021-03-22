@@ -10,7 +10,6 @@
 #include <memory>
 
 
-
 template<typename T>
 void do_withdraw(T&& account, double amount)
 {
@@ -61,8 +60,8 @@ void TestMyString()
 	std::cout << "TEMP: ";
 	temp.display();
 
-	/* cannot use const char* on the very left side
-	since + operator is a member function expects left side to be MyString */
+	///* cannot use const char* on the very left side
+	//since + operator is a member function expects left side to be MyString */
 	//std::cout << "temp + s1 = ";
 	//temp = temp + s1+ "Anything";  
 	//temp.display();
@@ -70,6 +69,23 @@ void TestMyString()
 	temp += s1;
 	std::cout << "temp+=s1; ";
 	temp.display();
+
+	
+	(temp++).display();
+	temp.display();
+	
+	std::cout << "Hello my overloaded temp: " << ++temp << '\n';
+
+
+/* TODO: Not works with c++latest ; works with c++17 
+* write a BETTER macro to strip out if c++latest otherwise should work
+*/
+#ifdef HG_C20
+	std::cout << "Please write a string for temp2: ";
+	MyString temp2;
+	std::cin >>temp2;
+	std::cout << "Temp2: " << temp2 << '\n';
+#endif
 
 	//std::cout << std::boolalpha;
 	//std::cout <<"s1=s1: "<< (s1 == s1) << '\n';
@@ -147,7 +163,7 @@ void TestAccount()
 
 void Test_CString()
 {
-	char* cptr = new char[4]('a', 'b', 'c');
+	char* cptr = new char[4]{ 'a', 'b', 'c' };
 	std::for_each(&cptr[0], &cptr[0] + std::strlen(cptr), [](const auto& c) {std::cout << c << '\n'; });
 
 	std::cout << "cptr length : " << std::strlen(cptr) << '\n';
@@ -171,10 +187,10 @@ void Test_CString()
 
 int main()
 {
-	//TestMyString();
+	TestMyString();
 
-	TestAccount();
-	Test_CString();
+	//TestAccount();
+	//Test_CString();
 
 	return 0;
 }

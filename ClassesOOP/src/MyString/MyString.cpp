@@ -2,6 +2,8 @@
 #include <cstring>
 #include <cctype>
 #include <array>
+#include <iostream>
+#include <istream>
 
 MyString::MyString(): str{nullptr}
 {
@@ -22,7 +24,7 @@ MyString::MyString(const char* s):str{nullptr}
 		/** strlen does not in last zero termination*/
 		str = new char[std::strlen(s) + 1];
 		std::memcpy(str, s, std::strlen(s)+1);
-		printf("Copy constructor for const char* !!!! \n");
+		//printf("Copy constructor for const char* !!!! \n");
 	}
 }
 
@@ -30,25 +32,25 @@ MyString::MyString(const MyString& source):str{nullptr}
 {
 	str = new char[std::strlen(source.str) + 1];
 	std::memcpy(str, source.str, std::strlen(source.str) + 1);
-	printf("Copy constructor !!!! \n");
+	//printf("Copy constructor !!!! \n");
 }
 
 MyString::MyString(MyString&& source) noexcept:str{source.str} 
 {
 	source.str = nullptr;
-	printf("Move constructor !!!! \n");
+	//printf("Move constructor !!!! \n");
 }
 
 MyString::~MyString()
 {
-	printf("Deleting : %s \n", (str != nullptr ? str : "nullptr"));
+	//printf("Deleting : %s \n", (str != nullptr ? str : "nullptr"));
 	delete[]str;
 }
 
 
 MyString& MyString::operator=(const MyString& source)
 {
-	printf("Copy assignment for const MyString!!!\n");
+	//printf("Copy assignment for const MyString!!!\n");
 	if (this == &source)
 	{
 		return *this;
@@ -124,6 +126,40 @@ bool MyString::operator>(const MyString& rhs) const
 	return (std::strcmp(str, rhs.str) > 0 );
 }
 
+/* Preincrement; add itself to itself*/
+MyString& MyString::operator++()
+{
+	*this += *this;
+	return *this;
+}
+
+/* Post increment version of above*/
+MyString MyString::operator++(int)
+{
+	MyString oldvalue = *this;
+	*this += *this;
+	return oldvalue;
+}
+
+std::ostream &operator<<(std::ostream& os, const MyString& obj)
+{
+	os << obj.str;
+	return os;
+}
+
+/** TODO: cin >> buffer is not recognized in c++ laterst version ; works for c++17
+  * Wait until the bug is fixed 
+  * Report to VS Develop web site
+*/
+#if HG_20
+std::istream& operator>>(std::istream& in, MyString& obj) {
+	char* buffer=new char[1000];
+   	in >> buffer;
+	obj = MyString{ buffer };
+	delete[] buffer;
+	return in;
+}
+#endif
 
 
 
