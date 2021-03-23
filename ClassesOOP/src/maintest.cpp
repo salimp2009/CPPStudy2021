@@ -8,6 +8,8 @@
 #include "MyString/MyString.h"
 #include <algorithm>
 #include <memory>
+#include <string>
+
 
 
 template<typename T>
@@ -80,13 +82,16 @@ void TestMyString()
 /* TODO: Not works with c++latest ; works with c++17 
 * write a BETTER macro to strip out if c++latest otherwise should work
 */
-#ifdef HG_C20
+#if HG_20
 	std::cout << "Please write a string for temp2: ";
-	MyString temp2;
+	MyString temp2=new char[1000];
 	std::cin >>temp2;
 	std::cout << "Temp2: " << temp2 << '\n';
 #endif
 
+	int* n = new int();
+	std::cin >>*n;
+	std::cout << *n << '\n';
 	//std::cout << std::boolalpha;
 	//std::cout <<"s1=s1: "<< (s1 == s1) << '\n';
 	//std::cout <<"Didem < Demir : "<< (MyString("Didem")<MyString("Didem")) << '\n';
@@ -191,6 +196,7 @@ int main()
 
 	//TestAccount();
 	//Test_CString();
+	
 
 	return 0;
 }

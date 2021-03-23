@@ -5,9 +5,16 @@
 #include <type_traits>
 #include <string>
 #include <vector>
+#include "Person.h"
 
 
 typedef std::pair<int, float> IntFloatPair;
+
+struct X
+{
+	int a = 1;
+};
+
 
 class Foo
 {
@@ -110,8 +117,56 @@ void SmartPointers_Test()
 
 	std::cout << "Use count of ps2: " << *NameList[1] << ", use count: " << NameList[1].use_count() << '\n';
 
+	/* Compiles as of c++17; does not works work before c++17*/
+	/* custom deleters can be used ; if not used since c++17 default deleter also call delete[]p */
+	std::shared_ptr<int[]> ps3(new int[10], [](int* p) { std::cout << "custom deleter\n"; delete[]p; });
+	std::shared_ptr<int[]> ps4 = std::make_shared<int[10]>();
+
+	ps3[0] = 1;
+	ps3[1] = 2;
+	std::cout << ps3[1] << '\n';
+
+
+	/* DONT THIS ANYMORE; Before C++17; older version*/
+	std::shared_ptr<int>ps5(new int[10]{ 1,2,3,4,5 }, [](int* p) { std::cout << "Old style shared ptr w/ array\n"; delete[] p; });
+	*ps5 = 10;
+	(ps5.get())[1] = 20;
+	std::cout << *ps5 << (ps5.get())[4]<< '\n';
+
 	std::printf("\n----------------------Smart Pointers------------------------------------\n");
 }
+
+void WeakPointers_Test()
+{
+	std::printf("\n----------------------Weak Pointers------------------------------------\n\n");
+	
+	std::shared_ptr<Person> p1 = InitFamily("salim");
+	std::cout << "salim's family exist!!!!\n";
+	std::cout << "- salim is shared " << p1.use_count() << " times\n";
+
+	/* Make sure the the shared pointer that weak_ptr is pointing still exist otherwise we will get a nullptr*/
+	/*Alternative is to check if p1->mother->kids[0].lock() */
+	if (!p1->mother->kids[0].expired())
+	{
+		std::cout << "- name of 1st kid of salim's mom: " << p1->mother->kids[0].lock()->name << '\n';
+	}
+
+	p1 = InitFamily("didem");
+	std::cout << "Didem's family exist!!!!\n";
+	std::cout << "p1 use count: " << p1.use_count() << '\n';
+
+	/**In order to increase life time of object we first create an shared_ptr
+	 then we create a ptr to one if it is members so that when the object goes out of scope 
+	 the first shared_ptr will hold it ; known as "Aliasing Constructor" 
+	 */
+	std::shared_ptr<X> xp(new X);
+	std::shared_ptr<int> pa(xp, &xp->a);
+
+	std::cout <<"a of Struct X by pa: "<< *pa << '\n';
+
+	std::printf("\n----------------------Weak Pointers------------------------------------\n\n");
+}
+
 
 
 int main()
@@ -119,8 +174,8 @@ int main()
 	//PairTest();
 
 	//TupleTest();
-	SmartPointers_Test();
-
+	//SmartPointers_Test();
+	WeakPointers_Test();
 	
 
 	return 0;

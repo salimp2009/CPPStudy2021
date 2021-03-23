@@ -87,6 +87,7 @@
     <ClCompile Include="src\STLtest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Person.h" />
     <ClInclude Include="src\TupplePairUtilities.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
