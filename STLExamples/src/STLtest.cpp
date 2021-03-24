@@ -1,11 +1,15 @@
 #include <stdio.h>
-#include "TupplePairUtilities.hpp"
 #include <utility>
 #include <typeinfo>
 #include <type_traits>
 #include <string>
 #include <vector>
+
+#include "TupplePairUtilities.hpp"
 #include "Person.h"
+#include "MyTypeTraits.hpp"
+
+
 
 
 typedef std::pair<int, float> IntFloatPair;
@@ -13,6 +17,11 @@ typedef std::pair<int, float> IntFloatPair;
 struct X
 {
 	int a = 1;
+};
+
+struct Test : public std::enable_shared_from_this<Test>
+{
+
 };
 
 
@@ -63,9 +72,9 @@ void TupleTest()
 	std::tuple<int, float, std::string> t1{ 2, 23.4f, "Salim" };
 
 	std::cout << "\n----------------------Tuples Test ------------------------------------\n";
-	std::cout << get<0>(t1) << '\n';
-	std::cout << get<1>(t1) << '\n';
-	std::cout << get<2>(t1) << '\n';
+	std::cout << std::get<0>(t1) << '\n';
+	std::cout << std::get<1>(t1) << '\n';
+	std::cout << std::get<2>(t1) << '\n';
 
 	std::cout <<"\t tuple print utility test: "<< t1 << '\n';
 
@@ -164,10 +173,72 @@ void WeakPointers_Test()
 
 	std::cout <<"a of Struct X by pa: "<< *pa << '\n';
 
+	int* pint = new int(10);
+
+	std::shared_ptr<int> p1int{ pint };
+	std::shared_ptr<int> p2int{ p1int };
+
+	std::cout <<"p1 int use count: "<< p1int.use_count() << '\n';
+
+	/** Since Test has enable_shared_from this; the below code 
+		Creating shared ptr from the the same raw pointer is OK
+		Before C++17 it gives runtime error; the two shared pointer dont share ownership
+	*/
+	Test* ptest = new Test();
+
+	std::shared_ptr<Test>p1test(ptest);
+	
+	/** this cause an error exit since both shared pointers own the the same raw pointer then once one of them is deleting the other becomes invalid
+		and destructor still tries to delete and gives error exit code; program runs but dont use it this way
+	*/
+	//std::shared_ptr<Test>p2test(ptest); 
+	// use count is still one since p1 and p2 dont share ownership; use with caution 
+	// if one of the pointer deletes the resource then it will cause runtime errors or undefine behav.
+	std::cout << "p1test use count: " << p1test.use_count() << '\n';
+
+	std::weak_ptr<Test>p3weak{ ptest->weak_from_this() };
+	/*you can create a shared ptr from original raw ptr that shares owner ship p1test*/
+	std::shared_ptr<Test>p4test{ ptest->shared_from_this() };
+
+	/* p1test use count increase since we create a shared_ptr using shared from this*/
+	/* no need to delete the raw pointer here since wrapped up into shared_ptr*/
+	std::cout << "p1test use count: " << p1test.use_count() << '\n';
+
+	std::unique_ptr<std::string>uptr{ new std::string("Salim") };
+	std::cout << *uptr << '\n';
+
+	std::unique_ptr<std::string[]>pstr{ new std::string[]{"Didem", "Demir"} };
+	std::cout << "pstr string array  pstr[0]: " << pstr[0] << '\n';
+	std::cout << "pstr string array  pstr[1]: " << pstr[1] << '\n';
+	std::cout << "second element of array, first character of string;  pstr[1][0]: " << pstr[1][0] << '\n';
+
 	std::printf("\n----------------------Weak Pointers------------------------------------\n\n");
 }
 
+void NumericLimits_Test()
+{
+	std::printf("\n---------------------Numeric Limits------------------------------------\n\n");
+	/* Returns the base of exponent for float*/
+	std::cout << std::numeric_limits<float>::radix << '\n';
+	std::cout <<std::numeric_limits<float>::epsilon() << '\n';
+	std::cout<<std::boolalpha;
+	std::cout << std::numeric_limits<char>::is_signed << '\n';
+	std::printf("\n---------------------Numeric Limits------------------------------------\n\n");
+}
 
+void TypeTraits_Test()
+{
+	std::printf("\n---------------------Type Traits------------------------------------\n\n");
+
+	std::unique_ptr<int>Intptr = std::make_unique<int>(5);
+
+	int* ptr = new int(12);
+	TypeFoo(*Intptr);
+	std::cout << std::boolalpha;
+	std::cout << std::is_pointer_v<decltype(ptr)> << '\n';
+
+	std::printf("\n---------------------Type Traits------------------------------------\n\n");
+}
 
 int main()
 {
@@ -175,9 +246,9 @@ int main()
 
 	//TupleTest();
 	//SmartPointers_Test();
-	WeakPointers_Test();
-	
-
+	//WeakPointers_Test();
+	//NumericLimits_Test();
+	TypeTraits_Test();
 	return 0;
 }
 
