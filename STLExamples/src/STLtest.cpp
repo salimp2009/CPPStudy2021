@@ -1,9 +1,12 @@
-#include <stdio.h>
-#include <utility>
-#include <typeinfo>
-#include <type_traits>
-#include <string>
-#include <vector>
+#include "STLpch.h"
+
+/* TODO; delete these after a while since using precompiled header */
+//#include <stdio.h>
+//#include <utility>
+//#include <typeinfo>
+//#include <type_traits>
+//#include <string>
+//#include <vector>
 
 #include "TupplePairUtilities.hpp"
 #include "Person.h"
@@ -129,7 +132,10 @@ void SmartPointers_Test()
 	/* Compiles as of c++17; does not works work before c++17*/
 	/* custom deleters can be used ; if not used since c++17 default deleter also call delete[]p */
 	std::shared_ptr<int[]> ps3(new int[10], [](int* p) { std::cout << "custom deleter\n"; delete[]p; });
-	std::shared_ptr<int[]> ps4 = std::make_shared<int[10]>();
+	std::shared_ptr<int[]> ps4{ new int[10] };
+	
+	/* Does not work with C++17; works with C++20*/
+	std::shared_ptr<int[]> ps555 = std::make_shared<int[10]>();
 
 	ps3[0] = 1;
 	ps3[1] = 2;
@@ -233,17 +239,29 @@ void TypeTraits_Test()
 	std::unique_ptr<int>Intptr = std::make_unique<int>(5);
 
 	int* ptr = new int(12);
+	/*calls pointer version*/
+	TypeFoo(ptr);				
+	TypeFoo(Intptr.get());
+	/* call value version*/
 	TypeFoo(*Intptr);
+	TypeFoo(Intptr);
+
 	std::cout << std::boolalpha;
 	std::cout << std::is_pointer_v<decltype(ptr)> << '\n';
 
+	TypeFoo2(ptr);
+	
+	std::cout << std::is_integral_v<float> << '\n';
+	std::cout << std::is_integral_v<nullptr_t> << '\n';
+	std::cout << std::is_integral_v<bool> << '\n';
+
+	delete ptr;
 	std::printf("\n---------------------Type Traits------------------------------------\n\n");
 }
 
 int main()
 {
 	//PairTest();
-
 	//TupleTest();
 	//SmartPointers_Test();
 	//WeakPointers_Test();

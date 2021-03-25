@@ -1,9 +1,11 @@
 #pragma once
-#include <iostream>
-#include <cstdio>
-#include <string>
-#include <memory>
-#include <vector>
+#include "STLpch.h"
+
+//#include <iostream>
+//#include <cstdio>
+//#include <string>
+//#include <memory>
+//#include <vector>
 
 
 class Person
