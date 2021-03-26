@@ -23,5 +23,8 @@
     <ClInclude Include="src\Assertions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EndianSwap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

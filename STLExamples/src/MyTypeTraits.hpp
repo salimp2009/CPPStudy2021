@@ -24,10 +24,28 @@ constexpr void TypeFoo2(const T& val)
 	{
 		std::cout << *val << '\n';
 	}
+	
 	else
 	{
 		std::cout << val << '\n';
 	}
 }
 
+template<typename T>
+void TypeFoo3_Impl(T&& val, std::true_type)
+{
+	std::cout<< "Pointer type called: " << *val << '\n';
+}
 
+template<typename T>
+void TypeFoo3_Impl(T&& val, std::false_type)
+{
+	std::cout << "Value called: " << val << '\n';
+}
+
+
+template<typename T>
+void TypeFoo3(T&& val)
+{
+	TypeFoo3_Impl<T>(std::forward<T>(val), std::is_pointer<std::decay_t<decltype(val)>>());
+}

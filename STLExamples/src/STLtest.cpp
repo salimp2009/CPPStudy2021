@@ -14,7 +14,6 @@
 
 
 
-
 typedef std::pair<int, float> IntFloatPair;
 
 struct X
@@ -250,13 +249,39 @@ void TypeTraits_Test()
 	std::cout << std::is_pointer_v<decltype(ptr)> << '\n';
 
 	TypeFoo2(ptr);
+	/* gets the address of pointer is_pointer does not recognizes unique_ptr as pointer type */
+	TypeFoo2(Intptr); 
 	
 	std::cout << std::is_integral_v<float> << '\n';
 	std::cout << std::is_integral_v<nullptr_t> << '\n';
 	std::cout << std::is_integral_v<bool> << '\n';
 
+	std::cout << (5 != 4) << '\n';
+
+	TypeFoo3(ptr);
+	TypeFoo3(*ptr);
+
+	/* std::is_pointer does not recognizes unique_ptr as pointer type therefore you need to use get()*/
+	TypeFoo3(Intptr.get());
+	TypeFoo3(*Intptr);
+	
+
 	delete ptr;
 	std::printf("\n---------------------Type Traits------------------------------------\n\n");
+}
+
+
+void FunctionWrappers_Test()
+{
+	X x;
+	/* Reference_wrapper allows us to use ref to any object to pass in containers that does not allow directed access*/
+	std::vector<std::reference_wrapper<X>> myXvec;
+	myXvec.push_back(x);
+	std::cout << myXvec[0].get().a << '\n';
+	myXvec[0].get().a = 12;
+
+	std::cout << x.a << '\n';
+
 }
 
 int main()
@@ -266,7 +291,8 @@ int main()
 	//SmartPointers_Test();
 	//WeakPointers_Test();
 	//NumericLimits_Test();
-	TypeTraits_Test();
+	//TypeTraits_Test();
+	FunctionWrappers_Test();
 	return 0;
 }
 
