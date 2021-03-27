@@ -9,6 +9,7 @@
 #include <typeinfo>
 #include <tuple>
 #include <functional>
+#include <ratio>
 
 #include <string>
 #include <vector>

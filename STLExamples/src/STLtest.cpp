@@ -313,6 +313,23 @@ void FunctionPointer_Test()
 
 }
 
+void Ratio_Test()
+{
+	[[maybe_unused]] std::ratio<5, 3> fivethirds;
+
+	std::cout << "ratio num: " << fivethirds.num << ", den: " << fivethirds.den << '\n';
+
+	using ratiotype = std::ratio_add<std::ratio<2, 4>, std::ratio<5, 3>>;
+
+	std::cout << ratiotype::num << ", " << ratiotype::den << '\n';
+
+	std::cout << std::boolalpha;
+	std::cout <<"ratio equal: "<< std::ratio_equal_v<std::ratio<3, 5>, std::ratio<15, 25>> << '\n';
+
+	std::cout << "predefined ratios milli num: " << std::milli::num <<", mill den :"<<std::milli::den<< 
+		",\n nano num:" << std::nano::num <<", nano den: "<<std::nano::den<<'\n';
+}
+
 int main()
 {
 	//PairTest();
@@ -323,6 +340,7 @@ int main()
 	//TypeTraits_Test();
 	//FunctionWrappers_Test();
 	FunctionPointer_Test();
+	Ratio_Test();
 	return 0;
 }
 
