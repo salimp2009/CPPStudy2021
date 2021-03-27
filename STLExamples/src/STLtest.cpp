@@ -26,13 +26,14 @@ struct Test : public std::enable_shared_from_this<Test>
 
 };
 
-
 class Foo
 {
 public:
 	Foo(std::tuple<int, float>) { std::cout << "Constructed Foo from a tuple\n"; };
 
 	Foo(int a, float b) { std::cout << "Constructed Foo from an int and float \n"; };	
+
+	void printFoo_nums(int a, int b) const { std::cout << "FOO prints; a: " << a << ", b: " << b << '\n'; }
 };
 
 void PairTest()
@@ -67,7 +68,6 @@ void PairTest()
 	std::cout << std::is_same_v<decltype(p2.first), float> << '\n';   // expected false
 
 }
-
 
 void TupleTest()
 {
@@ -270,7 +270,6 @@ void TypeTraits_Test()
 	std::printf("\n---------------------Type Traits------------------------------------\n\n");
 }
 
-
 void FunctionWrappers_Test()
 {
 	X x;
@@ -284,6 +283,36 @@ void FunctionWrappers_Test()
 
 }
 
+void FunctionPointer_Test()
+{
+
+	std::vector<std::function<void(int, int)> > fvec;
+	auto sum = [](int a, int b) {std::printf("sum of %d and %d = %d \n", a, b, (a + b)); };
+	sum(2, 4);
+
+	fvec.push_back(sum);
+	fvec.emplace_back([](int a, int b) {std::printf("sum of %d and %d = %d \n", a, b, (a + b)); });
+	fvec[0](2, 4);
+	fvec[1](5, 3);
+
+	std::function<void(const Foo&, int, int)> f_printfoo = &Foo::printFoo_nums;
+
+	const Foo mfoo1(32, 45);
+	f_printfoo(mfoo1, 3, 4);
+
+	/*-----DONT USE std::bind in modern c++ since lamda or oter options more efficient-----*/
+	/* if need to USE ; prefer std::bind_front if C++20 is available*/
+#if  _DEBUG
+		std::function<void(int, int)> f_printfoo2 = std::bind(&Foo::printFoo_nums, mfoo1, std::placeholders::_1, std::placeholders::_2);
+		f_printfoo2(5, 8);
+	#if _MSC_VER && _HAS_CXX20
+		auto f_printfoo3 = std::bind_front(&Foo::printFoo_nums, mfoo1);
+		f_printfoo3(11, 12);
+	#endif 
+#endif //  DEBUG
+
+}
+
 int main()
 {
 	//PairTest();
@@ -292,7 +321,8 @@ int main()
 	//WeakPointers_Test();
 	//NumericLimits_Test();
 	//TypeTraits_Test();
-	FunctionWrappers_Test();
+	//FunctionWrappers_Test();
+	FunctionPointer_Test();
 	return 0;
 }
 

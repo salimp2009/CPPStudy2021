@@ -8,6 +8,7 @@
 #include <utility>
 #include <typeinfo>
 #include <tuple>
+#include <functional>
 
 #include <string>
 #include <vector>
