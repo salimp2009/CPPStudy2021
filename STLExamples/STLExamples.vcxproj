@@ -79,6 +79,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectName)\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -97,6 +98,7 @@
     <ClCompile Include="src\STLtest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ChronoExamples.h" />
     <ClInclude Include="src\Person.h" />
     <ClInclude Include="src\STLpch.h" />
     <ClInclude Include="src\TupplePairUtilities.hpp" />

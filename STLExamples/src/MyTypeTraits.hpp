@@ -49,3 +49,4 @@ void TypeFoo3(T&& val)
 {
 	TypeFoo3_Impl<T>(std::forward<T>(val), std::is_pointer<std::decay_t<decltype(val)>>());
 }
+

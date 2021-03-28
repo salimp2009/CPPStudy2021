@@ -1,18 +1,18 @@
 #include "STLpch.h"
 
-/* TODO; delete these after a while since using precompiled header */
-//#include <stdio.h>
-//#include <utility>
-//#include <typeinfo>
-//#include <type_traits>
-//#include <string>
-//#include <vector>
-
 #include "TupplePairUtilities.hpp"
 #include "Person.h"
 #include "MyTypeTraits.hpp"
+#include "ChronoExamples.h"
 
 
+/*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
+template<typename V, typename R>
+std::ostream& operator<<(std::ostream& os, const std::chrono::duration<V, R>& dur)
+{
+	os << "[" << dur.count() << "of " << R::num << ", "<< V::den << "] \n";
+	return os;
+}
 
 typedef std::pair<int, float> IntFloatPair;
 
@@ -330,6 +330,7 @@ void Ratio_Test()
 		",\n nano num:" << std::nano::num <<", nano den: "<<std::nano::den<<'\n';
 }
 
+
 int main()
 {
 	//PairTest();
@@ -339,8 +340,9 @@ int main()
 	//NumericLimits_Test();
 	//TypeTraits_Test();
 	//FunctionWrappers_Test();
-	FunctionPointer_Test();
-	Ratio_Test();
+	//FunctionPointer_Test();
+	//Ratio_Test();
+	Chrono_Test();
 	return 0;
 }
 
