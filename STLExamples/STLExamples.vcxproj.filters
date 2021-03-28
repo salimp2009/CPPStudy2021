@@ -35,7 +35,7 @@
     <ClInclude Include="src\MyTypeTraits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ChronoExamples.h">
+    <ClInclude Include="src\ChronoExamples.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -98,7 +98,7 @@
     <ClCompile Include="src\STLtest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ChronoExamples.h" />
+    <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\Person.h" />
     <ClInclude Include="src\STLpch.h" />
     <ClInclude Include="src\TupplePairUtilities.hpp" />

@@ -1,5 +1,26 @@
 #pragma once
 
+template<typename C>
+void printClockData()
+{
+	/*period is the unit type in seconds of a given clock type*/
+	typedef typename C::period  P;
+	if (std::ratio_less_equal<P, std::milli>::value)
+	{
+		/*convert to millisecs and print*/
+		typedef typename std::ratio_multiply<P, std::kilo>::type TT;
+		std::cout << std::fixed << double(TT::num) / TT::den << " milliseconds \n";
+	}
+
+	else
+	{
+		std::cout << std::fixed << double(P::num) / P::den << " seconds \n";
+	}
+
+	/*is_steady; is a boolean value if the clock is steady*/
+	std::cout << "- is steady: " << std::boolalpha << C::is_steady << '\n';
+
+}
 
 
 void Chrono_Test()
@@ -34,6 +55,16 @@ void Chrono_Test()
 
 	m1 = std::chrono::duration_cast<std::chrono::minutes>(sec);
 
+	std::cout << "\n-------steady clock---------------\n";
+	printClockData<std::chrono::steady_clock>();
+
+	std::cout << "\n-------high_res clock---------------\n";
+	printClockData<std::chrono::high_resolution_clock>();
+
+	std::cout << "\n-------system clock---------------\n";
+	printClockData<std::chrono::high_resolution_clock>();
 
 	std::printf("\n---------------------Chrono Examples------------------------------------\n\n");
 }
+
+
