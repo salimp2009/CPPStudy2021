@@ -6,7 +6,13 @@
 
 #include "Max5.hpp"
 
-
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 
 template<typename T>
 T max(T a, T b)
@@ -45,7 +51,7 @@ int max3(int a, int b)
 }
 
 template<typename T>
-decltype(auto) max3(T a, T b)
+T max3(T a, T b)
 {
 	return b < a ? a : b;
 }
@@ -85,6 +91,7 @@ int main()
 	const char* mychar2 = "didem";
 	const char* mychar3 = "sema";
 
+	/* the function returns the address of temp created in the function*/
 	auto m6 = ::max5(mychar1, mychar2, mychar3);
 	
 	printf("max6: %s \n", m6);
@@ -112,7 +119,7 @@ int main()
 	::max3(7.0, 42.0);		// expected double from template
 	::max3('a', 'b');		// expected char from template
 	::max<>(7, 42);			// expected int from template
-	::max3<double>(7, 42);	//expected double from template 
+	::max3<double>(7, 42);	// expected double from template 
 	::max3('a', 42);		// expected int implicit conversion from non template; template version does not allow unless used with enable if 
 
 
