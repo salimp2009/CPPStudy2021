@@ -2,6 +2,8 @@
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
+//#include "ContainerUtilities.hpp"
+
 
 
 void Array_Test()
@@ -42,12 +44,64 @@ void Array_Test()
 	fmt::print("negated array: ({0}), ({1}) \n", arr2[0], arr2[1]);
 }
 
+void Vector_Test()
+{
+	std::vector<int>v;
+	/* allocate memory for 20 elements of type int; note it invalidates any existing pointers */
+	v.reserve(20);
+
+	fmt::print("v capacity: {0}\n", v.capacity());
+	v = { 5,25,13,1,1 };
+	for (const auto& elem : v)
+	{
+		fmt::print("elem: {0} ", elem);
+	}
+	
+	/* Invalidate pointers*/
+	//v.shrink_to_fit();
+	//fmt::print("new v capacity: {0}\n", v.capacity());
+
+	if (v.size() > 1)
+	{
+		if constexpr (std::is_same_v< std::vector<int>::iterator::iterator_category::bidirectional_iterator_tag, std::bidirectional_iterator_tag>)
+		{
+			/* this might fail if the vector iterator is implemented as ordinary pointer*/
+			/* because ++ operator is not valid for temp values but ok for classes..*/
+			std::sort(++v.begin(), v.end());
+		}
+		else
+		{
+			/*this wont fail even if the vector iterator is regular pointer*/
+			std::sort(std::next(v.begin()), v.end());
+		}
+
+	}
+	std::cout<< '\n';
+	for (const auto& elem : v)
+	{
+		fmt::print("elem: {0} ", elem);
+	}
+
+	/** remove looks for a value from begin to end and removes all the match elements to the end
+		and returns the pos of the first removed element but elements are still in the contaier;
+		then erase deletes from the given pos to the end so all matching elements are removed
+	*/
+	v.erase(std::remove(v.begin(), v.end(), 1), v.end());
+	
+	std::cout << '\n';
+	for (const auto& elem : v)
+	{
+		fmt::print("elem: {0} ", elem);
+	}
+
+}
+
 
 
 int main()
 {
-	Array_Test();
-
+	//Array_Test();
+	Vector_Test();
 
 
 
