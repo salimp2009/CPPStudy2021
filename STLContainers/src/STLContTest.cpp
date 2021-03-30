@@ -1,8 +1,8 @@
 #include "STLContpch.h"
-#include "spdlog/fmt/fmt.h"
-#include "spdlog/fmt/ostr.h"
-#include "spdlog/spdlog.h"
-//#include "ContainerUtilities.hpp"
+//#include "spdlog/fmt/fmt.h"
+//#include "spdlog/fmt/ostr.h"
+//#include "spdlog/spdlog.h"
+#include "ContainerUtilities.hpp"
 
 
 
@@ -88,11 +88,27 @@ void Vector_Test()
 	*/
 	v.erase(std::remove(v.begin(), v.end(), 1), v.end());
 	
-	std::cout << '\n';
+	/*std::cout << '\n';
 	for (const auto& elem : v)
 	{
 		fmt::print("elem: {0} ", elem);
-	}
+	}*/
+
+	std::cout <<"vector overloaded: "<< v << '\n';
+
+	std::vector<std::string>sentence;
+	sentence.reserve(5);
+	sentence.emplace_back("Hello");
+	sentence.insert(sentence.end(), { "Didem","Demir","Semos" });
+
+	std::cout <<"family:"<< sentence << '\n';
+	/* insert before the position passed; e.g.; before "Demir"*/
+	sentence.emplace(std::find(sentence.begin(), sentence.end(), "Demir"), "Salim");
+	std::cout << "family added:" << sentence << '\n';
+
+	std::exchange(sentence[0], "Semsetting");
+
+	fmt::print("{}", sentence[0]);
 
 }
 
