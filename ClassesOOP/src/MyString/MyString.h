@@ -7,7 +7,7 @@ class MyString
 	friend std::ostream& operator<<(std::ostream& os, const MyString& obj);
 	
 #if HG_20
-	/* TODO: Not works with c++latest ; works with c++17*/
+	/* Does Not works with c++latest ; works with c++17*; char* overload in std::cin is removed in C++*/
 	friend std::istream& operator>>(std::istream& in, MyString& obj);
 #endif
 

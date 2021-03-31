@@ -1,14 +1,11 @@
 #include "STLContpch.h"
-//#include "spdlog/fmt/fmt.h"
-//#include "spdlog/fmt/ostr.h"
-//#include "spdlog/spdlog.h"
 #include "ContainerUtilities.hpp"
 
 
 
 void Array_Test()
 {
-	std::printf("\n---------------------Type Traits------------------------------------\n\n");
+	std::printf("\n---------------------Array Test------------------------------------\n\n");
 
 	std::array<int, 5> arr1 = { 45 };
 	std::cout << arr1[0] << ", " << arr1[1] << '\n';
@@ -42,10 +39,13 @@ void Array_Test()
 				   [](auto& elem) { return -elem; });
 
 	fmt::print("negated array: ({0}), ({1}) \n", arr2[0], arr2[1]);
+
+	std::printf("\n---------------------Array Test------------------------------------\n\n");
 }
 
 void Vector_Test()
 {
+	std::printf("\n---------------------VectorTest------------------------------------\n\n");
 	std::vector<int>v;
 	/* allocate memory for 20 elements of type int; note it invalidates any existing pointers */
 	v.reserve(20);
@@ -110,15 +110,25 @@ void Vector_Test()
 
 	fmt::print("{}", sentence[0]);
 
+	std::printf("\n---------------------VectorTest------------------------------------\n\n");
 }
 
+void Deque_Test()
+{
+	fmt::print("\n---------------------Deque Test------------------------------------\n\n");
+
+	std::deque<int> deq1 = { 1,5,3,15 };
+	deq1.push_front(35);
+
+	std::cout << deq1.front() << '\n';
+}
 
 
 int main()
 {
 	//Array_Test();
-	Vector_Test();
-
+	//Vector_Test();
+	Deque_Test();
 
 
 }

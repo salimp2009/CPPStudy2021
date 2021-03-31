@@ -1,5 +1,5 @@
 #pragma once
-#include <cstring>
+
 
 template<typename T>
 const T& max5(const T& a, const T& b)

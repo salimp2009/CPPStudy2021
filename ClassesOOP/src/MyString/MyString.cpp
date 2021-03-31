@@ -147,9 +147,8 @@ std::ostream &operator<<(std::ostream& os, const MyString& obj)
 	return os;
 }
 
-/** TODO: cin >> buffer is not recognized in c++ laterst version ; works for c++17
-  * Wait until the bug is fixed 
-  * Report to VS Develop web site
+/** cin >> buffer is not recognized in c++ laterst version ; works for c++17
+ * CHAR* overload for std::cin is removed in c++20
 */
 #if HG_20
 std::istream& operator>>(std::istream& in, MyString& obj) {

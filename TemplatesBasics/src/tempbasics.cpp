@@ -1,18 +1,9 @@
-#include <stdio.h>
-#include <iostream>
-#include <cstring>
-#include <utility>
-#include <concepts>
+#include "Templpch.h"
 
 #include "Max5.hpp"
+#include "EnableIf_Utils.hpp"
 
-/// <summary>
-/// 
-/// </summary>
-/// <typeparam name="T"></typeparam>
-/// <param name="a"></param>
-/// <param name="b"></param>
-/// <returns></returns>
+
 
 template<typename T>
 T max(T a, T b)
@@ -84,6 +75,9 @@ const char* max4(const char* a, const char* b)
 int main()
 {
 
+	[[maybe_unused]] auto myval1= GetInt(5);
+	//std::cout << myIntval << '\n';
+
 	auto m5 = ::max5(100, 42, 68);
 	printf("max5: %d \n", m5);
 
@@ -91,10 +85,12 @@ int main()
 	const char* mychar2 = "didem";
 	const char* mychar3 = "sema";
 
-	/* the function returns the address of temp created in the function*/
-	auto m6 = ::max5(mychar1, mychar2, mychar3);
+	/** the function returns the address of temp created in the function
+		gives warning that it returns a temp value; better to use universal forwarding and not to mix overloads
+	*/
+	//auto&& m6 = ::max5(mychar1, mychar2, mychar3);
 	
-	printf("max6: %s \n", m6);
+	//printf("max6: %s \n", m6);
 
 	int a = 4; 
 	int b = 5;
@@ -111,7 +107,6 @@ int main()
 	const char* x = "demir";
 	const char* y = "sema";
 	auto m4 = ::max4(x, y);			// expected to use T* template
-
 
 
 
