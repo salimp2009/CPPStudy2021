@@ -121,14 +121,50 @@ void Deque_Test()
 	deq1.push_front(35);
 
 	std::cout << deq1.front() << '\n';
+
+	std::deque<std::string> deq2{ "Salim", "Didem", "Demir" };
+
+	deq2.assign(3, "yawyaw");
+	std::cout << deq2.back() << '\n';
+	for (std::string_view name : deq2)
+	{
+		fmt::print("{} ", name);
+	}
 }
 
+
+void List_Test()
+{
+	fmt::print("\n---------------------List Test------------------------------------\n\n");
+
+	std::list<int>list1, list2;
+
+	for (int i{ 0 }; i < 6; ++i)
+	{
+		list1.push_front(i);
+		list2.push_back(i);
+	}
+
+	for (const auto& elem : list1)
+	{
+		fmt::print("{} ", elem);
+		
+	}
+
+	std::cout << '\n';
+
+	for (const auto& elem : list2)
+	{
+		fmt::print("{} ", elem);
+	}
+}
 
 int main()
 {
 	//Array_Test();
 	//Vector_Test();
-	Deque_Test();
+	//Deque_Test();
+	List_Test();
 
 
 }
