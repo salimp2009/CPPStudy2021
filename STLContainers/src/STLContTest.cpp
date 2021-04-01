@@ -165,9 +165,35 @@ void List_Test()
 void ForwardList_Test()
 {
 	fmt::print("\n---------------------Forward List Test------------------------------------\n\n");
-	std::forward_list<int>flist1;
+	std::forward_list<int>flist1{ 1,2,3 };
 
 	printCont(flist1);
+
+	flist1.insert_after(flist1.before_begin(), { 55,44,67 });
+	printCont(flist1);
+
+	auto posbefore = find_before(flist1.before_begin(), flist1.end(), 3);
+	if (posbefore != flist1.end())
+	{
+		flist1.insert_after(posbefore, 888);
+	}
+	
+	printCont(flist1);
+
+	posbefore = find_before_if(flist1.before_begin(), flist1.end(), [](auto&& elem) { return elem % 2 == 0; });
+	if (posbefore != flist1.end())
+	{
+		flist1.insert_after(posbefore, -222);
+	}
+	printCont(flist1);
+
+	std::forward_list<int>fw1 = { 1,2,3,4,5 };
+	std::forward_list<int>fw2 = { 97, 98,99 };
+
+	fw2.splice_after(find_before(fw2.before_begin(), fw2.end(), 98), 
+					 fw1, find_before(fw1.before_begin(), fw1.end(), 2), fw1.end());
+	printCont(fw2);
+	printCont(fw1);
 
 }
 
@@ -177,7 +203,7 @@ int main()
 	//Array_Test();
 	//Vector_Test();
 	//Deque_Test();
-	List_Test();
+	//List_Test();
 	ForwardList_Test();
 
 }

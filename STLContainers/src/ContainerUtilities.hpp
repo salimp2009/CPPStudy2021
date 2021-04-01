@@ -28,4 +28,45 @@ constexpr void printCont(Cont& cont)
 }
 
 
+template<typename InputIterator, typename Tval>
+constexpr InputIterator find_before(InputIterator first, InputIterator last, Tval&& val)
+{
+	if (first == last)
+	{
+		return first;
+	}
+
+	InputIterator next{ first };
+	++next;
+
+	while (next != last && *next != val)
+	{
+		++next;
+		++first;
+	}
+
+	return first;
+}
+
+template<class InputIterator, class Tpred>
+constexpr InputIterator find_before_if(InputIterator first, const InputIterator last, Tpred&& pred)
+{
+	if (first == last)
+	{
+		return first;
+	}
+
+	InputIterator next{ first };
+	++next;
+
+	while (next != last && !pred(std::forward<decltype(*next)>(*next)))
+	{
+		++next;
+		++first;
+	}
+
+	return first;
+}
+
+
 
