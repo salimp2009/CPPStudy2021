@@ -15,5 +15,17 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& cont)
 }
 
 
+template<typename Cont>
+constexpr void printCont(Cont& cont)
+{
+	if (cont.empty()) return;
+
+	for (auto&& elem : cont)
+	{
+		fmt::print("{} ", elem);
+	}
+	std::cout << '\n';
+}
+
 
 

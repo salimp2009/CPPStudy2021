@@ -2,7 +2,6 @@
 #include "ContainerUtilities.hpp"
 
 
-
 void Array_Test()
 {
 	std::printf("\n---------------------Array Test------------------------------------\n\n");
@@ -130,6 +129,8 @@ void Deque_Test()
 	{
 		fmt::print("{} ", name);
 	}
+
+	printCont(deq2);
 }
 
 
@@ -141,23 +142,35 @@ void List_Test()
 
 	for (int i{ 0 }; i < 6; ++i)
 	{
-		list1.push_front(i);
-		list2.push_back(i);
+		list2.push_front(i);
+		list1.push_back(i);
 	}
 
-	for (const auto& elem : list1)
-	{
-		fmt::print("{} ", elem);
-		
-	}
+	printCont(list1);
+	printCont(list2);
 
-	std::cout << '\n';
+	/* splice moves elements of the source into destination*/
+	list2.splice(std::find(list2.begin(), list2.end(), 3),
+					list1);
 
-	for (const auto& elem : list2)
-	{
-		fmt::print("{} ", elem);
-	}
+	printCont(list1);
+	printCont(list2);
+
+	std::cout<<std::distance(list2.begin(), list2.end())<<'\n';
+	auto pos = std::next(list2.begin(), 3);
+	std::cout << *pos << '\n';
+	std::cout << *(++pos) << '\n';
 }
+
+void ForwardList_Test()
+{
+	fmt::print("\n---------------------Forward List Test------------------------------------\n\n");
+	std::forward_list<int>flist1;
+
+	printCont(flist1);
+
+}
+
 
 int main()
 {
@@ -165,6 +178,6 @@ int main()
 	//Vector_Test();
 	//Deque_Test();
 	List_Test();
-
+	ForwardList_Test();
 
 }

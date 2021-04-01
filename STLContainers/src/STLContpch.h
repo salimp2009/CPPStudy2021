@@ -23,3 +23,4 @@
 #include <array>
 #include <deque>
 #include <list>
+#include <forward_list>

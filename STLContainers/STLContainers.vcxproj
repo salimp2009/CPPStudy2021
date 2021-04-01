@@ -62,7 +62,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLContpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,7 +80,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLContpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

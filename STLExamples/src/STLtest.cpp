@@ -128,13 +128,21 @@ void SmartPointers_Test()
 
 	std::cout << "Use count of ps2: " << *NameList[1] << ", use count: " << NameList[1].use_count() << '\n';
 
+#ifdef _HAS_CXX17 
 	/* Compiles as of c++17; does not works work before c++17*/
 	/* custom deleters can be used ; if not used since c++17 default deleter also call delete[]p */
 	std::shared_ptr<int[]> ps3(new int[10], [](int* p) { std::cout << "custom deleter\n"; delete[]p; });
 	std::shared_ptr<int[]> ps4{ new int[10] };
+#endif // __HAS_CXX17
+
 	
-	/* Does not work with C++17; works with C++20*/
+	
+/* Does not work with C++17; works with C++20*/
+#if _HAS_CXX20 
 	std::shared_ptr<int[]> ps555 = std::make_shared<int[10]>();
+#endif // CXX20
+
+	
 
 	ps3[0] = 1;
 	ps3[1] = 2;
