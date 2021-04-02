@@ -1,5 +1,6 @@
 #include "STLContpch.h"
 #include "ContainerUtilities.hpp"
+#include "SetMultiSetTest.h"
 
 
 void Array_Test()
@@ -133,7 +134,6 @@ void Deque_Test()
 	printCont(deq2);
 }
 
-
 void List_Test()
 {
 	fmt::print("\n---------------------List Test------------------------------------\n\n");
@@ -198,12 +198,16 @@ void ForwardList_Test()
 }
 
 
+
+
+
+
 int main()
 {
 	//Array_Test();
 	//Vector_Test();
 	//Deque_Test();
 	//List_Test();
-	ForwardList_Test();
-
+	//ForwardList_Test();
+	SetMultiSet_Test();
 }
