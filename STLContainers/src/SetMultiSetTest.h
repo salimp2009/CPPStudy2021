@@ -1,6 +1,7 @@
 #pragma once
 #include "STLContpch.h"
 #include "ContainerUtilities.hpp"
+#include "RuntimeComp.h"
 
 inline void SetMultiSet_Test()
 {
@@ -44,4 +45,34 @@ inline void SetMultiSet_Test()
 	printCont(mset4);
 	fmt::print("the {0} inserted in mset4 at position {1} \n", *newpos, std::distance(mset4.begin(), newpos) + 1);
 
+	using IntSet = std::set<int, RuntimeComp>;
+
+	IntSet rset5 = { 4,7,5,1,6,2,5 };
+	printCont(rset5);
+
+	IntSet rset6(rset5.begin(), rset5.end(), RuntimeComp{ RuntimeComp::reverse });
+	printCont(rset6);
+
+	if (rset5.value_comp() == rset6.value_comp())
+	{
+		fmt::print("rset 5 and rset6 are equal!\n");
+	}
+	else
+	{
+		fmt::print("rset 5 and rset6 are NOT equal!\n");
+
+	}
+
+	rset6 = rset5;
+
+	if (rset5.value_comp() == rset6.value_comp())
+	{
+		fmt::print("After the change; rset 5 and rset6 are equal!\n");
+	}
+	else
+	{
+		fmt::print("After the change; rset 5 and rset6 are NOT equal!\n");
+
+	}
+	printCont(rset6);
 }
