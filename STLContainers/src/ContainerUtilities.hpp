@@ -27,6 +27,39 @@ constexpr void printCont(Cont& cont)
 	std::cout << '\n';
 }
 
+template<typename T1, typename T2>
+constexpr void printCont(std::map<T1, T2>& cont)
+{
+	if (cont.empty()) return;
+
+	for (auto&& [key, value]: cont)
+	{
+		fmt::print("[key: {0}, value: {1}] ", key, value);
+	}
+	std::cout << '\n';
+}
+
+
+
+template<typename MCont>
+constexpr void printMCont(MCont& cont)
+{
+	if (cont.empty()) return;
+
+	for (auto&& [key, value] : cont)
+	{
+		fmt::print("[key: {0}, value: {1}] ", key, value);
+	}
+	std::cout << '\n';
+}
+
+
+
+
+
+
+
+
 
 template<typename InputIterator, typename Tval>
 constexpr InputIterator find_before(InputIterator first, InputIterator last, Tval&& val)

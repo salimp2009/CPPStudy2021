@@ -1,6 +1,7 @@
 #include "STLContpch.h"
 #include "ContainerUtilities.hpp"
 #include "SetMultiSetTest.h"
+#include "MapMultiMapTest.h"
 
 
 
@@ -206,5 +207,6 @@ int main()
 	//Deque_Test();
 	//List_Test();
 	//ForwardList_Test();
-	SetMultiSet_Test();
+	//SetMultiSet_Test();
+	MapMultiMap_Test();
 }

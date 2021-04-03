@@ -35,5 +35,8 @@
     <ClInclude Include="src\RuntimeComp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MapMultiMapTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
