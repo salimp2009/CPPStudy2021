@@ -52,4 +52,46 @@ inline void MapMultiMap_Test()
 	coll2.emplace(50, "Didem");
 	printMCont(coll2);
 
+	printMCont(coll1);
+
+	std::for_each(coll1.begin(), coll1.end(), [](auto& elem) { elem.second += " Pamukcu"; });
+	std::for_each(coll1.begin(), coll1.end(), [](typename decltype(coll1)::value_type& elem){ elem.second += ":Family"; });
+	std::for_each(coll1.begin(), coll1.end(), [](typename decltype(coll1)::value_type& elem){ elem.second += ":Family"; });
+
+	printMCont(coll1);
+
+
+	/* removed the node with the given key per c++17*/
+	auto nodetoReplace = coll1.extract(51);
+	/* change the key of the extracted node; which is just a pointer*/
+	nodetoReplace.key() = 52;
+	/* access to underlying types second value and change the first letter ; only for map; for sets use value() member funct of nodes*/
+	nodetoReplace.mapped()[0] = 'Z';
+	/* move the node back to std::map; no copies made only pointer moves with the new key*/
+	coll1.insert(std::move(nodetoReplace));
+	printMCont(coll1);
+
+	/*Alternative way to rechange the key*/
+	/* this is slower even for inserting prefer insert() member function*/
+	/* the value type has to have a default constructor to use this as well*/
+	coll1[51] = coll1[52];
+	coll1[51][0] = 'S';
+	coll1.erase(52);
+
+	printMCont(coll1);
+
+	coll1.insert(std::make_pair( 16,"Demir" ));
+	printMCont(coll1);
+
+	auto posSearched =std::find_if(coll1.cbegin(), coll1.cend(), [](const auto& elem) {return elem.second == "Demir"; });
+	if (posSearched != coll1.cend())
+	{
+		fmt::print("Found the value {} we were looking for!", posSearched->second);
+	}
+	else
+	{
+		fmt::print("it does not exist !!!!");
+	}
+
+
 }
