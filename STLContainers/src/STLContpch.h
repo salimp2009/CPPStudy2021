@@ -12,6 +12,7 @@
 #include <chrono>
 #include <algorithm>
 #include <numeric>
+#include <variant>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
@@ -26,4 +27,6 @@
 #include <forward_list>
 #include <set>
 #include <map>
+#include <unordered_map>
+#include <unordered_set>
 

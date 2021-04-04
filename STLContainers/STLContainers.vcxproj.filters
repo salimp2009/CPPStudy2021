@@ -38,5 +38,11 @@
     <ClInclude Include="src\MapMultiMapTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\OverLoadVariadic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnorderedCont\UnderOrderedCont_Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

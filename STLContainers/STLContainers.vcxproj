@@ -62,7 +62,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLContpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,7 +80,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLContpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -101,9 +101,11 @@
   <ItemGroup>
     <ClInclude Include="src\ContainerUtilities.hpp" />
     <ClInclude Include="src\MapMultiMapTest.h" />
+    <ClInclude Include="src\OverLoadVariadic.hpp" />
     <ClInclude Include="src\RuntimeComp.h" />
     <ClInclude Include="src\SetMultiSetTest.h" />
     <ClInclude Include="src\STLContpch.h" />
+    <ClInclude Include="src\UnorderedCont\UnderOrderedCont_Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "STLContpch.h"
+#include "OverLoadVariadic.hpp"
 
 
 inline void MapMultiMap_Test()
@@ -86,12 +87,35 @@ inline void MapMultiMap_Test()
 	auto posSearched =std::find_if(coll1.cbegin(), coll1.cend(), [](const auto& elem) {return elem.second == "Demir"; });
 	if (posSearched != coll1.cend())
 	{
-		fmt::print("Found the value {} we were looking for!", posSearched->second);
+		fmt::print("Found the value {} we were looking for!\n", posSearched->second);
 	}
 	else
 	{
-		fmt::print("it does not exist !!!!");
+		fmt::print("it does not exist !!!!\n");
 	}
+
+	/* Tried to use variant to change the Compare runtime; mightr better to use Lambda*/
+	std::variant<NormalComp, ReverseComp>CompOpt{ NormalComp() };
+	auto CurrentComp = std::get<0>(CompOpt);
+	
+	std::map<int, std::string, decltype(CurrentComp)>coll3 = { {55, "Salitos"}, {65, "Semoski"} };
+	printMCont(coll3);
+
+	CompOpt = ReverseComp();
+	auto mYReverseComp = std::get<1>(CompOpt);
+	std::map<int, std::string, decltype(mYReverseComp)>coll4 = { {55, "Salitos"}, {65, "Semoski"} };
+	printMCont(coll4);
+
+	/* Using variadic Base class */
+	auto New1Comp = Overloader{ NormalComp() };
+
+	std::map<int, std::string, decltype(New1Comp)>coll5 = { {55, "Salitos"}, {65, "Semoski"} };
+	printMCont(coll5);
+
+	auto New2Comp = Overloader{ ReverseComp() };
+	std::map<int, std::string, decltype(New2Comp)>coll6 = { {55, "Salitos"}, {65, "Semoski"} };
+	printMCont(coll6);
+
 
 
 }

@@ -47,5 +47,8 @@
     <ClInclude Include="src\MyString\MyString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ExceptionSamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

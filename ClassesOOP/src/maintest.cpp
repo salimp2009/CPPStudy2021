@@ -1,14 +1,17 @@
 
+#include <stdio.h>
+#include <cstring>
+#include <algorithm>
+#include <memory>
+#include <string>
+
 #include "Account.h"
 #include "Savings.h"
 #include "Printable.h"
 #include "AccountUtilities.h"
-#include <stdio.h>
-#include <cstring>
 #include "MyString/MyString.h"
-#include <algorithm>
-#include <memory>
-#include <string>
+#include "ExceptionSamples.h"
+
 
 
 
@@ -192,11 +195,18 @@ void Test_CString()
 
 int main()
 {
-	TestMyString();
+	//TestMyString();
 
 	//TestAccount();
 	//Test_CString();
 	
-
-	return 0;
+	try
+	{
+		DivideByZero(200.0, 0.0);
+	}
+	catch (int& e) {
+		std::cout << e << '\n';
+	}
+	
+	std::cout << "program continues; from main \n";
 }

@@ -94,6 +94,7 @@
     <ClCompile Include="src\maintest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ExceptionSamples.h" />
     <ClInclude Include="src\MyString\MyString.h" />
     <ClInclude Include="src\Account.h" />
     <ClInclude Include="src\AccountUtilities.h" />
