@@ -205,7 +205,7 @@ int main()
 		DivideByZero(200.0, 0.0);
 	}
 	catch (int& e) {
-		std::cout << e << '\n';
+		std::cout <<"Cant Divide by Zero!!!" <<e << '\n';
 	}
 	
 	std::cout << "program continues; from main \n";

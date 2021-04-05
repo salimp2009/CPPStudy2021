@@ -13,6 +13,9 @@
 #include <algorithm>
 #include <numeric>
 #include <variant>
+#include <cassert>
+#include <iomanip>
+
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"

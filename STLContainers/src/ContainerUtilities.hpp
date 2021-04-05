@@ -1,7 +1,13 @@
 #pragma once
 #include "STLContpch.h"
 
-/* cause some overload problems; better to use this for specific class to overload that class*/
+
+
+template<typename T1, typename T2>
+std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p)
+{
+	return os << "[" << p.first << ", " << p.second << "] ";
+}
 
 
 template<typename T>

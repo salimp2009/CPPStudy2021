@@ -113,7 +113,7 @@ inline void MapMultiMap_Test()
 	printMCont(coll5);
 
 	auto New2Comp = Overloader{ ReverseComp() };
-	std::map<int, std::string, decltype(New2Comp)>coll6 = { {55, "Salitos"}, {65, "Semoski"} };
+	std::map<int, std::string, decltype(New2Comp)>coll6(coll5.begin(), coll5.end()); 
 	printMCont(coll6);
 
 
