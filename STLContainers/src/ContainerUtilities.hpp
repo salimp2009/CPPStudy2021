@@ -1,5 +1,5 @@
 #pragma once
-#include "STLContpch.h"
+//#include "STLContpch.h"
 
 
 
@@ -60,11 +60,20 @@ constexpr void printMCont(MCont& cont)
 }
 
 
+template<typename MCont>
+constexpr void printBCont(MCont& cont)
+{
+	for (std::size_t idx = 0; idx != cont.bucket_count(); ++idx)
+	{
+		fmt::print("b[{}]: ", idx);
+		for (auto pos = cont.begin(idx); pos != cont.end(idx); ++pos)
+		{
+			std::cout << *pos << " ";
+		}
+		std::cout << '\n';
+	}
 
-
-
-
-
+}
 
 
 template<typename InputIterator, typename Tval>

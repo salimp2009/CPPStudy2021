@@ -1,7 +1,8 @@
 #pragma once
 
-#include "STLContpch.h"
+//#include "STLContpch.h"
 #include "ContainerUtilities.hpp"
+#include "CustomHashEqual.h"
 
 inline void UnorderedCont_Test()
 {
@@ -28,6 +29,7 @@ inline void UnorderedCont_Test()
 		}
 		std::cout << '\n';
 	}
+	printBCont(mcoll1);
 
 	mcoll1["Salim"] = 52;
 	printMCont(mcoll1);
@@ -36,5 +38,27 @@ inline void UnorderedCont_Test()
 	if (newpos != mcoll1.end()) newpos->second = 51;
 	printMCont(mcoll1);
 
+	std::unordered_set<int>scoll2 = { 1,-3,3,5,5,-25,13,-14 };
+	printCont(scoll2);
+	printBCont(scoll2);
+
+	scoll2.erase(5);
+	printCont(scoll2);
+
+	/* Combine Hash and Equal using variadic bases to construct both; similar to std::variant*/
+	/* both Equality function and Hashfunction has to const qualified to be able to pass in unordered_maps*/
+	using CustomerOP1 = Overloader<CustomerHash, CustomerEqual>;
+	std::unordered_set<Customer, CustomerOP1, CustomerOP1>scoll3{{"Salim", "Pamukcu", 5201}};
+	printCont(scoll3);
+	printBCont(scoll3);
+
+	/* Lambda version of Hash; need to pass lambda as a variable in the constructor since lambda dont have constructor*/
+	auto CustHashLamb = [](auto&& c1) constexpr noexcept { return  std::hash<std::string_view>{}(c1.GetFName()) ^ (std::hash<std::string_view>{}(c1.GetLName())<<1) + (std::hash<long>{}(c1.GetNo())>>2); };
+	std::unordered_set<Customer, decltype(CustHashLamb), CustomerEqual>scoll4{10,CustHashLamb};
+	scoll4.max_load_factor(0.7f);
+	scoll4.insert({ {"Salim", "Pamukcu", 5201},{"Didem", "Pamukcu", 5200} });
+	printBCont(scoll4);
+	printCont(scoll4);
+	std::cout <<"bucket count: "<< scoll4.bucket_count() << '\n';
 
 }
