@@ -4,6 +4,7 @@
 #include "Person.h"
 #include "MyTypeTraits.hpp"
 #include "ChronoExamples.hpp"
+#include "FunctionObjectsLambdas.h"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -349,7 +350,9 @@ int main()
 	//FunctionWrappers_Test();
 	//FunctionPointer_Test();
 	//Ratio_Test();
-	Chrono_Test();
+	//Chrono_Test();
+	FunctionObjLamb_Test();
+
 
 	return 0;
 }

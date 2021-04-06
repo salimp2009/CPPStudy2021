@@ -11,7 +11,13 @@
 #include <functional>
 #include <ratio>
 #include <chrono>
+#include <algorithm>
+
+#include "spdlog/fmt/fmt.h"
+#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
 
 
 #include <string>
 #include <vector>
+#include <list>
