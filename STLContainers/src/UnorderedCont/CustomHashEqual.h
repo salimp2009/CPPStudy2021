@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OverLoadVariadic.hpp"
+#include "HashVal.hpp"
 
 class Customer
 {
@@ -18,10 +19,9 @@ public:
 	const std::string& GetLName() const& { return lname; }
 	std::string GetLName()&& { return std::move(lname); }
 
-	long GetNo() { return no; }
 	long GetNo() const { return no; }
 	
-
+	bool operator==(const Customer& rght) const { return this->no == rght.no; }
 
 	friend std::ostream& operator<<(std::ostream& os, const Customer& c)
 	{
@@ -48,7 +48,7 @@ class CustomerHash
 public:
 	std::size_t operator()(const Customer& c1) const noexcept
 	{
-		return std::hash<std::string_view>{}(c1.fname) ^ (std::hash<std::string_view>{}(c1.lname)<<1) + (std::hash<long>{}(c1.no)>>2);
+		//return std::hash<std::string_view>{}(c1.fname) ^ (std::hash<std::string_view>{}(c1.lname)<<1) + (std::hash<long>{}(c1.no)>>2);
+		return hash_val(std::forward<std::string_view>(c1.fname), std::forward<std::string_view>(c1.lname), c1.no);
 	}
-
 };

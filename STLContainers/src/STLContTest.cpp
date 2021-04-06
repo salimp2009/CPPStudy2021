@@ -3,6 +3,7 @@
 #include "SetMultiSetTest.h"
 #include "MapMultiMapTest.h"
 #include "UnorderedCont/UnderOrderedCont_Test.h"
+#include "UnorderedCont/HashVal.hpp"
 
 
 

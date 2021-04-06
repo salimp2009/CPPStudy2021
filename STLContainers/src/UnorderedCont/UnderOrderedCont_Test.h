@@ -54,11 +54,17 @@ inline void UnorderedCont_Test()
 
 	/* Lambda version of Hash; need to pass lambda as a variable in the constructor since lambda dont have constructor*/
 	auto CustHashLamb = [](auto&& c1) constexpr noexcept { return  std::hash<std::string_view>{}(c1.GetFName()) ^ (std::hash<std::string_view>{}(c1.GetLName())<<1) + (std::hash<long>{}(c1.GetNo())>>2); };
-	std::unordered_set<Customer, decltype(CustHashLamb), CustomerEqual>scoll4{10,CustHashLamb};
+	auto CustEqLamb = [](auto&& c1, auto&& c2) constexpr noexcept { return c1 == c2; };
+	std::unordered_set<Customer, decltype(CustHashLamb), decltype(CustEqLamb)>scoll4{10,CustHashLamb, CustEqLamb};
+	
 	scoll4.max_load_factor(0.7f);
 	scoll4.insert({ {"Salim", "Pamukcu", 5201},{"Didem", "Pamukcu", 5200} });
-	printBCont(scoll4);
 	printCont(scoll4);
+	printBCont(scoll4);
+	
 	std::cout <<"bucket count: "<< scoll4.bucket_count() << '\n';
 
+	std::cout << std::boolalpha;
+	auto SinglyLinkedList = !std::is_same_v<typename std::iterator_traits<decltype(scoll3)::iterator>::iterator_category, std::bidirectional_iterator_tag>;
+	std::cout << "Chaining Type; Singly Linked List ????: " << SinglyLinkedList << '\n';
 }

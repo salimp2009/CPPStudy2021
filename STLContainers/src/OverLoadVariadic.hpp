@@ -1,5 +1,5 @@
 #pragma once
-#include "STLContpch.h"
+//#include "STLContpch.h"
 
 struct NormalComp
 {
