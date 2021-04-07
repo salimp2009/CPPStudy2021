@@ -1,62 +1,18 @@
 #pragma once
 
 #include "TupplePairUtilities.hpp"
+#include "FunctObjLambdaUtils.hpp"
 
-class IntSequence
-{
-private:
-	int value;
-public:
-	constexpr IntSequence(int val) noexcept :value{ val } {}
 
-	constexpr int operator()() noexcept
-	{
-		return value++;
-	}
 
-};
-
-class MyPerson
-{
-private:
-	std::string name;
-public:
-	MyPerson(std::string n) noexcept : name{ std::move(n) } {}
-
-	void printname() const noexcept 
-	{ 
-		fmt::print("MyPerson: {}\n", name); 
-	}
-	void printname2(std::string&& prefix) const noexcept
-	{ 
-		fmt::print("MyPerson: {0} {1} \n", std::move(prefix), name); 
-	}
-
-};
-
-struct PrinterEx
-{
-	int numCalls;
-	PrinterEx() noexcept:numCalls{0}{}
-
-	void operator()(int x) noexcept
-	{
-		fmt::print("{} ", x);
-		fmt::print("\n");
-		++numCalls;
-	}
-};
-
-/* Global and Static variables/objects to test Lambda Captures*/
-int gval = 10;
-static int static_val = 15;
 
 inline void FunctionObjLamb_Test()
 {
 	fmt::print("\n---------------Function Objects Lambda --------------------------\n");
 
-	
 	std::vector<int> v1{ 1,2 };
+
+	fmt::print("vector print {}", fmt::join(v1,", "));
 
 	const PrinterEx vis = std::for_each(v1.begin(), v1.end(), PrinterEx());
 	
@@ -96,9 +52,13 @@ inline void FunctionObjLamb_Test()
 
 	lmb2();
 	std::cout << "value of x1 after lmb2 mutable changed it: " << x1 << '\n';
-	++x1;
+	//++x1;
 	lmb2();
 	std::cout << "value of x1 after lmb2 mutable changed it: " << x1 << '\n';
+	lmb2();
+	++x1;
+	lmb2();
+
 
 	/* no need for capturing any gloabal or static variables/objects; if you do you get compiler error*/
 	auto lmbd3 = []() noexcept
@@ -108,5 +68,31 @@ inline void FunctionObjLamb_Test()
 
 	lmbd3();
 	fmt::print("global/static values of gval &static_int after captured/modified in lambda: {0}, {1}\n", gval, static_val);
+
+	Baz bz{ "Salim" };
+	auto myBazf1 = bz.foo();
+	myBazf1();
+
+	/* this will not print the value of struct member since we create a temp object and 
+		by the time we call it expired therefore the value destroyed
+	*/
+	auto myBazf2 = Baz("Salitos").foo();
+	myBazf2();
+
+	std::unique_ptr<int>uptr = std::make_unique<int>(10);
+
+	std::printf("address of uptr: %p \n", uptr.get());
+	
+	auto ulmd4 = [ptr = std::move(uptr)]() noexcept { fmt::print("ptr in lambda adress {0}, and value {1}\n", fmt::ptr(ptr.get()),*ptr); };
+	ulmd4();
+	
+	std::printf("address of uptr after moved : %p \n", uptr.get());
+
+	std::unique_ptr<int>uptr2 = std::make_unique<int>(10);
+
+	auto Overloadedlambda = Overloader([](auto f) {return f();});
+	Overloadedlambda(myBazf1);
+	Overloadedlambda(bz.foo());
+	
 
 }

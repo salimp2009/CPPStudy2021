@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
+    <ClInclude Include="src\FunctObjLambdaUtils.hpp" />
     <ClInclude Include="src\Person.h" />
     <ClInclude Include="src\STLpch.h" />
     <ClInclude Include="src\TupplePairUtilities.hpp" />
