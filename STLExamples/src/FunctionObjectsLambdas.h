@@ -21,13 +21,13 @@ class MyPerson
 private:
 	std::string name;
 public:
-	MyPerson(std::string n) : name{ std::move(n) } {}
+	MyPerson(std::string n) noexcept : name{ std::move(n) } {}
 
-	void printname() const  
+	void printname() const noexcept 
 	{ 
 		fmt::print("MyPerson: {}\n", name); 
 	}
-	void printname2(std::string&& prefix) const 
+	void printname2(std::string&& prefix) const noexcept
 	{ 
 		fmt::print("MyPerson: {0} {1} \n", std::move(prefix), name); 
 	}
@@ -47,11 +47,14 @@ struct PrinterEx
 	}
 };
 
-
+/* Global and Static variables/objects to test Lambda Captures*/
+int gval = 10;
+static int static_val = 15;
 
 inline void FunctionObjLamb_Test()
 {
 	fmt::print("\n---------------Function Objects Lambda --------------------------\n");
+
 	
 	std::vector<int> v1{ 1,2 };
 
@@ -79,5 +82,31 @@ inline void FunctionObjLamb_Test()
 
 	std::mem_fn(&MyPerson::printname)(MyPerson("Salim"));
 	std::mem_fn(&MyPerson::printname2)(MyPerson("Didem"), "is a ");
-	
+
+	int x1 = 5;
+	auto l1 = [&x1]() mutable noexcept { fmt::print("x1 from lambda thru a : {} \n",++(x1)); };
+	x1 = 456;
+	l1();
+
+	auto lmb2 = [x1]() mutable noexcept 
+	{ 
+		fmt::print("x1 from lmb2 copied by val (mutable) {}\n", ++x1); 
+		
+	};
+
+	lmb2();
+	std::cout << "value of x1 after lmb2 mutable changed it: " << x1 << '\n';
+	++x1;
+	lmb2();
+	std::cout << "value of x1 after lmb2 mutable changed it: " << x1 << '\n';
+
+	/* no need for capturing any gloabal or static variables/objects; if you do you get compiler error*/
+	auto lmbd3 = []() noexcept
+	{ 
+		++gval; ++static_val;
+	};
+
+	lmbd3();
+	fmt::print("global/static values of gval &static_int after captured/modified in lambda: {0}, {1}\n", gval, static_val);
+
 }

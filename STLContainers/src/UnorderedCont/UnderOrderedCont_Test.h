@@ -52,6 +52,13 @@ inline void UnorderedCont_Test()
 	printCont(scoll3);
 	printBCont(scoll3);
 
+	/* Test Overloader if it can generate lambda; might be usefull to use as function wrapper instead of*/
+	int z = 25;
+	auto funcoverload = Overloader([&](auto&& x)->decltype(auto){std::cout << "x and z " << x <<", "<<z <<'\n'; }, [](float y) {std::cout << "y: " << y<< '\n'; });
+	funcoverload(10.235f);
+	funcoverload(10);
+		
+
 	/* Lambda version of Hash; need to pass lambda as a variable in the constructor since lambda dont have constructor*/
 	auto CustHashLamb = [](auto&& c1) constexpr noexcept { return  std::hash<std::string_view>{}(c1.GetFName()) ^ (std::hash<std::string_view>{}(c1.GetLName())<<1) + (std::hash<long>{}(c1.GetNo())>>2); };
 	auto CustEqLamb = [](auto&& c1, auto&& c2) constexpr noexcept { return c1 == c2; };
