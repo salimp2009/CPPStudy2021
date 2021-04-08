@@ -12,12 +12,12 @@ inline void FunctionObjLamb_Test()
 
 	std::vector<int> v1{ 1,2 };
 
-	fmt::print("vector print {}", fmt::join(v1,", "));
+	fmt::print("vector print {}", fmt::join(v1, ", "));
 
 	const PrinterEx vis = std::for_each(v1.begin(), v1.end(), PrinterEx());
-	
+
 	fmt::print("numcalls: {}\n", vis.numCalls);
-	
+
 	std::list<int>coll;
 	IntSequence seq(1);
 
@@ -34,20 +34,20 @@ inline void FunctionObjLamb_Test()
 	printCont(coll);
 
 	auto plus10times2 = [](auto&& y) {return (y + 10) * 2; };
-	std::cout<< plus10times2(7)<<'\n';
+	std::cout << plus10times2(7) << '\n';
 
 	std::mem_fn(&MyPerson::printname)(MyPerson("Salim"));
 	std::mem_fn(&MyPerson::printname2)(MyPerson("Didem"), "is a ");
 
 	int x1 = 5;
-	auto l1 = [&x1]() mutable noexcept { fmt::print("x1 from lambda thru a : {} \n",++(x1)); };
+	auto l1 = [&x1]() mutable noexcept { fmt::print("x1 from lambda thru a : {} \n", ++(x1)); };
 	x1 = 456;
 	l1();
 
-	auto lmb2 = [x1]() mutable noexcept 
-	{ 
-		fmt::print("x1 from lmb2 copied by val (mutable) {}\n", ++x1); 
-		
+	auto lmb2 = [x1]() mutable noexcept
+	{
+		fmt::print("x1 from lmb2 copied by val (mutable) {}\n", ++x1);
+
 	};
 
 	lmb2();
@@ -62,7 +62,7 @@ inline void FunctionObjLamb_Test()
 
 	/* no need for capturing any gloabal or static variables/objects; if you do you get compiler error*/
 	auto lmbd3 = []() noexcept
-	{ 
+	{
 		++gval; ++static_val;
 	};
 
@@ -73,7 +73,7 @@ inline void FunctionObjLamb_Test()
 	auto myBazf1 = bz.foo();
 	myBazf1();
 
-	/* this will not print the value of struct member since we create a temp object and 
+	/* this will not print the value of struct member since we create a temp object and
 		by the time we call it expired therefore the value destroyed
 	*/
 	auto myBazf2 = Baz("Salitos").foo();
@@ -82,21 +82,21 @@ inline void FunctionObjLamb_Test()
 	std::unique_ptr<int>uptr = std::make_unique<int>(10);
 
 	std::printf("address of uptr: %p \n", uptr.get());
-	
-	auto ulmd4 = [ptr = std::move(uptr)]() noexcept { fmt::print("ptr in lambda adress {0}, and value {1}\n", fmt::ptr(ptr.get()),*ptr); };
+
+	auto ulmd4 = [ptr = std::move(uptr)]() noexcept { fmt::print("ptr in lambda adress {0}, and value {1}\n", fmt::ptr(ptr.get()), *ptr); };
 	ulmd4();
-	
+
 	std::printf("address of uptr after moved : %p \n", uptr.get());
 
 	std::unique_ptr<int>uptr2 = std::make_unique<int>(10);
 
-	auto Overloadedlambda = Overloader([](auto f) {return f();});
+	auto Overloadedlambda = Overloader([](auto f) {return f(); });
 	Overloadedlambda(myBazf1);
 	Overloadedlambda(bz.foo());
-	
+
 	const int cx = 10;
 	/* you cannot modify a captured const variable*/
-	auto myconstlmbda= [cx]()mutable {fmt::print("{}\n", std::is_const_v<decltype(cx)>); };
+	auto myconstlmbda = [cx]()mutable {fmt::print("{}\n", std::is_const_v<decltype(cx)>); };
 	myconstlmbda();
 
 	/* C++17 version of implementation of variadic capture in lambdas*/
@@ -115,4 +115,55 @@ inline void FunctionObjLamb_Test()
 
 	Bazptr mybaz;
 	callwith10(mybaz);
+
+	auto funcptr = static_cast<void(*)()>([]()->decltype(auto) {});
+	static_assert(std::is_same_v<decltype(funcptr), void(*)()>);
+
+	/*Example for passing lamda into container stateless*/
+	using TFunct = void(*)(int&);
+	std::vector<TFunct> ptrFunctVec;
+	
+	ptrFunctVec.emplace_back([](int& x) {fmt::print("x: {}\n", x); });
+	ptrFunctVec.emplace_back([](int& x) {x *= 2; });
+	ptrFunctVec.emplace_back(ptrFunctVec[0]);
+
+	int vx = 10;
+	for (const auto& elem : ptrFunctVec)
+	{
+		elem(vx);
+	}
+	
+
+}
+
+inline void FunctionObjLamb_Test2()
+{
+	std::printf("\n---------------Function Objects Lambda Part2--------------------------\n");
+
+	auto lam1 = [](int x = 10) {fmt::print("x: {}\n", x); };
+	lam1();
+
+	int x1 = 15;
+	auto lam2 = [&z = x1]() {fmt::print("z: {}\n", z); };
+	lam2();
+	x1 = 35;
+	lam2();
+
+	std::unique_ptr<int>uptr(new int(10));
+
+	std::function<void()>ufunct = [ptr = &uptr]{};
+
+	using namespace std::string_literals;
+	/* vector is used for example but prefer std::Array if const is used */
+	const std::vector<std::string>vs = { "Salim"s, "Didem", "foobar"s, "Demir"s };
+
+	const auto prefix = "foo"s;
+	auto result = std::find_if(vs.cbegin(), vs.cend(), 
+					[searchprefix = prefix + "bar"s](std::string_view elem) { return elem == searchprefix; });
+
+	if (result != vs.cend())
+	{
+		fmt::print("result: {}", *result);
+	}
+
 }

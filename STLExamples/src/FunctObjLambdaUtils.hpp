@@ -110,5 +110,7 @@ constexpr void capture(Args&&... args) noexcept
 		/*conver to function pointer that takes an int return void and return the address of call function*/
 		operator f_ptr() const noexcept { return &call; }
 	private:
-		static void call(int n)  { fmt::print("Bazptr calls: {}", n); }
+		static void call(int n)  { fmt::print("Bazptr calls: {}\n", n); }
 	};
+
+	

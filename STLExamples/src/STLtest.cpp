@@ -351,7 +351,8 @@ int main()
 	//FunctionPointer_Test();
 	//Ratio_Test();
 	//Chrono_Test();
-	FunctionObjLamb_Test();
+	//FunctionObjLamb_Test();
+	FunctionObjLamb_Test2();
 
 
 	return 0;
