@@ -94,5 +94,25 @@ inline void FunctionObjLamb_Test()
 	Overloadedlambda(myBazf1);
 	Overloadedlambda(bz.foo());
 	
+	const int cx = 10;
+	/* you cannot modify a captured const variable*/
+	auto myconstlmbda= [cx]()mutable {fmt::print("{}\n", std::is_const_v<decltype(cx)>); };
+	myconstlmbda();
 
+	/* C++17 version of implementation of variadic capture in lambdas*/
+	capture(1, 2, 3, "Salim");
+
+	/* C++20 version of implementation of variadic capture in lambdas*/
+#ifdef _HAS_CXX20
+	std::string name = "Didem";
+	callArgs(1, 2, 3, name);
+
+	std::printf("name after callArgs %s\n", name.c_str());
+#endif
+
+	callwith10([](int x) {fmt::print("lambda with 10+ : {}\n", x); });
+	callwith10([](int x) {fmt::print("lambda with 10+ : {}\n", x); });
+
+	Bazptr mybaz;
+	callwith10(mybaz);
 }

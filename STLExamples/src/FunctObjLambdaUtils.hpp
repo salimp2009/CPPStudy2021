@@ -68,3 +68,47 @@ struct Baz
 
 	std::string s;
 };
+
+/*C17 version of capturing */
+template<typename... Args>
+constexpr void capture(Args&&... args) noexcept
+{
+	auto captlambda = [args...]()noexcept
+	{
+		const auto tup = std::make_tuple(args...);
+		fmt::print("tupple size: {0}, sizeof args: {1}, sizeof(Args): {2}\n", std::tuple_size_v<decltype(tup)>, sizeof... (args), sizeof... (Args));
+		(fmt::print("{} ", args), ...);
+		/*Alternative way of printing; might work containers in fmt*/
+		fmt::print("\n{} \n", tup);
+		
+	};
+	captlambda();
+}
+
+/*C20 version of above; capture variadics in lambdas*/
+#ifdef _HAS_CXX20
+	template<typename...Args>
+	constexpr void callArgs(Args&&... args) noexcept
+	{
+		auto captC20vers = [...captargs = std::forward<Args>(args)]() noexcept
+		{
+			(fmt::print("{} ", captargs), ...);
+			std::printf("\n");
+		};
+		captC20vers();
+	}
+#endif
+
+	inline void callwith10(void(*func)(int)) noexcept { static int n= 10; func(++n); };
+
+	struct Bazptr
+	{
+		using f_ptr = void(*)(int);
+
+		void operator()(int s) const noexcept { return call(s); };
+
+		/*conver to function pointer that takes an int return void and return the address of call function*/
+		operator f_ptr() const noexcept { return &call; }
+	private:
+		static void call(int n)  { fmt::print("Bazptr calls: {}", n); }
+	};
