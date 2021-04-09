@@ -3,7 +3,11 @@
 #include "TupplePairUtilities.hpp"
 #include "FunctObjLambdaUtils.hpp"
 
-
+#define FUNCTWRAP(fn)\
+[](auto&&... x)\
+	noexcept(noexcept(fn(std::forward<decltype(x)>(x)...)))\
+	->decltype(fn(std::forward<decltype(x)>(x)...))\
+	{return fn(std::forward<decltype(x)>(x)...);}
 
 
 inline void FunctionObjLamb_Test()
@@ -192,5 +196,29 @@ inline void FunctionObjLamb_Test2()
 		{
 			fmt::print("{0}, {1} \n", fmt::ptr(&(elem.first)), fmt::ptr(&(elem.second)));	
 		});
+
+	const std::array<int, 10> arr1={ 1,2,3,4,5,6,7,8,9 };
+
+	/* Will not compile since fooFI overloads cannot be deduced */
+	//std::for_each(arr1.begin(), arr1.end(), fooFI);
+
+	std::for_each(arr1.begin(), arr1.end(), [](auto&& x) noexcept(noexcept(fooFI(std::forward<decltype(x)>(x)))) ->decltype(auto) { return fooFI(std::forward<decltype(x)>(x)); });
+	std::printf("\n");
+	
+	/* More generic lambda version of the above within a Macro */
+	std::for_each(arr1.begin(), arr1.end(), FUNCTWRAP(fooFI));
+	std::printf("\n");
+
+	constexpr auto factorialLambd = [](auto&& n) constexpr noexcept
+	{
+		constexpr auto factor_impl = [](auto&& n, const auto& impl) constexpr noexcept->int
+		{return n > 1 ? n * impl(n - 1, impl) : 1; };
+		
+		return factor_impl(n, factor_impl);
+	
+	};
+
+	const int n = 5;
+	fmt::print("factorial of {1}: {0}\n",factorialLambd(n), n);
 
 }

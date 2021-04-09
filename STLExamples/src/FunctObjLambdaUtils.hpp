@@ -132,6 +132,11 @@ constexpr void capture(Args&&... args) noexcept
 		return (val + (args + ...));
 	}
 
+	inline void fooFI(int x) { std::printf("Foo int");  }
+
+	inline void fooFI(float x) { std::printf("Foo float"); }
+
+
 
 
 	
