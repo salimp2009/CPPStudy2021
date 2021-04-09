@@ -66,6 +66,11 @@ struct Baz
 		return [this]() noexcept{ fmt::print("value of member s: {0}\n", s); };
 	}
 
+	decltype(auto) foo2() noexcept
+	{
+		return [s=s]() noexcept { fmt::print("value of member s: {0}\n", s); };
+	}
+
 	std::string s;
 };
 
@@ -112,5 +117,21 @@ constexpr void capture(Args&&... args) noexcept
 	private:
 		static void call(int n)  { fmt::print("Bazptr calls: {}\n", n); }
 	};
+
+	template<typename... TArgs>
+	constexpr decltype(auto) sumFold(TArgs&&... args) noexcept
+	{
+		return (args + ...);
+	}
+
+	/* same above but checks if types are convertible during and will get an error/warning before even compile time*/
+	/* in this case it is redundant but usefull if it is an array that expects same types*/
+	template<typename T, typename... TArgs, typename=std::enable_if_t<(std::is_convertible_v<T, TArgs> && ...)>>
+	constexpr decltype(auto) sumFold(T val, TArgs&&... args) noexcept
+	{
+		return (val + (args + ...));
+	}
+
+
 
 	

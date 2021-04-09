@@ -166,4 +166,31 @@ inline void FunctionObjLamb_Test2()
 		fmt::print("result: {}", *result);
 	}
 
+	const auto myf2 = Baz{ "c++" }.foo2();
+	myf2();
+
+	const auto sumLambda = [](auto&&... args)
+	{
+		fmt::print("sum of {} numbers: ", sizeof... (args));
+		return sumFold(std::forward<decltype(args)>(args)...);
+	};
+
+	fmt::print("{} \n", sumLambda(1, 2.1, 3.1f, 4.1));
+
+	/** Example to check the when using auto && there is no extra copies by checking the values address in container
+		and comparing in the std::for_each and passing into lambda
+	*/
+	const std::map<std::string, int>numbers = { {"one", 1}, {"two", 2}, {"three",3} };
+
+	for (auto it = numbers.cbegin(); it != numbers.end(); ++it)
+	{
+		fmt::print("{0}, {1} \n", fmt::ptr(&(it->first)), fmt::ptr(&(it->second)));
+	}
+
+	std::for_each(numbers.cbegin(), numbers.cend(),
+		[](auto&& elem) 
+		{
+			fmt::print("{0}, {1} \n", fmt::ptr(&(elem.first)), fmt::ptr(&(elem.second)));	
+		});
+
 }
