@@ -222,3 +222,27 @@ inline void FunctionObjLamb_Test2()
 	fmt::print("factorial of {1}: {0}\n",factorialLambd(n), n);
 
 }
+
+inline void FunctionObjLamb_TestC17()
+{
+	std::printf("\n---------------Function Objects Lambda Part3 / C++17--------------------------\n");
+
+	int x1{ 10 };
+
+	const auto lam1 = [&x1](auto&& y)noexcept { x1 += y; };
+	CallWithOptimAndNormal(lam1);
+
+	const auto lam2 = [&x1](auto&& y) {x1 += y; };
+	CallWithOptimAndNormal(lam2);
+
+	fmt::print("x1 after the calls above: {}", x1);
+
+	/** Example for compile calculation using constexpt in the function def; 
+		it will also work at run time if the passed value are not known compile time
+	*/
+	constexpr std::array arr1{ 1,2,3 };
+	constexpr auto sum = SimpleAccumulate(arr1, [](auto&& x) { return x * x; }, 0);
+	static_assert(sum == 14);
+
+
+}

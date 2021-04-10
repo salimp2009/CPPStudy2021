@@ -132,9 +132,37 @@ constexpr void capture(Args&&... args) noexcept
 		return (val + (args + ...));
 	}
 
+	/* Used for overload resolution example by using auto */
 	inline void fooFI(int x) { std::printf("Foo int");  }
 
 	inline void fooFI(float x) { std::printf("Foo float"); }
+
+	template<typename Callable>
+	constexpr void CallWithOptimAndNormal(Callable&& fn)
+	{
+		/* Checks if the given function with the arguments is noexcept and invokable*/
+		if constexpr (std::is_nothrow_invocable_v<Callable, int>)
+		{
+			fmt::print("calling fn(10) with optimization\n");
+			fn(10);
+		}
+		else
+		{
+			fmt::print("calling fn(10) normally\n");
+			fn(10);
+		}
+	}
+
+	template<typename Range, typename Func, typename T>
+	constexpr T SimpleAccumulate(Range&& range, Func func, T init)
+	{
+		for (auto&& elem : range)
+		{
+			init += func(std::forward<decltype(elem)>(elem));
+		}
+
+		return init;
+	}
 
 
 
