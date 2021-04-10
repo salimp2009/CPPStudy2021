@@ -235,14 +235,53 @@ inline void FunctionObjLamb_TestC17()
 	const auto lam2 = [&x1](auto&& y) {x1 += y; };
 	CallWithOptimAndNormal(lam2);
 
-	fmt::print("x1 after the calls above: {}", x1);
+	fmt::print("x1 after the calls above: {}\n", x1);
 
-	/** Example for compile calculation using constexpt in the function def; 
+	/** Example for compile calculation using constexpt in the function def;
 		it will also work at run time if the passed value are not known compile time
 	*/
 	constexpr std::array arr1{ 1,2,3 };
 	constexpr auto sum = SimpleAccumulate(arr1, [](auto&& x) { return x * x; }, 0);
 	static_assert(sum == 14);
+
+	const std::string in = "Hello Man";
+	const std::string out = std::invoke([copy = in]() mutable
+		{
+			return copy.replace(copy.find("Man"), 3, "C++");
+			
+
+		});
+
+	fmt::print("string out after replace: {}\n", out);
+
+
+}
+
+inline void LambdaIIFE_C17()
+{
+	using Student = std::pair<std::vector<double>, std::string>;
+
+	const std::vector<Student> db = { { {5.0, 5.0, 5.0, 4.0}, "John"},
+									  { {5.0, 5.0, 5.0, 4.0}, "Mark"},
+									  { {5.0, 5.0, 5.0, 4.0}, "Jane"},
+									};
+
+	/* Converting the calculation of averages above into a lambda that is invoked immediately*/
+
+	auto averages =[](const std::vector<Student>& Indb)
+	{
+		std::vector<std::pair<double, std::string>> out;
+		for (auto&& [marks, name] : Indb)
+		{
+			double avg = std::accumulate(marks.begin(), marks.end(), 0.0) / marks.size();
+			out.push_back({ avg, name });
+		}
+		return out;
+	}(db);
+
+	printCont(averages);
+
+
 
 
 }

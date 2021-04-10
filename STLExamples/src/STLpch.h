@@ -12,6 +12,7 @@
 #include <ratio>
 #include <chrono>
 #include <algorithm>
+#include <numeric>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"

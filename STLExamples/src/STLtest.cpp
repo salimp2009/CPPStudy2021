@@ -352,8 +352,9 @@ int main()
 	//Ratio_Test();
 	//Chrono_Test();
 	//FunctionObjLamb_Test();
-	FunctionObjLamb_Test2();
+	//FunctionObjLamb_Test2();
 	FunctionObjLamb_TestC17();
+	LambdaIIFE_C17();
 
 	return 0;
 }
