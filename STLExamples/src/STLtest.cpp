@@ -355,6 +355,7 @@ int main()
 	//FunctionObjLamb_Test2();
 	FunctionObjLamb_TestC17();
 	LambdaIIFE_C17();
+	LambdasInConcurency();
 
 	return 0;
 }

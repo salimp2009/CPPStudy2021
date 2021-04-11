@@ -13,6 +13,8 @@
 #include <chrono>
 #include <algorithm>
 #include <numeric>
+#include <variant>
+#include <thread>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"

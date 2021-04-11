@@ -277,8 +277,24 @@ inline void FunctionObjLamb_TestC17()
 	};
 
 	printer(1, 2, "Salim");
+	
+	const auto test = Overloader{
+		[](const int& i) {fmt::print("int overloaded: {}\n", i); },
+		[](const float& f) { fmt::print("float overloaded: {}\n", f); },
+		[](std::string_view sv) { fmt::print("string overloaded: {}\n", sv); }
 
+	};
 
+	test("10.0f");
+	test(10.0f);
+
+	const auto PrintVisitor = [](const auto& t) {fmt::print("PrintVisitor: {}\n", t); };
+
+	std::variant<int, float, std::string> intFloatString{ "My Variant is great" };
+
+	std::visit( PrintVisitor, intFloatString );
+
+	std::visit(test, intFloatString);
 }
 
 inline void LambdaIIFE_C17()
@@ -315,5 +331,29 @@ inline void LambdaIIFE_C17()
 	}(db);
 
 	printCont(averages);
+
+}
+
+inline void LambdasInConcurency()
+{
+	std::printf("\n---------------Lambdas in Concurrency / C++17--------------------------\n");
+
+	const auto PrintThreadID = [](std::string_view sv) {
+		fmt::print("message: {0}, thread id: {1}\n", sv, std::this_thread::get_id()); 
+	};
+
+	std::vector<int>nums(100);
+
+	/* this example is subject to data race if multiple threads used since std::vector is passed by ref*/
+	std::thread iotaThread([&nums, &PrintThreadID](int StartArg) 
+		{
+			std::iota(nums.begin(), nums.end(), StartArg);
+			PrintThreadID("iota in");
+		}, 10 /* value the lambda expects is passed when creating the thread*/
+		);
+
+	iotaThread.join();
+
+	printCont(nums);
 
 }

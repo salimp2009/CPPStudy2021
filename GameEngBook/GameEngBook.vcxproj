@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Assertions.h" />
+    <ClInclude Include="src\BranchPrediction.h" />
     <ClInclude Include="src\EndianSwap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

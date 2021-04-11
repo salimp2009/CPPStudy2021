@@ -4,6 +4,7 @@
 #include <limits>
 #include <bitset>
 #include "EndianSwap.h"
+#include "BranchPrediction.h"
 
 
 
@@ -11,7 +12,6 @@ int main()
 {
 	//ASSERT(3 == 5); 
 	printf("Test Game Engine BOOK TEST\n");
-
 
 	std::cout <<std::bitset<32>(255)<< '\n';
 
@@ -38,8 +38,11 @@ int main()
 	float mynum = 135.4f;
 	mynum=swapF32(mynum);
 
-	
-
+	SafeIntegerDivide(10, 5, 0);
+	/* Returns unsigned int; this is to be used as to SafeIntegerDivide 
+		since float division by zero is QAN rather than inf with integers; prefer Branch prediction to compilers !!!
+	*/
+	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 
 
 }
