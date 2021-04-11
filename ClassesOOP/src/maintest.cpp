@@ -202,11 +202,15 @@ int main()
 	
 	try
 	{
-		DivideByZero(200.0, 0.0);
+		DivideByZero(-200.0, 0.0);
 	}
-	catch (int& e) {
-		std::cout <<"Cant Divide by Zero!!!" <<e << '\n';
+	catch (const DivisionByZeroException& e) {
+		std::cout <<"Cant Divide by Zero: " <<e.GetMessage() << '\n';
 	}
+	catch ([[maybe_unused]] const NegativeValueException& ex) {
+		std::cout << "Negative values not excepted!!!"<< '\n';
+	}
+
 	
 	std::cout << "program continues; from main \n";
 }

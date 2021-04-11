@@ -223,6 +223,8 @@ inline void FunctionObjLamb_Test2()
 
 }
 
+
+
 inline void FunctionObjLamb_TestC17()
 {
 	std::printf("\n---------------Function Objects Lambda Part3 / C++17--------------------------\n");
@@ -254,6 +256,28 @@ inline void FunctionObjLamb_TestC17()
 
 	fmt::print("string out after replace: {}\n", out);
 
+	/* Fold expressions in C++17 basics*/
+	const auto sumLamda = [](auto&&... args)
+	{
+		fmt::print("sum of {} numbers \n", sizeof...(args));
+		return (args + ...);
+	};
+
+	fmt::print("{}\n", sumLamda(1.2, 1.3, 1.4));
+
+	const auto printer = [](auto&& first, auto&&... args)
+	{
+		/* Alternative to end the comma operator*/
+		//auto currentsize = sizeof...(args);
+		//((std::cout << args << (currentsize-- >1 ? ", " : " ")), ...)<<'\n';
+		std::cout << first; 
+		((std::cout << ',' << args), ...) << '\n';
+		
+		fmt::print("{0}, {1}\n", first, fmt::join(std::make_tuple(args...) , ","));
+	};
+
+	printer(1, 2, "Salim");
+
 
 }
 
@@ -276,12 +300,20 @@ inline void LambdaIIFE_C17()
 			double avg = std::accumulate(marks.begin(), marks.end(), 0.0) / marks.size();
 			out.push_back({ avg, name });
 		}
+
+		/*Alternative to for loop; but for loops looks better*/
+		//std::transform(Indb.begin(), Indb.end(), std::back_inserter(out),
+		//	[&](auto&& student)
+		//	{
+		//		/*to be able to structured bindings work added capture by & into lambda in the transform*/
+		//		auto&& [marks, name] = student;
+		//		double avg = std::accumulate(marks.begin(), marks.end(), 0.0) / marks.size();
+		//		return std::make_pair(avg, name);
+		//	});
+
 		return out;
 	}(db);
 
 	printCont(averages);
-
-
-
 
 }
