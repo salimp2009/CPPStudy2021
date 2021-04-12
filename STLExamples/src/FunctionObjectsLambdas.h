@@ -299,6 +299,7 @@ inline void FunctionObjLamb_TestC17()
 
 inline void LambdaIIFE_C17()
 {
+	std::printf("\n---------------Lambda IIFE / C++17--------------------------\n");
 	using Student = std::pair<std::vector<double>, std::string>;
 
 	const std::vector<Student> db = { { {5.0, 5.0, 5.0, 4.0}, "John"},
@@ -307,7 +308,6 @@ inline void LambdaIIFE_C17()
 									};
 
 	/* Converting the calculation of averages above into a lambda that is invoked immediately*/
-
 	auto averages =[](const std::vector<Student>& Indb)
 	{
 		std::vector<std::pair<double, std::string>> out;
@@ -317,6 +317,7 @@ inline void LambdaIIFE_C17()
 			out.push_back({ avg, name });
 		}
 
+		
 		/*Alternative to for loop; but for loops looks better*/
 		//std::transform(Indb.begin(), Indb.end(), std::back_inserter(out),
 		//	[&](auto&& student)
@@ -336,7 +337,7 @@ inline void LambdaIIFE_C17()
 
 inline void LambdasInConcurency()
 {
-	std::printf("\n---------------Lambdas in Concurrency / C++17--------------------------\n");
+	std::printf("\n---------------Lambdas in Concurrency - Part1 / C++17--------------------------\n");
 
 	const auto PrintThreadID = [](std::string_view sv) {
 		fmt::print("message: {0}, thread id: {1}\n", sv, std::this_thread::get_id()); 
@@ -355,5 +356,68 @@ inline void LambdasInConcurency()
 	iotaThread.join();
 
 	printCont(nums);
+
+	/* if counter is not atomic it will cause data race as different thread might write/modify the value*/
+	std::atomic<int> counter{ 0 };
+	const auto maxThreads = std::thread::hardware_concurrency();
+	fmt::print("maxThread: {}\n", maxThreads);
+	std::vector<std::thread>threads;
+	threads.reserve(maxThreads);
+
+	for (std::size_t tCounter{ 0 }; tCounter < maxThreads; ++tCounter)
+	{
+		threads.emplace_back([&counter]() noexcept
+			{
+				for (int i{ 0 }; i < 1000; ++i)
+				{
+					counter.fetch_add(1);
+					counter.fetch_sub(1);
+					counter.fetch_add(1);
+					counter.fetch_sub(1);
+				}
+			});
+	}
+
+	for (auto& thread : threads)
+	{
+		thread.join();
+	}
+
+	fmt::print("counter: {}\n", counter.load());
+
+	/*Basic std::future example*/
+	/** the return type of the function passes in arguments of std::future has to match the type of std::future
+		if the passed function expects arguments then those has to be passed arguments to std::future
+	*/
+	std::future<std::vector<int>> iotaFuture = std::async(std::launch::async, 
+			[startArgs=15]() 
+			{
+				std::vector<int>num2(100);
+				std::iota(num2.begin(), num2.end(), startArgs);
+				fmt::print("calling iota from thread : {}\n", std::this_thread::get_id());
+				return num2;
+			});
+
+	auto result= iotaFuture.get();
+	printCont(result);
+
+	/* A naive example of parallel algorithms in C++17;*/
+	std::vector<int>nums3(1000);
+	std::iota(nums3.begin(), nums3.end(), 0);
+	std::mutex m;
+	std::vector<int>out;
+
+	std::for_each(std::execution::par, nums3.begin(), nums3.end(),
+		[&m, &out](auto&& elem) 
+		{
+			if (elem % 2 == 0)
+			{
+				std::lock_guard guard(m);
+				out.push_back(elem);
+			}
+		});
+
+	printCont(out);
+
 
 }
