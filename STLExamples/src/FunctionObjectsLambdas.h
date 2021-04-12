@@ -421,3 +421,35 @@ inline void LambdasInConcurency()
 
 
 }
+
+#ifdef _HAS_CXX20
+inline void Lambdas_C20_Test()
+{
+
+	std::printf("\n---------------Lambdas in C++20 - Part1 --------------------------\n");
+	auto [x, y] = std::tuple{ std::string{"Hello c++20"}, 42 };
+
+	const auto ParamLength = [&x, &y]() { return x.length() + y; };
+	fmt::print("Param Length: {}\n", ParamLength());
+
+	/* this example does not MSVC compiler; works in GCC and Clang only*/
+	//const int x1 = 10;
+	///* consteval works only compile time whereas constexpr can work both compile or runtime*/
+	//auto lam1 = [](int n) consteval {return n + n; };
+	//lam1(x1);
+
+	std::unique_ptr<int> uptr{ new int(10) };
+
+	captureTest(std::move(uptr), 1, 2, "Salim");
+	captureTest(std::move(uptr), 5.4F, 25., "ZORT");
+
+
+	auto lam2 = []<typename T>(const std::vector<T>& vec)
+	{
+		fmt::print("size: {0}, vec capacity: {1}\n", std::size(vec), vec.capacity());
+	};
+	
+	std::vector vec1 = { 1, 2, 3 };
+	lam2(vec1);
+}
+#endif

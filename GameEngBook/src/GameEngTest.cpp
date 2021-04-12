@@ -39,8 +39,8 @@ int main()
 	mynum=swapF32(mynum);
 
 	SafeIntegerDivide(10, 5, 0);
-	/* Returns unsigned int; this is to be used as to SafeIntegerDivide 
-		since float division by zero is QAN rather than inf with integers; prefer Branch prediction to compilers !!!
+	/*
+		Can also be used for integers; if the return type casted; prefer Branch prediction off compilers !!!
 	*/
 	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 

@@ -11,7 +11,7 @@ inline int SafeIntegerDivide(int a, int b, int defaultVal)
 union Data { std::uint32_t m_datau;  float m_dataf = 0.0f; };
 
 
-inline std::uint32_t SafeFloatDivide_pred(float a, float b,float d)
+inline float SafeFloatDivide_pred(float a, float b,float d)
 {
 	/* convert bool value of b != 0.0f into either 1U or 0U (unsigned int)*/
 	const std::uint32_t condition = (std::uint32_t)(b != 0.0f);
@@ -33,5 +33,5 @@ inline std::uint32_t SafeFloatDivide_pred(float a, float b,float d)
 	Data rr;
 	rr.m_datau = (qq.m_datau & mask) | (dd.m_datau & ~mask);
 	
-	return (std::uint32_t)rr.m_dataf;
+	return rr.m_dataf;
 }

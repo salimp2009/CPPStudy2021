@@ -164,7 +164,19 @@ constexpr void capture(Args&&... args) noexcept
 		return init;
 	}
 
+#ifdef _HAS_CXX20
+	template<typename First, typename... Args>
+	constexpr void captureTest(First&& first, Args&&... args) 
+	{
+		const auto printer = [first = std::move(first), ...captArgs = std::move(args)]()
+		{
+			fmt::print("{}", first);
+			(fmt::print(", {}", captArgs), ...);
+			std::printf("\n");
+		};
 
-
+		printer();
+	}
+#endif
 
 	

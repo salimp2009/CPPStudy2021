@@ -355,7 +355,15 @@ int main()
 	//FunctionObjLamb_Test2();
 	FunctionObjLamb_TestC17();
 	LambdaIIFE_C17();
-	LambdasInConcurency();
+	//LambdasInConcurency();
+	
+#ifdef  _HAS_CXX20
+	Lambdas_C20_Test();
+#endif //  _HAS_CXX20
+
+	
+
+
 
 	return 0;
 }
