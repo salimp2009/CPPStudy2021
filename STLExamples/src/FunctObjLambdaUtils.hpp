@@ -197,14 +197,41 @@ constexpr void capture(Args&&... args) noexcept
 	template<typename T>
 	concept IRenderable = requires(T v) {
 		{v.render()} ->std::same_as<void>;
-		{v.GetVertCount()}->std::convertible_to<std::size_t>;
+		{v.getVertCount()}->std::convertible_to<std::size_t>;
 	};
 	
-	//TODO: Add types that matches the IRenderable concept above;!!!!
+	struct Circle
+	{
+		void render() { fmt::print("render: Drawing Circle\n"); }
+		std::size_t getVertCount() { return 12; }
+	};
+
+	struct Square
+	{
+		void render() { fmt::print("render: Drawing Square\n"); }
+		std::size_t getVertCount() { return 4; }
+	};
+
+	template<typename F>
+	struct Product2
+	{
+		std::string name;
+		int id{ 0 };
+		double price{ 0.0 };
+		F pred;
+	};
+
+
 
 #endif
 
-
+	
+	struct Product
+	{
+		std::string name;
+		int id{ 0 };
+		double price{ 0.0 };
+	};
 
 	/* alternative to Concept with c++17 when c++20 is not available*/
 	template<class T>
