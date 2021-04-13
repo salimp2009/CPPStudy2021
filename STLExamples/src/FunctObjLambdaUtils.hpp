@@ -177,6 +177,42 @@ constexpr void capture(Args&&... args) noexcept
 
 		printer();
 	}
+	
+	/* Basic Concept example from C++20*/
+	template<class T>
+	concept SignedIntegral = std::is_integral_v<T> && std::is_signed_v<T>;
+
+	/* example usage of concepts in a template function; no need for typename in template parameters*/
+	template<SignedIntegral T>
+	void SignedIntsOnly(T val) { fmt::print("Concepts: signed integral: {}\n", val); }
+
+	/* no need for templated auto can be used in function paramaters with or without concepts or other constraints*/
+	void MyTemplateFunction(SignedIntegral auto val) { fmt::print("Concepts in funct parameters with auto: signed integral: {}\n", val); };
+	
+	void FloatsOnlyFunction(std::floating_point auto val) { fmt::print("Concepts and auto in funct: floating point only : {}\n", val); };
+
+	/* Concept with required specifier; C++20*; it defines that a passed argument has certain functionality 
+		that matches the certain constraints defined in a concept
+	*/
+	template<typename T>
+	concept IRenderable = requires(T v) {
+		{v.render()} ->std::same_as<void>;
+		{v.GetVertCount()}->std::convertible_to<std::size_t>;
+	};
+	
+	//TODO: Add types that matches the IRenderable concept above;!!!!
+
 #endif
+
+
+
+	/* alternative to Concept with c++17 when c++20 is not available*/
+	template<class T>
+	constexpr bool ASignedIntegral = std::is_integral_v<T>&& std::is_signed_v<T>;
+
+	/* alternative using alias to Concepts with c++17 when c++20 is not available*/
+	template<class T>
+	using SignedIntegralType = std::enable_if_t<(std::is_integral_v<T> && std::is_signed_v<T>)>;
+
 
 	

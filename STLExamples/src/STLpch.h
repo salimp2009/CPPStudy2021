@@ -15,6 +15,10 @@
 #include <numeric>
 #include <variant>
 
+#if __has_include(<concepts>)
+	#include <concepts>
+#endif
+
 #include <thread>
 #include <future>
 #include <execution>
@@ -31,3 +35,4 @@
 #include <vector>
 #include <list>
 #include <map>
+
