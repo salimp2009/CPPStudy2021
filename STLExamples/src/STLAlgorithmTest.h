@@ -32,4 +32,18 @@ inline void STLAlgorithms_Test()
 
 	printCont(coll2);
 
+	/* add the first value of coll2 to each element; for each return predicate function by using std::move*/
+	auto pred = std::for_each(std::next(coll2.begin()), coll2.end(), [=](auto&& elem) { elem += *coll2.begin(); });
+	printCont(coll2);
+
+	const auto coll3 = coll2;
+
+	/* std::count and count_if return the total number that matches the values given or predicate (returns bool)*/
+	auto numofCount = std::count_if(coll3.cbegin(), coll3.cend(), [](auto&& elem) noexcept {return elem > 4; });
+		
+	fmt::print("number of Counts : {}\n", numofCount);
+	printCont(coll3);
+
+
+
 }

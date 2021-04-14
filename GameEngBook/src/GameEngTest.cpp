@@ -8,6 +8,7 @@
 
 
 
+
 int main()
 {
 	//ASSERT(3 == 5); 
@@ -44,5 +45,5 @@ int main()
 	*/
 	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 
-
+	
 }
