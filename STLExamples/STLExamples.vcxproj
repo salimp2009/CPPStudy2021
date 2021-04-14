@@ -103,6 +103,7 @@
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
     <ClInclude Include="src\FunctObjLambdaUtils.hpp" />
     <ClInclude Include="src\Person.h" />
+    <ClInclude Include="src\STLAlgorithmTest.h" />
     <ClInclude Include="src\STLpch.h" />
     <ClInclude Include="src\TupplePairUtilities.hpp" />
     <ClInclude Include="src\MyTypeTraits.hpp" />

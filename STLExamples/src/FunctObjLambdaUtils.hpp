@@ -221,7 +221,19 @@ constexpr void capture(Args&&... args) noexcept
 		F pred;
 	};
 
+	/* C++20 constxpr functions/algorithms and auto specifier in function paramaters*/
+	constexpr auto CountValues(auto container, auto cmp)
+	{
+		return std::count_if(std::begin(container), std::end(container), cmp);
+	}
 
+	template<typename T, typename U, typename V>
+	struct Triple 
+	{ 
+		/* added constructor otherwise gives false error although it work even without it */
+		Triple(T tt, U uu, V vv) :t{ tt }, u{ uu }, v{ vv } {}
+		T t; U u; V v; 
+	};
 
 #endif
 
@@ -232,6 +244,7 @@ constexpr void capture(Args&&... args) noexcept
 		int id{ 0 };
 		double price{ 0.0 };
 	};
+
 
 	/* alternative to Concept with c++17 when c++20 is not available*/
 	template<class T>

@@ -28,7 +28,7 @@ inline void FunctionObjLamb_Test()
 	std::generate_n<std::back_insert_iterator<std::list<int>>, int, IntSequence&>(std::back_inserter(coll), 4, seq);
 	printCont(coll);
 
-	std::generate_n(std::back_inserter(coll), 4, seq);
+	std::generate_n(std::back_inserter(coll), 4,std::ref(seq));
 	printCont(coll);
 
 	std::generate_n(std::back_inserter(coll), 4, seq);
@@ -459,7 +459,7 @@ inline void Lambdas_C20_Test()
 	SignedIntsOnly(1);
 	MyTemplateFunction(4);
 
-	FloatsOnlyFunction(5.0f);
+	FloatsOnlyFunction(5.5f);
 
 	auto GenLambda1 = [](SignedIntegral auto param) { return param * param + 1; };
 	fmt::print("Generic lambda with Concepts: {}\n", GenLambda1(5));
@@ -484,12 +484,29 @@ inline void Lambdas_C20_Test()
 	/* Example for C++20 to store a stateless lambda in custom type and it is even copyable*/
 	const auto idComp = [](auto&& a) { return a.ID != 0; };
 
-	/* decltype is not needed butr VS intellisense thinks there is no constructor but it works regardless of the warning*/
+	/* decltype is not needed but VS intellisense thinks there is no constructor but it works regardless of the warning*/
 	Product2<decltype(idComp)> p1{ "Laptop", 10, 100.0, idComp };
 
 	Product2 p2{p1};
 
 	fmt::print("name {0}, ID: {1}, Price: {2}\n", p1.name, p1.id, p1.price);
 	fmt::print("name {0}, ID: {1}, Price: {2}\n", p2.name, p2.id, p2.price);
+
+	/* Example showing STL algorithms are marked as constexpr and 
+	   constexpr lambdas can be used with for compile time operations
+	*/
+	constexpr std::array arr1{ 1,2,3,4,5,6,7,8,9,10 };
+	static_assert(std::accumulate(arr1.begin(), arr1.end(), 0, [](auto&& a, auto&& b) noexcept { return a + b; })==55);
+
+	/* C++20; compile algorithms with stateless lambdas passed in function params and function uses auto type specifier in params*/
+	constexpr auto minVal = CountValues(std::array{ -10, 6,8,-5,2,4,6}, [](auto&& a) { return a <= 0; });
+	/* above calculation has done in compile time*/
+	static_assert(minVal == 2);
+	fmt::print("minVal: {}\n", minVal);
+
+	Triple tr1{ 1.0f, 2, std::string{ "Salim" } };
+
+	
+
 }
 #endif

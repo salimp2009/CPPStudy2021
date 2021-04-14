@@ -5,6 +5,7 @@
 #include "MyTypeTraits.hpp"
 #include "ChronoExamples.hpp"
 #include "FunctionObjectsLambdas.h"
+#include "STLAlgorithmTest.h"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -354,15 +355,13 @@ int main()
 	//FunctionObjLamb_Test();
 	//FunctionObjLamb_Test2();
 	//FunctionObjLamb_TestC17();
-	LambdaIIFE_C17();
+	//LambdaIIFE_C17();
 	//LambdasInConcurency();
-	
+	STLAlgorithms_Test();
+
 #ifdef  _HAS_CXX20
 	Lambdas_C20_Test();
 #endif //  _HAS_CXX20
-
-	
-
 
 
 	return 0;
