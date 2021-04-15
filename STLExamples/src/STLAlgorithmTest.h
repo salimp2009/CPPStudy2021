@@ -111,7 +111,8 @@ inline void STLAlgorithms_Test2()
 	std::deque<int>coll2 = {4,5, 1,2,3,4,5,6,7,8, 4,5,6 };
 	std::deque<int>subColl = { 4,5,6 };
 
-	//auto pos3 = std::search(coll2.begin(), coll2.end(),			// the source container to search
+	/*Search stop on the 1st match ; if not match return end() of container / range*/
+	//auto pos3 = std::search(coll2.begin(), coll2.end(),		// the source container to search
 	//						subColl.begin(), subColl.end());	// sub range to be searched for
 
 
@@ -146,4 +147,49 @@ inline void STLAlgorithms_Test2()
 		fmt::print("the subrange  BOYER_MOORE SEARCH (4,5,6) found at pos: {}\n", dist);
 	}
 
+	std::vector<int> vec1 = { 1,2,3,4,5,6,7,8,9 };
+	bool checkEvenArgs[3] = { true, false, true };
+	printCont(vec1);
+	
+	auto pos4 = std::search(vec1.begin(), vec1.end(), checkEvenArgs, checkEvenArgs + std::size(checkEvenArgs),
+		[](auto&& elem, bool cond)
+		{
+			if (cond == true)
+			{
+				return elem % 2 == 0;
+			}
+			else
+			{
+				return elem % 2 == 1;
+			}
+
+		});
+
+	if (pos4 != vec1.end())
+	{
+
+		fmt::print("even: {0}, odd: {1}, even{2}\n", *pos4, *(pos4+1), *(pos4+2));
+	}
+
+	auto searchPred = [](auto&& elem, bool cond) 
+	{
+		if (cond == true)
+		{
+			return elem % 2 == 0;
+		}
+		else
+		{
+			return elem % 2 == 1;
+		}
+
+	};
+
+	for (auto pos5 = std::search(vec1.begin(), vec1.end(), checkEvenArgs, checkEvenArgs + std::size(checkEvenArgs), searchPred); 
+		pos5!= vec1.end();
+		pos5= std::search(++pos5, vec1.end(), checkEvenArgs, checkEvenArgs + std::size(checkEvenArgs), searchPred))
+	{
+		auto dist = std::distance(vec1.begin(), pos5) + 1;
+		fmt::print("found match (even, odd, even) at pos: {}\n", dist);
+
+	}
 }
