@@ -44,6 +44,106 @@ inline void STLAlgorithms_Test()
 	fmt::print("number of Counts : {}\n", numofCount);
 	printCont(coll3);
 
+	std::list<int>coll4(10);
+	std::iota(coll4.begin(), coll4.end(), 0);
+	printCont(coll4);
+	coll4.push_back(4);
+	
+#if __has_include(<ranges>) && _HAS_CXX20
+	/* search not only the first found but beyond*/
+	/* ranges only used for testing purposes; not any benefit here 
+		unless you combine with other algorithms using c++20 features
+	*/
+	std::list<int>::iterator pos1;
+	std::list<int>::iterator pos2;
+	const int value = 4;
+	/* find and find_if normally stop at the first match value or condition to make it continue you need an "if" or a "loop" to continue*/
+	if (pos1 = std::ranges::find(coll4, value); pos1 != coll4.end())
+	{
+		pos2 = std::ranges::find(++pos1, coll4.end(), value);
 
+	}
+
+	fmt::print("first pos1: {}\n", *(--pos1));
+	
+	/* print only between to find value */
+	if (pos1 != coll4.end() && pos2 != coll4.end())
+	{
+		std::ranges::copy(pos1, ++pos2, std::ostream_iterator<int>(std::cout," "));
+	}
+#endif
+
+}
+
+
+inline void STLAlgorithms_Test2()
+{
+	std::printf("\n---------------STL Algorithms Test2--------------------------\n");
+
+	std::deque<int> coll1 = {1,2,7,7,6,3,9,7,7,7,7,7,6,25,40 };
+	printCont(coll1);
+	const int value = 7;
+	const int count = 3;
+	/*search_n gives you the for given count of consecutive elements
+	  returns pos of first one; e.g. search 3 consecutive of 7's;
+	  the search stops at first match
+	*/
+	auto pos1=std::search_n(coll1.begin(), coll1.end(), count, value);
+	if (pos1 != coll1.end())
+	{
+		auto dist = std::distance(coll1.begin(), pos1) + 1;
+		fmt::print("the first three consecutive of sevens is at {}\n", dist);
+	}
+
+	/* if passed a predicate the predicate has two inputs ; first is the element in collection, second is a value 
+		but the passed value does not neccessarily to be used; predicate needs to return a bool
+		e.g; search for 3 consecutive odd elements; (stops at first match)
+	*/
+	auto pos2 = std::search_n(coll1.begin(), coll1.end(), count, 0,
+		[](auto&& elem, auto&& value) { return elem % 2 == 1; });
+
+	if (pos2 != coll1.end())
+	{
+		auto dist2 = std::distance(coll1.begin(), pos2) + 1;
+		fmt::print("the first three consecutive of odd elems is at {}\n", dist2);
+	}
+
+	std::deque<int>coll2 = {4,5, 1,2,3,4,5,6,7,8, 4,5,6 };
+	std::deque<int>subColl = { 4,5,6 };
+
+	//auto pos3 = std::search(coll2.begin(), coll2.end(),			// the source container to search
+	//						subColl.begin(), subColl.end());	// sub range to be searched for
+
+
+	//if (pos3 != coll2.end())
+	//{
+	//	auto dist = std::distance(coll2.begin(), pos3) + 1;
+	//	fmt::print("the subrange (4,5,6) found at pos: {}\n", dist);
+
+	//}
+	
+	
+	/* 1ST ALTERNATIVE to search all matching sub ranges to search for 
+		for string there are different search methods that can be used 
+		also std::string member find() member function is faster for strings
+	*/
+	for (auto pos3 = std::search(coll2.begin(), coll2.end(),			// the source container to search
+		subColl.begin(), subColl.end()); pos3 != coll2.end();
+		pos3 = std::search(pos3 + subColl.size(), coll2.end(), subColl.begin(), subColl.end()))
+	{
+		auto dist = std::distance(coll2.begin(), pos3) + 1;
+		fmt::print("the subrange (4,5,6) found at pos: {}\n", dist);
+	}
+
+	/* 2ND ALTERNATIVE using boyer_moore_search algorithm; used for big text data searchs
+		this is the fastest search for bigger search texts; NOTE: Uses to much memory!!!
+	*/
+	std::boyer_moore_searcher bmsearch{ subColl.begin(), subColl.end() };
+	for (auto pos3 = std::search(coll2.begin(), coll2.end(),			
+		bmsearch); pos3 != coll2.end(); pos3 = std::search(pos3 + subColl.size(), coll2.end(), bmsearch))
+	{
+		auto dist = std::distance(coll2.begin(), pos3) + 1;
+		fmt::print("the subrange  BOYER_MOORE SEARCH (4,5,6) found at pos: {}\n", dist);
+	}
 
 }

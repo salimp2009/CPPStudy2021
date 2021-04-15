@@ -358,9 +358,10 @@ int main()
 	//LambdaIIFE_C17();
 	//LambdasInConcurency();
 	STLAlgorithms_Test();
+	STLAlgorithms_Test2();
 
 #ifdef  _HAS_CXX20
-	Lambdas_C20_Test();
+	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20
 
 

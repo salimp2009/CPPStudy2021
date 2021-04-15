@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <stdio.h>
 #include <type_traits>
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <typeinfo>
@@ -11,9 +12,13 @@
 #include <functional>
 #include <ratio>
 #include <chrono>
-#include <algorithm>
+
 #include <numeric>
 #include <variant>
+
+#if __has_include(<ranges>)
+	#include <ranges>
+#endif
 
 #if __has_include(<concepts>)
 	#include <concepts>
@@ -37,4 +42,5 @@
 #include <list>
 #include <map>
 #include <set>
+#include <deque>
 
