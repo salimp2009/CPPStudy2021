@@ -365,8 +365,6 @@ int main()
 	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20
 
-		
-
 	return 0;
 }
 

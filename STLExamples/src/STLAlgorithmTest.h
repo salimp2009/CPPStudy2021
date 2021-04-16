@@ -222,6 +222,30 @@ inline void STLAlgorithms_Test3()
 
 #endif	
 
+	std::vector<char>source(10, '.');
+
+	for (int c = 'a'; c <= 'f'; ++c)
+	{
+		source.push_back(c);
+	}
+
+	source.insert(source.end(), 10, '.');
+	printCont(source);
+
+	std::vector<char>c1(source.begin(), source.end());
+	printCont(c1);
+
+	/* copy all letters into same container but move them to front to index 7*/
+	std::copy(c1.cbegin() + 10, c1.cbegin() + 16,  // source
+		c1.begin() + 7);						   // dest
+	printCont(c1);
+
+	std::vector<char>c2(source.cbegin(), source.cend());
+
+	/* copy the letter from source and copy into dest start from the back and dest.end() is passed*/
+	std::copy_backward(source.cbegin() + 10, source.cbegin() + 16, c2.begin() + 19);
+	printCont(c2);
+
 	
 }
 
