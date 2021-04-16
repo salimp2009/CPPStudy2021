@@ -459,7 +459,7 @@ inline void Lambdas_C20_Test()
 	SignedIntsOnly(1);
 	MyTemplateFunction(4);
 
-	FloatsOnlyFunction(5.5f);
+	FloatsOnlyFunction(5.8f);
 
 	auto GenLambda1 = [](SignedIntegral auto param) { return param * param + 1; };
 	fmt::print("Generic lambda with Concepts: {}\n", GenLambda1(5));

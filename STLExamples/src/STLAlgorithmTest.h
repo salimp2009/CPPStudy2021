@@ -193,3 +193,35 @@ inline void STLAlgorithms_Test2()
 
 	}
 }
+
+
+
+inline void STLAlgorithms_Test3()
+{
+	std::printf("\n---------------STL Algorithms Test3--------------------------\n");
+
+	std::vector<int> coll1 = { 1,2,3,4,5 };
+	std::list<int>comp1 = { 1,2,3,4,5,6,7,8};
+	std::list<int>comp2 = { 1,2,3};
+
+	/* equal check if all the elements match; the 2nd comparaision container must have at least same amount
+		of elements otherwise it Undefined behavior might happen; need to put std::is_permutation concept 
+		before using it !!!
+		NOTE: the std::ranges::equal has a check if both container elements match min criteria
+	*/
+	auto result = std::equal(coll1.begin(), coll1.end(), comp1.begin());
+	
+	fmt::print("result: {}\n", result);
+
+#if _HAS_CXX20 || __has_include(<ranges>)
+	/*std::Ranges::equal has a constraint to check if both containers comprable if 2nd container has less elements
+		the function is not invoked and returns false immediately without causing undefined behaviour
+	*/
+	auto result2= std::ranges::equal(coll1, comp1);
+	fmt::print("result2: {}\n", result2);
+
+#endif	
+
+	
+}
+

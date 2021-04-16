@@ -359,11 +359,13 @@ int main()
 	//LambdasInConcurency();
 	STLAlgorithms_Test();
 	STLAlgorithms_Test2();
+	STLAlgorithms_Test3();
 
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20
 
+		
 
 	return 0;
 }
