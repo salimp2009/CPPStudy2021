@@ -360,6 +360,7 @@ int main()
 	STLAlgorithms_Test();
 	STLAlgorithms_Test2();
 	STLAlgorithms_Test3();
+	STLAlgorithms_Test4();
 
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();

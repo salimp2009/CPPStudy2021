@@ -195,21 +195,29 @@ inline void STLAlgorithms_Test2()
 }
 
 
+template<typename Cont1, typename Cont2>
+concept ContofEqualSize = requires(Cont1 c1, Cont2 c2) {
+	{c1.size() == c2.size() } ->std::convertible_to<std::true_type>;
+
+};
 
 inline void STLAlgorithms_Test3()
 {
+
 	std::printf("\n---------------STL Algorithms Test3--------------------------\n");
 
 	std::vector<int> coll1 = { 1,2,3,4,5 };
 	std::list<int>comp1 = { 1,2,3,4,5,6,7,8};
 	std::list<int>comp2 = { 1,2,3};
 
+
+
 	/* equal check if all the elements match; the 2nd comparaision container must have at least same amount
 		of elements otherwise it Undefined behavior might happen; need to put std::is_permutation concept 
 		before using it !!!
 		NOTE: the std::ranges::equal has a check if both container elements match min criteria
 	*/
-	auto result = std::equal(coll1.begin(), coll1.end(), comp1.begin());
+	auto result = std::equal(coll1.begin(), coll1.end(),comp1.begin());
 	
 	fmt::print("result: {}\n", result);
 
@@ -219,6 +227,7 @@ inline void STLAlgorithms_Test3()
 	*/
 	auto result2= std::ranges::equal(coll1, comp1);
 	fmt::print("result2: {}\n", result2);
+
 
 #endif	
 
@@ -258,13 +267,26 @@ inline void STLAlgorithms_Test3()
 	printCont(coll3);
 }
 
+
+
 inline void STLAlgorithms_Test4()
 {
 	std::printf("\n---------------STL Algorithms Test 4--------------------------\n");
 
+	std::vector<int> vec1 = { 1,2,3,4,5,6,7,8,9 };
+	std::list<int> list1;
 
+	printCont(vec1);
 
+	std::transform(vec1.begin(), vec1.end(),
+		vec1.begin(),
+		[](auto&& elem) {return elem *= -1; });
 
+	printCont(vec1);
 
+	std::transform(vec1.cbegin(), vec1.cend(),
+		std::back_inserter(list1), [](auto&& elem) {return elem * 10; });
+
+	printCont(list1);
 }
 
