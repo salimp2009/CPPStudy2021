@@ -246,6 +246,25 @@ inline void STLAlgorithms_Test3()
 	std::copy_backward(source.cbegin() + 10, source.cbegin() + 16, c2.begin() + 19);
 	printCont(c2);
 
-	
+	std::vector<std::string>coll2 = { "Hello", "this", "is", "an", "example" };
+	std::list<std::string>coll3;
+
+	std::copy(coll2.crbegin(), coll2.crend(),std::back_inserter(coll3));
+	printCont(coll2);
+	printCont(coll3);
+
+	std::move_backward(coll2.begin(), coll2.end(), coll3.end());
+	printCont(coll2); // no more elements will be displayed; moved
+	printCont(coll3);
+}
+
+inline void STLAlgorithms_Test4()
+{
+	std::printf("\n---------------STL Algorithms Test 4--------------------------\n");
+
+
+
+
+
 }
 
