@@ -194,12 +194,24 @@ inline void STLAlgorithms_Test2()
 	}
 }
 
-
+/*TODO : Does not work ; LEarn How to do it!!!*/
 template<typename Cont1, typename Cont2>
 concept ContofEqualSize = requires(Cont1 c1, Cont2 c2) {
-	{c1.size() == c2.size() } ->std::convertible_to<std::true_type>;
+	(c1.size() == c2.size()); 
 
 };
+
+template<typename Cont1, typename Cont2>
+requires requires(Cont1 c1, Cont2 c2)
+{
+	c1.size() == c2.size();
+}
+auto CheckCont(Cont1 coll1, Cont2 comp)
+{
+	return std::equal(coll1.begin(), coll1.end(), comp.begin());
+}
+
+
 
 inline void STLAlgorithms_Test3()
 {
@@ -207,9 +219,8 @@ inline void STLAlgorithms_Test3()
 	std::printf("\n---------------STL Algorithms Test3--------------------------\n");
 
 	std::vector<int> coll1 = { 1,2,3,4,5 };
-	std::list<int>comp1 = { 1,2,3,4,5,6,7,8};
+	std::list<int>comp1 = { 1,2,3,4,5,6,7,8 };
 	std::list<int>comp2 = { 1,2,3};
-
 
 
 	/* equal check if all the elements match; the 2nd comparaision container must have at least same amount
@@ -218,6 +229,11 @@ inline void STLAlgorithms_Test3()
 		NOTE: the std::ranges::equal has a check if both container elements match min criteria
 	*/
 	auto result = std::equal(coll1.begin(), coll1.end(),comp1.begin());
+
+	/* Concept trial but somehow not work; want to check if 2 containers have exact equal size*/
+	auto rr = CheckCont(coll1, comp1);
+
+	fmt::print("rr: {}\n", rr);
 	
 	fmt::print("result: {}\n", result);
 
@@ -268,7 +284,6 @@ inline void STLAlgorithms_Test3()
 }
 
 
-
 inline void STLAlgorithms_Test4()
 {
 	std::printf("\n---------------STL Algorithms Test 4--------------------------\n");
@@ -288,5 +303,23 @@ inline void STLAlgorithms_Test4()
 		std::back_inserter(list1), [](auto&& elem) {return elem * 10; });
 
 	printCont(list1);
+
+	/* remove && remove_if dont erase ; only removes to the back of container and gives the iterator pos of the
+		removed elements start pos and need to use erase to delete elements from that pos to the end
+		when using lambda/predicates prefer stateless lambdas (no internal mutabla member variable)
+		or use by ref to increase a counter in case needed!!
+	*/
+	vec1.erase(std::remove_if(vec1.begin(), vec1.end(),
+		[](auto&& elem) { return elem >= -4; }),
+		vec1.end());
+
+	printCont(vec1);
+
+	std::vector<int> vec2(10);
+	std::iota(vec2.begin(), vec2.end(), 1);
+	printCont(vec2);
+
+	std::rotate(vec2.begin(), vec2.begin()+1, vec2.end()-3);
+	printCont(vec2);
 }
 
