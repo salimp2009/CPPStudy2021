@@ -99,12 +99,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ContainerAdapaters.h" />
     <ClInclude Include="src\ContainerUtilities.hpp" />
     <ClInclude Include="src\MapMultiMapTest.h" />
     <ClInclude Include="src\OverLoadVariadic.hpp" />
     <ClInclude Include="src\RuntimeComp.h" />
     <ClInclude Include="src\SetMultiSetTest.h" />
     <ClInclude Include="src\STLContpch.h" />
+    <ClInclude Include="src\TemplateStack.hpp" />
     <ClInclude Include="src\UnorderedCont\CustomHashEqual.h" />
     <ClInclude Include="src\UnorderedCont\HashVal.hpp" />
     <ClInclude Include="src\UnorderedCont\UnderOrderedCont_Test.h" />

@@ -4,7 +4,7 @@
 #include "MapMultiMapTest.h"
 #include "UnorderedCont/UnderOrderedCont_Test.h"
 #include "UnorderedCont/HashVal.hpp"
-
+#include "ContainerAdapaters.h"
 
 
 void Array_Test()
@@ -211,6 +211,8 @@ int main()
 	//ForwardList_Test();
 	//SetMultiSet_Test();
 	//MapMultiMap_Test();
-	UnorderedCont_Test();
+	//UnorderedCont_Test();
+	StackExamples();
 
+	
 }
