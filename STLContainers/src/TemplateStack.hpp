@@ -8,13 +8,24 @@ private:
 public:
 	SPStack() = default;
 
+	/* just implemented for learning purposes otherwise the below constructor with variadic is enough*/
+	SPStack(std::initializer_list<T> ls) :cont{ ls } {}
+
 	template<typename... U, typename =std::enable_if_t<(std::is_convertible_v<U,T> && ...)>>
 	SPStack(U&&... args) noexcept(noexcept(Cont()) && noexcept(U())) : cont{std::forward<U>(args)...} { }
 	
-	constexpr void push(T&& elem) noexcept(noexcept(Cont));
-	
 	template<typename... U, typename=std::enable_if_t<(std::is_convertible_v<U,T> && ...)>>
-	constexpr decltype(auto) emplace(U&&... elems) noexcept(noexcept(Cont)) { return (cont.emplace_back(std::forward<T>(elems)), ...); }
+	constexpr decltype(auto) emplace(U&&... elems) noexcept(noexcept(Cont())) 
+	{ 
+		return (cont.emplace_back(std::forward<U>(elems)), ...); 
+	}
+
+	constexpr decltype(auto) emplace(T&& elems) noexcept(noexcept(Cont()))
+	{
+		return cont.emplace_back(std::forward<T>(elems));
+	}
+
+	constexpr void push(T&& elem) noexcept(noexcept(Cont()));
 
 	const T& top()  const&;
 
@@ -39,6 +50,7 @@ const T& SPStack<T,Cont>::top() const&
 	return cont.back();
 }
 
+
 template<typename T, typename Cont>
 T SPStack<T, Cont>::pop()
 {
@@ -50,7 +62,7 @@ T SPStack<T, Cont>::pop()
 
 
 template<typename T, typename Cont>
-constexpr void SPStack<T, Cont>::push(T&& elem) noexcept(noexcept(Cont))
+constexpr void SPStack<T, Cont>::push(T&& elem) noexcept(noexcept(Cont()))
 {
 	cont.push_back(std::forward<T>(elem));
 }

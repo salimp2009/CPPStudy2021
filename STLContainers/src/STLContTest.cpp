@@ -1,3 +1,8 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
+
 #include "STLContpch.h"
 #include "ContainerUtilities.hpp"
 #include "SetMultiSetTest.h"
@@ -212,7 +217,8 @@ int main()
 	//SetMultiSet_Test();
 	//MapMultiMap_Test();
 	//UnorderedCont_Test();
-	StackExamples();
+	 StackExamples();
+	 Queues_Examples();
 
 	
 }

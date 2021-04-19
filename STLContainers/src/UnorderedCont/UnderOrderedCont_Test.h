@@ -38,7 +38,7 @@ inline void UnorderedCont_Test()
 	if (newpos != mcoll1.end()) newpos->second = 51;
 	printMCont(mcoll1);
 
-	std::unordered_set<int>scoll2 = { 1,-3,3,5,5,-25,13,-14 };
+	std::unordered_set<int>scoll2 = { 1,-3,3,5, 5,-25,13,-14 };
 	printCont(scoll2);
 	printBCont(scoll2);
 

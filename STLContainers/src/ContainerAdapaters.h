@@ -36,7 +36,7 @@ inline void StackExamples()
 	fmt::print("mstack top: {}\n", stackval);
 
 	SPStack<int>mstack2{ mstack };
-	mstack2.emplace(55, 77, 234);
+	mstack2.emplace(55);
 	fmt::print("mstack top: {}\n", mstack2.top());
 
 	SPStack<std::string>mstack3{ "Salim", "Didem", "Demir" };
@@ -63,4 +63,31 @@ inline void StackExamples()
 	SPStack<SPStack<int>>mstack5{ 1,2,3 };
 
 	fmt::print("mstack top: {}\n", mstack5.top().top());
+	
+
+	SPStack<std::pair<int, float>>mstack6;
+	mstack6.push({ 4,45.0f });
+	fmt::print("mstack top: {}\n", mstack6.top().second);
+	mstack6.emplace(std::make_pair(12, 12.5f ), std::make_pair( 12, 35.5F ));
+	mstack6.emplace({ 12, 34.4f });
+
+	std::vector<std::pair<int, float>> vec1{ { 4,45.0f } };
+	vec1.emplace_back(12, 12.5f);
+
+}
+
+inline void Queues_Examples()
+{
+	std::printf("\n---------------------Queues Test- FIFO(First-in-First-Out)------------------------------------\n\n");
+
+	std::queue<std::string>q1;
+	q1.push("Salim");
+	fmt::print("queue front: {}\n", q1.front());
+	q1.push("Didem");
+	q1.push("Demir");
+	q1.push("Semos");
+	fmt::print("queue front: {}\n", q1.front());
+	fmt::print("queue front: {}\n", q1.back());
+	q1.pop();
+	fmt::print("queue front: {}\n", q1.front());
 }
