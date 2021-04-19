@@ -219,6 +219,6 @@ int main()
 	//UnorderedCont_Test();
 	 StackExamples();
 	 Queues_Examples();
-
+	 PriorityQueue_Examples();
 	
 }

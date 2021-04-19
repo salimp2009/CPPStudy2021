@@ -1,8 +1,5 @@
 #pragma once
 
-#include <assert.h>
-
-
 
 #if ASSERTIONS_ENABLED	
 

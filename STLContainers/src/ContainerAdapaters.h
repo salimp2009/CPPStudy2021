@@ -91,3 +91,21 @@ inline void Queues_Examples()
 	q1.pop();
 	fmt::print("queue front: {}\n", q1.front());
 }
+
+inline void PriorityQueue_Examples()
+{
+	std::printf("\n---------------------Priority Queue Test- FIFO(First-in-First-Out)------------------------------------\n\n");
+
+	std::priority_queue<float>pq1;
+
+	pq1.push(120.5f);
+	pq1.push(20.5f);
+	pq1.push(12.5f);
+	pq1.push(180.5f);
+	while (!pq1.empty())
+	{
+		fmt::print("pq1 top : {}\n", pq1.top());
+		pq1.pop();
+	}
+
+}

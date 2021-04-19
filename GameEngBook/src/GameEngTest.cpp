@@ -1,12 +1,9 @@
-#include <stdio.h>
+#include "GameEnginePCH.h"
 #include "Assertions.h"
 #include <iostream>
-#include <limits>
-#include <bitset>
 #include "EndianSwap.h"
 #include "BranchPrediction.h"
-
-
+#include "ThreadGuard.h"
 
 
 int main()
@@ -45,5 +42,17 @@ int main()
 	*/
 	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 
-	
+	int localState = 0;
+
+	auto myfunc = [&localState]() 
+	{
+		std::printf("local state = %i\n", ++localState);
+		fmt::print("thread id {}\n", std::this_thread::get_id());
+	};
+
+	std::thread th1{myfunc};
+
+	threadguard thguard{ th1 };
+
+	std::printf("Hello from main thread\n");
 }
