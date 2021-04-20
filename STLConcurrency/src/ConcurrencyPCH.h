@@ -12,6 +12,7 @@
 #include <ratio>
 #include <chrono>
 #include <random>
+#include <exception>
 
 #include <numeric>
 #include <variant>

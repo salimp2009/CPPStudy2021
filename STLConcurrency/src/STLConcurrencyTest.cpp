@@ -10,4 +10,5 @@ int main()
 	printCont(vec1);
 
 	FutureBasics_Test();
+	Futures_WaitingTwoTasks();
 }

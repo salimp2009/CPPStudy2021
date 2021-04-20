@@ -4,6 +4,7 @@
 #include "EndianSwap.h"
 #include "BranchPrediction.h"
 #include "ThreadGuard.h"
+#include "ScopedThread.h"
 
 
 int main()
@@ -42,9 +43,9 @@ int main()
 	*/
 	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 
-	int localState = 0;
+	std::atomic<int> localState{ 0 };
 
-	auto myfunc = [&localState]() 
+	auto myfunc = [&localState] () noexcept
 	{
 		std::printf("local state = %i\n", ++localState);
 		fmt::print("thread id {}\n", std::this_thread::get_id());
@@ -53,6 +54,11 @@ int main()
 	std::thread th1{myfunc};
 
 	threadguard thguard{ th1 };
+	
+	scopedThread t{ std::thread{myfunc} };
 
 	std::printf("Hello from main thread\n");
+
+	
+
 }

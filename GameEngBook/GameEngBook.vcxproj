@@ -103,6 +103,7 @@
     <ClInclude Include="src\BranchPrediction.h" />
     <ClInclude Include="src\EndianSwap.h" />
     <ClInclude Include="src\GameEnginePCH.h" />
+    <ClInclude Include="src\ScopedThread.h" />
     <ClInclude Include="src\ThreadGuard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
