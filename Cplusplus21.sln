@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngBook", "GameEngBook\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STLContainers", "STLContainers\STLContainers.vcxproj", "{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STLConcurrency", "STLConcurrency\STLConcurrency.vcxproj", "{5F299B91-95FD-422B-8B56-1FDC70B4F2E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,8 +45,12 @@ Global
 		{43D58C0F-F1BA-40F5-8B15-FD1683852288}.Release|x64.Build.0 = Debug|x64
 		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Debug|x64.ActiveCfg = Debug|x64
 		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Debug|x64.Build.0 = Debug|x64
-		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Release|x64.ActiveCfg = Release|x64
-		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Release|x64.Build.0 = Release|x64
+		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Release|x64.ActiveCfg = Debug|x64
+		{3F095EDF-84F8-438D-B5E4-2B86FD3DA23E}.Release|x64.Build.0 = Debug|x64
+		{5F299B91-95FD-422B-8B56-1FDC70B4F2E7}.Debug|x64.ActiveCfg = Debug|x64
+		{5F299B91-95FD-422B-8B56-1FDC70B4F2E7}.Debug|x64.Build.0 = Debug|x64
+		{5F299B91-95FD-422B-8B56-1FDC70B4F2E7}.Release|x64.ActiveCfg = Release|x64
+		{5F299B91-95FD-422B-8B56-1FDC70B4F2E7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
