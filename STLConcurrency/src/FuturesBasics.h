@@ -2,6 +2,12 @@
 
 #include "ConcurrencyUtility.hpp"
 
+#ifdef NDEBUG
+	#define ASSERTM(exp, msg) assert ((void)0)
+#else
+	#define	ASSERTM(exp, msg) assert(((void)msg, exp))
+#endif
+
 /* movedf into global space on using in examples; othwerwise Dont Do this!!*/
 auto doSomethng = [](auto&& c)->int
 {
@@ -35,11 +41,11 @@ inline void FutureBasics_Test()
 	auto result = result1.get() + result2;
 
 	fmt::print("\nresult of func1 and func2 {}\n", result);
-
+	
 }
 
 
-void Futures_WaitingTwoTasks()
+inline void Futures_WaitingTwoTasks()
 {
 	std::printf("\n---------------Future Waiting Two Tasks-------------------------\n");
 
@@ -76,5 +82,52 @@ void Futures_WaitingTwoTasks()
 	}
 
 	std::printf("\nWaiting Two Tasks Example Done!\n");
+
+}
+
+inline void SharedFutures_Example()
+{
+	std::printf("\n---------------Shared Futures-------------------------\n");
+
+	auto getNumber = []()->int
+	{
+		std::printf("Enter a number: ");
+		int num;
+		std::cin >> num;
+		ASSERTM(num, "no numbers read!!");
+		return num;
+	};
+
+	auto doSomethn2 = [](char c, std::shared_future<int> f)
+	{
+		try
+		{
+			auto num = f.get();
+
+			for (int i{0}; i<num; ++i)
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+				std::cout.put(c).flush();
+			}
+
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << "Thread Exception!: " << e.what() << ", in thread id: " << std::this_thread::get_id() << '\n';
+		}
+	};
+
+	/* read number into shared future async and use it doSomethn2 in multiple threads*/
+	/* shared_futures are expensive; AVOID using them and dont use by cont& or & it may cause data races!!*/
+	std::shared_future<int> f=std::async(getNumber);
+
+	auto fut1 = std::async(std::launch::async, doSomethn2, '.', f);
+	auto fut2 = std::async(std::launch::async, doSomethn2, '+', f);
+	auto fut3 = std::async(std::launch::async, doSomethn2, '*', f);
+
+	fut1.get(); fut2.get(); fut3.get();
+
+	std::printf("\nShared Futures done!\n");
+
 
 }

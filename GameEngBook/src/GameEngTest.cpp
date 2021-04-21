@@ -45,6 +45,9 @@ int main()
 
 	std::atomic<int> localState{ 0 };
 
+	/* preferabbly do not pass variables/or shared data by ref cause if it changes in another thread
+		you might get unexpected result unless it is inteded to do so
+	*/
 	auto myfunc = [&localState] () noexcept
 	{
 		std::printf("local state = %i\n", ++localState);
@@ -54,11 +57,11 @@ int main()
 	std::thread th1{myfunc};
 
 	threadguard thguard{ th1 };
-	
+		
 	scopedThread t{ std::thread{myfunc} };
+	localState.store(15);
 
 	std::printf("Hello from main thread\n");
 
 	
-
 }

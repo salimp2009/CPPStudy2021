@@ -4,11 +4,9 @@
 
 int main()
 {
+	//FutureBasics_Test();
+	//Futures_WaitingTwoTasks();
+	SharedFutures_Example();
+	
 
-	std::printf("hello from main\n");
-	std::vector vec1{ 1,2,3,4,5,6 };
-	printCont(vec1);
-
-	FutureBasics_Test();
-	Futures_WaitingTwoTasks();
 }

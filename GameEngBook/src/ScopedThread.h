@@ -1,7 +1,12 @@
 #pragma once
 
 /* custom assert with message; void is used to supress Unused warnings!*/
-#define	ASSERTM(exp, msg) assert(((void)msg, exp))
+#ifdef NDEBUG
+	#define ASSERTM(exp, msg) assert ((void)0)
+#else
+	#define	ASSERTM(exp, msg) assert(((void)msg, exp))
+#endif
+
 
 class scopedThread
 {
