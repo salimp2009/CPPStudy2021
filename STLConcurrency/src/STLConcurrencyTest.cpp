@@ -6,7 +6,7 @@ int main()
 {
 	//FutureBasics_Test();
 	//Futures_WaitingTwoTasks();
-	SharedFutures_Example();
-	
+	//SharedFutures_Example();
+	ThreadPromises_Example();
 
 }

@@ -131,3 +131,62 @@ inline void SharedFutures_Example()
 
 
 }
+
+inline void ThreadPromises_Example()
+{
+	std::printf("\n---------------Threads with Promises-------------------------\n");
+
+
+	auto doSomePromises = [](std::promise<std::string>& p)
+	{
+		try 
+		{
+			std::printf("enter a char ('x' for exception): ");
+			char c = std::cin.get();
+			if (c == 'x')
+			{
+				throw std::runtime_error(std::string("char ") + c + " read");
+			}
+
+			std::string s = std::string("char ") + c + " processed";
+			/*store the result*/
+			p.set_value(std::move(s));
+		}
+		catch (...)
+		{
+			/* store the exception if any occcurs*/
+			p.set_exception(std::current_exception());
+		}
+
+	};
+
+
+	try
+	{
+		/* the type of promise needs to match the result to get from the function
+			in which the value is set with member function of std::promise via set_value()
+		*/
+		std::promise<std::string> p;
+
+		/* promise can be passed by reference only since it will be modified*/
+		std::thread t(doSomePromises, std::ref(p));
+
+		/*ALTERNATIVE: std::future<std::string> futA(p.get_future());*/
+		/* we need a future object to get the result from promise*/
+		auto fut = p.get_future();
+
+		t.join();
+
+		fmt::print("Result from promise: {}", fut.get());
+
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "EXCEPTION: "<<e.what()<<'\n';
+	}
+	catch (...)
+	{
+		std::cerr << "EXCEPTION ... " <<'\n';
+	}
+
+}
