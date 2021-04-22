@@ -214,7 +214,52 @@ inline void MutexLock_Basics()
 	/* no need to use get() for futures since we are not getting any result!*/
 	print("hi from main thread");
 
+}
 
+inline void ConditionVariable_Basics()
+{
+	std::printf("\n---------------Condition Variable Syncing -------------------------\n");
+	/* Condition Variable can wake up a thread spuriosly even the lock is not available therefore NOT RELIABLE
+	   Used it for Example Purposes !!! Otherwise prefer Atmics and testAndSet methods
+	*/
 
+	/* make sure this is initialized otherwise the result is undefined !!!*/
+	bool readyFlag{ false };
+	std::mutex readyMutex;
+	std::condition_variable readyCondVar;
+
+	auto produce = [&]()
+	{
+		std::printf("Enter return to proceed\n");
+		std::cin.get();
+
+		{
+			std::lock_guard<std::mutex> lg{ readyMutex };
+			readyFlag = true;
+		}// release lock
+		/* notify_all() can be used if multiple threads waiting*/
+		fmt::print("producing thread : {}\n", std::this_thread::get_id());
+
+		readyCondVar.notify_one();
+	};
+
+	auto consume = [&]()
+	{
+		{
+			/* unique_lock will lock if the lock is available*/
+			std::unique_lock<std::mutex> ulock{ readyMutex };
+
+			/* unique_lock will wait until the passed predicate return true*/
+			readyCondVar.wait(ulock, [&readyFlag]() { return readyFlag; });
+		} // release lock
+
+		fmt::print("consuming thread : {}\n", std::this_thread::get_id());
+		//std::cout << "consuming thread : " << std::this_thread::get_id() << '\n';
+	};
+
+	auto fut1 = std::async(std::launch::async, produce);
+	auto fut2 = std::async(std::launch::async, consume);
 
 }
+
+

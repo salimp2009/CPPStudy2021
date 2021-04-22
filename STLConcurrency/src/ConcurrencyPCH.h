@@ -28,6 +28,8 @@
 #include <thread>
 #include <future>
 #include <execution>
+#include <condition_variable>
+#include <mutex>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
