@@ -23,6 +23,8 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>
+    </EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -30,6 +32,8 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>
+    </EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -98,7 +102,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ConcurrencyPCH.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\STLConcurrencyTest.cpp" />
+    <ClCompile Include="src\STLConcurrencyTest.cpp">
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </EnableModules>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ConcurrencyPCH.h" />

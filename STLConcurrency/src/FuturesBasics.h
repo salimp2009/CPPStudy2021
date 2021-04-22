@@ -190,3 +190,31 @@ inline void ThreadPromises_Example()
 	}
 
 }
+
+inline void MutexLock_Basics()
+{
+	std::printf("\n---------------Mutex and Guard Lock-------------------------\n");
+
+	std::mutex printMutex;
+
+	auto print = [&printMutex](std::string_view sv)
+	{
+	
+		std::lock_guard<std::mutex> lg{printMutex};
+		for (auto&& c : sv)
+		{
+			std::printf("%c", c);
+		}
+		std::printf("\n");
+	};
+
+	auto fut1 = std::async(std::launch::async, print, "Hi from first thread");
+	auto fut2 = std::async(std::launch::async, print, "Hi from second thread");
+
+	/* no need to use get() for futures since we are not getting any result!*/
+	print("hi from main thread");
+
+
+
+
+}
