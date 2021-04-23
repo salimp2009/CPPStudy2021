@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef NDEBUG
+	#define ASSERTM(exp, msg) assert ((void)0)
+#else
+	#define	ASSERTM(exp, msg) assert(((void)msg, exp))
+#endif
+
 /*---std::cout overloaded for Pair---*/
 template<typename T1, typename T2>
 std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p)

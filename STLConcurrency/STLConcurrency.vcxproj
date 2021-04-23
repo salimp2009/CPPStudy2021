@@ -113,6 +113,7 @@
     <ClInclude Include="src\ConcurrencyPCH.h" />
     <ClInclude Include="src\ConcurrencyUtility.hpp" />
     <ClInclude Include="src\FuturesBasics.h" />
+    <ClInclude Include="src\MemoryOrderBasics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

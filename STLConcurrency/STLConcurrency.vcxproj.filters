@@ -32,5 +32,8 @@
     <ClInclude Include="src\FuturesBasics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MemoryOrderBasics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

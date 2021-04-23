@@ -2,11 +2,6 @@
 
 #include "ConcurrencyUtility.hpp"
 
-#ifdef NDEBUG
-	#define ASSERTM(exp, msg) assert ((void)0)
-#else
-	#define	ASSERTM(exp, msg) assert(((void)msg, exp))
-#endif
 
 /* movedf into global space on using in examples; othwerwise Dont Do this!!*/
 auto doSomethng = [](auto&& c)->int

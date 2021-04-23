@@ -1,5 +1,6 @@
 #include "ConcurrencyPCH.h"
 #include "FuturesBasics.h"
+#include "MemoryOrderBasics.h"
 
 
 
@@ -11,5 +12,9 @@ int main()
 	//ThreadPromises_Example();
 	//MutexLock_Basics();
 	//ConditionVariable_Basics();
-	Atomics_Basics();
+	//Atomics_Basics();
+	AtomicFlag_Basics();
+	SpinLock_Example();
+
+	
 }
