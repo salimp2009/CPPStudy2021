@@ -262,4 +262,47 @@ inline void ConditionVariable_Basics()
 
 }
 
+inline void Atomics_Basics()
+{
+	std::printf("\n---------------Atomics -------------------------\n");
 
+	long data;
+	/* Always initialize atomics otherwise the data is not lock
+	   Alternative way to initialize later is ; std::atomic_init(&readyFlag, false) ; which is also C compatible;
+	*/
+	std::atomic<bool> readyFlag{ false };
+
+	auto provider = [&data, &readyFlag] () noexcept
+	{
+
+		std::printf("please press enter to start!");
+		std::cin.get();
+
+		data = 42;
+		/* stores used default sync memory order in order to prevent compiler reordering
+		   therefore any operation has to happen before readyFlag is stored ; this provides protection to the variable
+		   above without using mutex but be aware atomics is not also cheap !!
+		*/
+		fmt::print("data ready : {}, by thread {}\n", data, std::this_thread::get_id());
+		readyFlag.store(true);
+	};
+
+	auto consumer = [&data, &readyFlag]() noexcept
+	{
+		while (!readyFlag.load())
+		{
+			std::cout.put('.').flush();
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		}
+
+		fmt::print("data consumed : {}, by thread {}\n", data, std::this_thread::get_id());
+
+	};
+
+
+	auto fut1 = std::async(std::launch::async, provider);
+	auto fut2 = std::async(std::launch::async, consumer);
+
+	fmt::print("atomic bool lock free: {}\n", readyFlag.is_lock_free());
+
+}

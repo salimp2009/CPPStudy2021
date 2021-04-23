@@ -30,6 +30,7 @@
 #include <execution>
 #include <condition_variable>
 #include <mutex>
+#include <atomic>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"

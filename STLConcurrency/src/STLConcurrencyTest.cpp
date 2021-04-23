@@ -10,6 +10,6 @@ int main()
 	//SharedFutures_Example();
 	//ThreadPromises_Example();
 	//MutexLock_Basics();
-	ConditionVariable_Basics();
-
+	//ConditionVariable_Basics();
+	Atomics_Basics();
 }
