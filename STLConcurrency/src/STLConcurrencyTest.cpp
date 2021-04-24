@@ -13,8 +13,8 @@ int main()
 	//MutexLock_Basics();
 	//ConditionVariable_Basics();
 	//Atomics_Basics();
-	AtomicFlag_Basics();
-	SpinLock_Example();
-
+	//AtomicFlag_Basics();
+	//SpinLock_Example();
+	AtomicFlag_ThreadSync();
 	
 }

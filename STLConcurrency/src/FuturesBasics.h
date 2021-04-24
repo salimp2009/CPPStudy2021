@@ -279,7 +279,13 @@ inline void Atomics_Basics()
 		   above without using mutex but be aware atomics is not also cheap !!
 		*/
 		fmt::print("data ready : {}, by thread {}\n", data, std::this_thread::get_id());
+		/* store() operation is atomic*/
 		readyFlag.store(true);
+		
+		/* ALTERNATIVE; atomics can be set as other variables but this method in not atomic; 
+		   prefer using store() and load() with atomics
+		*/
+		//readyFlag = true;
 	};
 
 	auto consumer = [&data, &readyFlag]() noexcept
