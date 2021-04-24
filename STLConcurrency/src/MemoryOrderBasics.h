@@ -3,6 +3,7 @@
 #include "ConcurrencyUtility.hpp"
 
 
+
 inline void AtomicFlag_Basics()
 {
 	std::printf("\n---------------Atomic Flag------------------------\n");
@@ -103,5 +104,92 @@ inline void SpinLock_Example()
 		t2.join();
 }
 
-#endif
 
+/* a naive check if custom type can be atomic*/
+template<typename T>
+concept atomicTypes = !std::is_polymorphic_v<T>  &&  std::is_trivially_copy_constructible_v<T> &&  std::is_trivial_v<T>;
+
+/* cpp versions of fethc_add or other operations returns the unchanged value; this custom version returns the new value
+	+=, -= or other composite overloads return the new value and work on atomics
+*/
+template<atomicTypes T>
+T fetch_Mult(std::atomic<T>& shared, T mult)
+{
+	T oldvalue = shared.load();
+	while (!shared.compare_exchange_strong(oldvalue, oldvalue * mult));
+	return oldvalue;
+}
+
+struct CustDef
+{
+	int a;
+	int b;
+};
+
+inline void AtomicTypes_Operations()
+{
+	std::printf("\n---------------AtomicTypes &Operations-----------------------\n");
+
+	int intArray[5];
+	std::atomic<int*> ptr(intArray);
+
+	ptr++;
+	assert(ptr.load() == &intArray[1]);
+	ptr++;
+	assert(ptr.load() == &intArray[2]);
+	ptr++;
+	assert(ptr.load() == &intArray[3]);
+
+	std::atomic<int> myInt{ 5 };
+	fmt::print("myInt before change: {}\n", myInt);
+	std::thread t1{fetch_Mult<int>, std::ref(myInt), 5 };
+	std::thread t2{ fetch_Mult<int>, std::ref(myInt), 5 };
+	t1.join();
+	t2.join();
+
+	fetch_Mult(myInt, 5);
+	
+	fmt::print("myInt after change: {}\n", myInt);
+
+	/* fetch add returns the old value; it changes the value of the variable */
+	std::printf("return value of fetch_add %i\n", myInt.fetch_add(5));
+
+	std::atomic<CustDef> myCustDef;
+
+	static_assert(std::is_trivially_copy_constructible_v<CustDef>);
+	static_assert(atomicTypes<CustDef>);
+	std::cout << !std::is_polymorphic_v<CustDef> && std::is_trivially_copy_constructible_v<CustDef> && std::is_trivial_v<CustDef> << '\n';
+
+}
+
+
+
+inline void SharedPtr_AtomicOps()
+{
+	std::printf("\n---------------SharedPtr & Atomic Operations-----------------------\n");
+
+	//std::shared_ptr<int> ptr = std::make_shared<int>(2011);
+
+	//for (auto i = 0; i < 10; ++i)
+	//{
+	//	std::thread{ [ptr, i]() 
+	//		{
+	//			std::shared_ptr<int> localPtr(ptr);
+	//			localPtr = std::make_shared<int>(2014);
+	//			fmt::print("i thread: {0}, ptr count: {1}, localPtr value:{2}\n", i, ptr.use_count(), *localPtr+i);
+	//		} 
+	//	
+	//	}.detach();
+	//}
+
+	/* C++20 version of atomic; all atomic operation on other types now available to std::shared_ptr
+		previous versions of std::atomic_store() and other free functions are depreceated and replace by new overloads
+		C++11 versions will not work in C++20!!!
+	*/
+
+
+
+}
+
+
+#endif
