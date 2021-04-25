@@ -21,6 +21,7 @@ inline void AtomicFlag_Basics()
 
 }
 
+/* modified with memory order/syncing using aqcquire-release */
 class spinlock
 {
 private:
@@ -29,12 +30,12 @@ public:
 	void lock() noexcept
 	{
 		/* spinlock should be used for very short time locking ; it wastes CPU cycles; prefer not to use it*/
-		while (flag.test_and_set());
+		while (flag.test_and_set(std::memory_order_acquire));
 	}
 
 	void unlock() noexcept
 	{
-		flag.clear();
+		flag.clear(std::memory_order_release);
 	}
 
 };
@@ -270,3 +271,47 @@ inline void AtomicRef_Example()
 }
 
 #endif
+
+inline void AcquireRelease_Example()
+{
+	std::printf("\n--------------- Acquire Release Example-----------------------\n");
+
+	std::vector<int> mySharedWork;
+	std::atomic<bool> dataProduced{ false };
+	std::atomic<bool>dataConsume{ false };
+
+	auto produceData = [&mySharedWork, &dataProduced]() noexcept
+	{
+		mySharedWork = { 1,0,3 };
+		dataProduced.store(true, std::memory_order_release);
+		fmt::print("produced data: current value of dataProduce: {0}\n", dataProduced);
+	};
+
+	auto deliverData = [&dataProduced, &dataConsume]() noexcept
+	{
+		while (!dataProduced.load(std::memory_order_acquire));
+		fmt::print("delivered data: current value of dataConsume: {0}, dataProduce: {1}\n", dataConsume, dataProduced);
+		dataConsume.store(true, std::memory_order_release);
+	};
+
+	auto consumeData = [&dataConsume, &mySharedWork, &dataProduced]() noexcept
+	{
+		while (!dataConsume.load(std::memory_order_acquire));
+		mySharedWork[1] = 55;
+		fmt::print("consumed data: current value of dataConsume: {0}, dataProduce: {1}\n", dataConsume, dataProduced);
+		dataConsume.store(false, std::memory_order_relaxed);
+		dataProduced.store(false, std::memory_order_relaxed);
+	};
+
+	auto th1 = std::thread(consumeData);
+	auto th2 = std::thread(deliverData);
+	auto th3 = std::thread(produceData);
+
+	th1.join();
+	th2.join();
+	th3.join();
+
+	fmt::print("main thread: current value of dataConsume: {0}, dataProduce: {1}\n", dataConsume, dataProduced);
+	printCont(mySharedWork);
+
+}
