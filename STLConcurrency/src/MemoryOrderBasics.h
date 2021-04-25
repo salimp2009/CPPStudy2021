@@ -170,6 +170,10 @@ inline void SharedPtr_AtomicOps()
 
 	//std::shared_ptr<int> ptr = std::make_shared<int>(2011);
 
+	/* here we use shared ptr as a copy in the threads so it is OK but if a reference is to be used then 
+		either use c++20 atmic shared ptr or use free function and a local shrptr then store a shared ptr atomicly; e.g. std::atomic_store(&ptr, localPtr)
+		but only counter is thread safe not the underlying object!!!
+	*/
 	//for (auto i = 0; i < 10; ++i)
 	//{
 	//	std::thread{ [ptr, i]() 
@@ -182,14 +186,87 @@ inline void SharedPtr_AtomicOps()
 	//	}.detach();
 	//}
 
+	
 	/* C++20 version of atomic; all atomic operation on other types now available to std::shared_ptr
 		previous versions of std::atomic_store() and other free functions are depreceated and replace by new overloads
 		C++11 versions will not work in C++20!!!
 	*/
+	std::atomic<std::shared_ptr<int>> shrPtr;
+	shrPtr.store(std::make_shared<int>(2014));
+	std::cout << *(shrPtr.load()) + 1 << '\n';
 
+	std::thread t1{ [&shrPtr]() {std::cout << *(shrPtr.load()) + 5 << '\n'; } };
 
+	std::cout << shrPtr.load().use_count()<< '\n';
+
+	t1.join();
+
+/* prefer not to use detach !!!
+	
+*/
+	//for (auto i = 0; i < 10; ++i)
+	//{
+	//	std::thread{ [&shrPtr, i]() 
+	//		{
+	//			fmt::print("i thread: {0}, ptr count: {1}, localPtr value:{2}\n", i, shrPtr.load().use_count(), *(shrPtr.load())+i);
+	//		} 
+	//
+	//	}.detach();
+	//}
 
 }
 
+struct ExpensiveToCopy
+{
+	int counter{};
+};
+
+inline void AtomicRef_Example()
+{
+	std::printf("\n---------------Atomic Ref C++20 Example-----------------------\n");
+
+	auto getRandom = [](int begin, int end) noexcept ->int
+	{
+		std::random_device seed;
+		std::mt19937 engine(seed());
+		std::uniform_int_distribution<> uniformDist(begin, end);
+		return uniformDist(engine);
+	};
+
+	auto count = [&getRandom](ExpensiveToCopy& exp) noexcept
+	{
+		std::vector<std::thread> vthreads;
+		/* the values of counter will not changed since each thread makes its own copy*/
+		//std::atomic<int> counter{exp.counter};
+
+		/*if you need to change the counter then use atomic_ref in c++20*/
+		std::atomic_ref<int>counter{ exp.counter };
+
+		for (auto n = 0; n < 10; ++n)
+		{
+			vthreads.emplace_back([&counter, &getRandom]()
+				{
+					auto randomNumber = getRandom(100, 200);
+					for (auto i = 0; i < randomNumber; ++i) { ++counter; }
+				});
+		}
+
+		for (auto& t : vthreads)
+		{
+			t.join();
+		}
+	
+	};
+
+	ExpensiveToCopy exp;
+	count(exp);
+
+	/* the value of exp.counter changes since we used atomic_ref within the lambda
+		if you dont have c++20 then just pass the counter into lamda as an argument by ref and create the inner
+		lambda before passing into thread and pass the lambda and its expected argument into thread by std::ref
+	*/
+	fmt::print("exp.counter expected to change : {}\n", exp.counter);
+	
+}
 
 #endif

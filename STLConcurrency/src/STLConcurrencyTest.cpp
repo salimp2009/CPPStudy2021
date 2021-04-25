@@ -17,7 +17,7 @@ int main()
 	//SpinLock_Example();
 	//AtomicFlag_ThreadSync();
 	//AtomicTypes_Operations();
-	SharedPtr_AtomicOps();
-	
+	//SharedPtr_AtomicOps();
+	AtomicRef_Example();
 
 }
