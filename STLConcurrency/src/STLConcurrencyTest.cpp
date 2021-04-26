@@ -21,7 +21,9 @@ int main()
 	//AtomicRef_Example();
 	//AcquireRelease_Example();
 	//ReleaseSemantics_Example();
-	AcquireConsumeRelease_Example();
+	//AcquireConsumeRelease_Example();
+	//RelaxedSemantics_Example();
+	FencesAcquireRelease_Example();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

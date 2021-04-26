@@ -395,4 +395,75 @@ inline void AcquireConsumeRelease_Example()
 	t2.join();
 }
 
+inline void RelaxedSemantics_Example()
+{
+	std::printf("\n--------------- Relaxed Semantics Release----------------------\n");
+
+	std::atomic<int> counter{ 0 };
+
+	auto add = [&counter]() noexcept
+	{
+		for (auto n = 0; n < 1000; ++n)
+		{
+			counter.fetch_add(1, std::memory_order_relaxed);
+		}
+	};
+
+	std::vector<std::thread>threads;
+
+	for (auto i = 0; i < 10; ++i)
+	{
+		threads.emplace_back(add);
+	}
+
+	for (auto& t : threads)
+	{
+		t.join();
+	}
+
+	fmt::print("final counter value: {}\n", counter);
+}
+
+inline void FencesAcquireRelease_Example()
+{
+	std::printf("\n--------------- Fences Acquire Release---------------------\n");
+
+	std::atomic<std::string*> ptr;
+	int data{ 0 };
+	std::atomic<int> atomData;
+
+	auto producer = [&ptr, &data, &atomData]() noexcept
+	{
+		std::string* p = new std::string("C++11");
+		data = 2011;
+		atomData.store(2014, std::memory_order_relaxed);
+		
+		/* thread fence release protects the write after it and no load or write before can cross the fence*/
+		std::atomic_thread_fence(std::memory_order_release);
+		fmt::print("thread fence release: data produced!!\n");
+		
+		/* atomic store operation is protected by the fence above*/
+		ptr.store(p, std::memory_order_relaxed);
+	};
+
+	auto consumer = [&ptr, &data, &atomData]() noexcept
+	{
+		std::string* p2;
+		/* atomic load(read) operation is protected by the atmic fence acquire below it
+			all other operations below can cross the fence
+		*/
+		while (!(p2 = ptr.load(std::memory_order_relaxed)));
+		std::atomic_thread_fence(std::memory_order_acquire);
+		fmt::print("*p2: {}\n", *p2);
+		fmt::print("data: {}\n", data);
+		fmt::print("atomData: {}\n", atomData.load(std::memory_order_relaxed));
+	};
+
+	std::thread t1{ consumer };
+	std::thread t2{ producer };
+
+	t1.join();
+	t2.join();
+}
+
 
