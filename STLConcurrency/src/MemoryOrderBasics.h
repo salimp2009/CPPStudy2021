@@ -283,8 +283,8 @@ inline void AcquireRelease_Example()
 	auto produceData = [&mySharedWork, &dataProduced]() noexcept
 	{
 		mySharedWork = { 1,0,3 };
+		fmt::print("produced data! \n");
 		dataProduced.store(true, std::memory_order_release);
-		fmt::print("produced data: current value of dataProduce: {0}\n", dataProduced);
 	};
 
 	auto deliverData = [&dataProduced, &dataConsume]() noexcept
@@ -292,6 +292,7 @@ inline void AcquireRelease_Example()
 		while (!dataProduced.load(std::memory_order_acquire));
 		fmt::print("delivered data: current value of dataConsume: {0}, dataProduce: {1}\n", dataConsume, dataProduced);
 		dataConsume.store(true, std::memory_order_release);
+		
 	};
 
 	auto consumeData = [&dataConsume, &mySharedWork, &dataProduced]() noexcept
@@ -299,8 +300,6 @@ inline void AcquireRelease_Example()
 		while (!dataConsume.load(std::memory_order_acquire));
 		mySharedWork[1] = 55;
 		fmt::print("consumed data: current value of dataConsume: {0}, dataProduce: {1}\n", dataConsume, dataProduced);
-		dataConsume.store(false, std::memory_order_relaxed);
-		dataProduced.store(false, std::memory_order_relaxed);
 	};
 
 	auto th1 = std::thread(consumeData);
@@ -315,3 +314,85 @@ inline void AcquireRelease_Example()
 	printCont(mySharedWork);
 
 }
+
+inline void ReleaseSemantics_Example()
+{
+	std::printf("\n--------------- Release Semantics Example-----------------------\n");
+	std::atomic<int> atomInt{ 0 };
+	int somethngShared{ 0 };
+
+	using namespace std::chrono_literals;
+
+	auto writeShared = [&somethngShared, &atomInt]() noexcept
+	{
+		somethngShared = 2011;
+		atomInt.store(2, std::memory_order_release);
+	};
+
+	auto readShared = [&somethngShared, &atomInt]() noexcept
+	{
+		while (!(atomInt.fetch_sub(1, std::memory_order_acquire) > 0))
+		{
+			std::this_thread::sleep_for(100ms);
+		}
+
+		fmt::print("somethng Shared: {}\n", somethngShared);
+	};
+
+	std::thread t1{ writeShared };
+	std::thread t2{ readShared };
+	std::thread t3{ readShared };
+
+	t1.join();
+	t2.join();
+	t3.join();
+
+	fmt::print("atomic Int: {}\n", atomInt);
+}
+
+inline void AcquireConsumeRelease_Example()
+{
+	std::printf("\n--------------- Acquire Consume Release----------------------\n");
+	/* !!---DO NOT USE std::memory_order_consume since the C++ standart is revising it and NOT recommended---!!;
+		“The specification of release-consume ordering is being revised,
+		and the use of memory_order_consume is temporarily discouraged.”
+	*/
+
+	std::atomic<std::string*> ptr;
+	int data{ 0 };
+	std::atomic<int> atomData;
+
+	auto producer = [&ptr, &data, &atomData]() noexcept
+	{
+		std::string* p = new std::string("C++11");
+		data = 2011;
+		atomData.store(2014, std::memory_order_relaxed);
+		fmt::print("data produced!!\n");
+		ptr.store(p, std::memory_order_release);
+	};
+
+	auto consumer = [&ptr, &data, &atomData]() noexcept
+	{
+		std::string* p2;
+		
+		/* std::memory_order_consume only carries a depency between threads on the atmoic variable that it is bound to
+		   the other variable not related to same dependency can be accessed in different order but compilers under the hood use 
+		   use same implementation with the acquire therefore it does not create a problem but DONT USE IT UNTIL c++ standart revises
+		*/
+		//while (!(p2 = ptr.load(std::memory_order_consume)));
+		
+		/* if p2 is nullptr wait*/
+		while (!(p2 = ptr.load(std::memory_order_acquire)));
+		fmt::print("*p2: {}\n", *p2);
+		fmt::print("data: {}\n", data);
+		fmt::print("atomData: {}\n", atomData.load(std::memory_order_relaxed));
+	};
+
+	std::thread t1{ consumer };
+	std::thread t2{ producer };
+
+	t1.join();
+	t2.join();
+}
+
+

@@ -19,8 +19,9 @@ int main()
 	//AtomicTypes_Operations();
 	//SharedPtr_AtomicOps();
 	//AtomicRef_Example();
-	AcquireRelease_Example();
-
+	//AcquireRelease_Example();
+	//ReleaseSemantics_Example();
+	AcquireConsumeRelease_Example();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
