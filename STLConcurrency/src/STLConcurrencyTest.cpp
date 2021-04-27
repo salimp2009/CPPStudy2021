@@ -26,7 +26,8 @@ int main()
 	//FencesAtomicSignal_Example();
 
 #if _HAS_CXX20
-	Semaphore_Example();
+	//Semaphore_Example();
+	Latch_Example();
 
 #endif
 

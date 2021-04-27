@@ -37,6 +37,10 @@
 	#include <semaphore>
 #endif
 
+#if __has_include(<latch>)
+	#include <latch>
+#endif
+
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
