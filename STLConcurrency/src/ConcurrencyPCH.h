@@ -18,11 +18,11 @@
 #include <variant>
 
 #if __has_include(<ranges>)
-#include <ranges>
+	#include <ranges>
 #endif
 
 #if __has_include(<concepts>)
-#include <concepts>
+	#include <concepts>
 #endif
 
 #include <thread>
@@ -31,6 +31,12 @@
 #include <condition_variable>
 #include <mutex>
 #include <atomic>
+#include <csignal>
+
+#if __has_include(<semaphore>)
+	#include <semaphore>
+#endif
+
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"

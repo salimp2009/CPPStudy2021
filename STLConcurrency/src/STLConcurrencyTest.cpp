@@ -1,8 +1,7 @@
 #include "ConcurrencyPCH.h"
 #include "FuturesBasics.h"
 #include "MemoryOrderBasics.h"
-
-
+#include "SemaphoreLatchBarriers.h"
 
 int main()
 {
@@ -23,7 +22,14 @@ int main()
 	//ReleaseSemantics_Example();
 	//AcquireConsumeRelease_Example();
 	//RelaxedSemantics_Example();
-	FencesAcquireRelease_Example();
+	//FencesAcquireRelease_Example();
+	//FencesAtomicSignal_Example();
+
+#if _HAS_CXX20
+	Semaphore_Example();
+
+#endif
+
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

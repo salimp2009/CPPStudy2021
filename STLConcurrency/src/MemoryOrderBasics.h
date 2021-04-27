@@ -439,10 +439,9 @@ inline void FencesAcquireRelease_Example()
 		atomData.store(2014, std::memory_order_relaxed);
 		
 		/* thread fence release protects the write after it and no load or write before can cross the fence*/
+		/* atomic store operation below is protected by the fence*/
 		std::atomic_thread_fence(std::memory_order_release);
 		fmt::print("thread fence release: data produced!!\n");
-		
-		/* atomic store operation is protected by the fence above*/
 		ptr.store(p, std::memory_order_relaxed);
 	};
 
@@ -466,4 +465,41 @@ inline void FencesAcquireRelease_Example()
 	t2.join();
 }
 
+/* Used in atomic signal fence example!!*/
+std::atomic<bool> a{ false };
+std::atomic<bool> b{ false };
+
+extern "C" void handler(int)
+{
+	if (a.load(std::memory_order_relaxed))
+	{
+		std::atomic_signal_fence(std::memory_order_acquire);
+		assert(b.load(std::memory_order_relaxed));
+		
+	}
+}
+
+
+inline void FencesAtomicSignal_Example()
+{
+	std::printf("\n---------------Atomic Signal Fence---------------------\n");
+
+
+	/* std::atomic_signal_fence establishes memory synchronisation ordering of non-atomic and relaxed atomic
+		accesses between a thread and a signal handler executed on the same thread
+	*/
+
+	/* SIGTERM ; signal termination request*/
+	std::signal(SIGTERM, handler);
+
+	b.store(true, std::memory_order_relaxed);
+	std::atomic_thread_fence(std::memory_order_release);
+	a.store(true, std::memory_order_relaxed);
+
+	/*if memory order relaxed is used on these loads below the release fence 
+	 the fence wont prevent them being reordered if relaxed is used since the release fence
+	 protects the writes/store below and the load/store above 	
+	*/
+	fmt::print("atomic a: {0}, atomic b: {1}", a.load(), b.load());
+}
 

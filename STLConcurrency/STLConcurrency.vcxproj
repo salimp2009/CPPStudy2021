@@ -114,6 +114,7 @@
     <ClInclude Include="src\ConcurrencyUtility.hpp" />
     <ClInclude Include="src\FuturesBasics.h" />
     <ClInclude Include="src\MemoryOrderBasics.h" />
+    <ClInclude Include="src\SemaphoreLatchBarriers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
