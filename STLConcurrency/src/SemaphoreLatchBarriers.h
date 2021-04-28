@@ -28,6 +28,7 @@ inline void Semaphore_Example()
 		std::printf("Sender: data ready!\n");
 		prepareSignal.release();
 		
+		
 	};
 
 	auto completeWork = [&]() noexcept
@@ -41,27 +42,15 @@ inline void Semaphore_Example()
 		std::printf("\n");		
 	};
 
-	std::thread th1{ prepareWork };
 	std::thread th2{ completeWork };
-
-	th1.join();
+	std::thread th1{ prepareWork };
+	std::thread th1a{ prepareWork };
+	
 	th2.join();
-
+	th1.join();
+	th1a.join();
+	
 }
-
-//class Worker
-//{
-//public:
-//	Worker(std::string n) : name{ std::move(n) } {}
-//
-//	void operator()()
-//	{
-//
-//	}
-//
-//private:
-//	std::string name;
-//};
 
 inline void Latch_Example()
 {
@@ -87,7 +76,6 @@ inline void Latch_Example()
 		fmt::print("{}\n", sv);
 	};
 
-	/* TODO if string_view will be OK here; should be OK since each thread makes a copy of the passed name*/
 	auto Worker = [&](std::string name)
 	{
 		/* notify when the work is done!!!*/
@@ -128,6 +116,72 @@ inline void Latch_Example()
 	th5.join();
 	th6.join();
 
+}
+
+inline void Barrier_Example()
+{
+	std::printf("\n--------------- Barrier C++20----------------------\n");
+
+	/*Two difference between latches and barriers; Barriers can be used more than once and 
+	  can be reset to different number threads for the next iteration;
+	*/
+	/* you can pass in a nothrow completion function for the barrier when the counter reaches zero it runs that function
+		e.g: below there is a lambda function and it is invoked when counter reaches zero; not per each thread
+	*/
+	std::barrier workDone(6, []() noexcept
+		{
+			static auto completeMessage = "All Work Done!";
+			fmt::print("{}!\n", completeMessage);
+		}
+	);
+	
+	/* USED in prev version of the example but kept it in case*/
+	//std::mutex coutMutex;
+
+	auto synchronizedOut = [/*&*/](std::string_view sv)
+	{
+		/* a lock is not need according to the example as each thread get its own copy of lambda*/
+		//std::lock_guard<std::mutex> lockedOut{ coutMutex };
+		fmt::print("{}\n", sv);
+	};
+
+
+	auto FullTimeWorker = [&](std::string name)
+	{
+		synchronizedOut(name + "; " + "Morning Work Done!");
+		/* arrive_wait is combination of countdown and wait() until it reaches zero; */
+		workDone.arrive_and_wait();
+		synchronizedOut(name + "; " + "Afternoon Work Done!");
+		/* reuse the barrier to so the work comes and wait untill all work is done !*/
+		workDone.arrive_and_wait();
+		synchronizedOut(name + "; " + "Goodbye Going Home!");
+
+	};
+
+
+	auto PartTimeWorker = [&](std::string name)
+	{
+		synchronizedOut(name + "; " + "Morning Work Done!");
+		/* arrive_drop is combination of countdown and wait() and also deduct from number of thread to be used for the next iteration
+		   until it reaches zero; 
+		*/
+		workDone.arrive_and_drop();
+	};
+
+
+	std::thread th1(FullTimeWorker, "  Herb");
+	std::thread th2(FullTimeWorker, "    Scott");
+	std::thread th3(PartTimeWorker, "     Salim");
+	std::thread th4(FullTimeWorker, "      Bjarne");
+	std::thread th5(PartTimeWorker, "		Andrei");
+	std::thread th6(PartTimeWorker, "		 David");
+
+	th1.join();
+	th2.join();
+	th3.join();
+	th4.join();
+	th5.join();
+	th6.join();
 }
 
 

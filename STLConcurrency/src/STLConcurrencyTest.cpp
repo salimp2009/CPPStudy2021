@@ -27,7 +27,8 @@ int main()
 
 #if _HAS_CXX20
 	//Semaphore_Example();
-	Latch_Example();
+	//Latch_Example();
+	Barrier_Example();
 
 #endif
 

@@ -41,6 +41,10 @@
 	#include <latch>
 #endif
 
+#if __has_include(<barrier>)
+#include <barrier>
+#endif
+
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
