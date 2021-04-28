@@ -5,12 +5,13 @@
 #include "BranchPrediction.h"
 #include "ThreadGuard.h"
 #include "ScopedThread.h"
+#include "ReentrantLock.h"
 
 
 int main()
 {
 	//ASSERT(3 == 5); 
-	printf("Test Game Engine BOOK TEST\n");
+	std::printf("Test Game Engine BOOK TEST\n");
 
 	std::cout <<std::bitset<32>(255)<< '\n';
 

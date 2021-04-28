@@ -9,7 +9,7 @@
 	if (expr) { }\
 	else \
 	{\
-		printf("%s failed FILE: %s, LINE: %i \n", #expr, __FILE__, __LINE__);\
+		std::printf("%s failed FILE: %s, LINE: %i \n", #expr, __FILE__, __LINE__);\
 		debugBreak();\
 	}
 #else

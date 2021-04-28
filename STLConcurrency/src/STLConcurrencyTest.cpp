@@ -2,6 +2,7 @@
 #include "FuturesBasics.h"
 #include "MemoryOrderBasics.h"
 #include "SemaphoreLatchBarriers.h"
+#include "JThreadsTokenBasics.h"
 
 int main()
 {
@@ -28,8 +29,8 @@ int main()
 #if _HAS_CXX20
 	//Semaphore_Example();
 	//Latch_Example();
-	Barrier_Example();
-
+	//Barrier_Example();
+	StopToken_Example();
 #endif
 
 

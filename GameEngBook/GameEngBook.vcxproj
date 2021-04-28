@@ -99,6 +99,7 @@
     <ClCompile Include="src\GameEngTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ReentrantLock.h" />
     <ClInclude Include="src\Assertions.h" />
     <ClInclude Include="src\BranchPrediction.h" />
     <ClInclude Include="src\EndianSwap.h" />
