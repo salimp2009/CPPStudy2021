@@ -30,7 +30,9 @@ int main()
 	//Semaphore_Example();
 	//Latch_Example();
 	//Barrier_Example();
-	StopToken_Example();
+	//StopToken_Example();
+	//StopToken_ConditionVar();
+	JThread_Basics();
 #endif
 
 
