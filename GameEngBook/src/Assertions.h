@@ -1,7 +1,7 @@
 #pragma once
 
 
-#if ASSERTIONS_ENABLED	
+#if ASSERTIONS_ENABLED	|| _DEBUG
 
 #define debugBreak()	__debugbreak()
 
