@@ -50,5 +50,11 @@
     <ClInclude Include="src\ExceptionSamples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ReadTextFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\test.txt" />
   </ItemGroup>
 </Project>

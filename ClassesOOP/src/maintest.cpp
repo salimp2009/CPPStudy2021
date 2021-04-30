@@ -11,6 +11,7 @@
 #include "AccountUtilities.h"
 #include "MyString/MyString.h"
 #include "ExceptionSamples.h"
+#include "ReadTextFile.h"
 
 
 
@@ -195,17 +196,21 @@ void Test_CString()
 
 int main()
 {
+
+	ReadFromFile();
+
 	//TestMyString();
 
 	//TestAccount();
 	//Test_CString();
 	
+
 	try
 	{
 		DivideByZero(-200.0, 0.0);
 	}
 	catch (const DivisionByZeroException& e) {
-		std::cout <<"Cant Divide by Zero: " <<e.GetMessage() << '\n';
+		std::cout <<"Cant Divide by Zero: " <<e.GetMsg()<< '\n';
 	}
 	catch ([[maybe_unused]] const NegativeValueException& ex) {
 		std::cout << "Negative values not excepted!!!"<< '\n';

@@ -12,8 +12,8 @@ public:
 	DivisionByZeroException(const char* msg):m_message{msg} {}
 	DivisionByZeroException(std::string msg) :m_message{ std::move(msg) } {}
 
-	const std::string& GetMessage()const & { return m_message; };
-	std::string GetMessage() && { return std::move(m_message); };
+	const std::string& GetMsg()const & { return m_message; };
+	std::string GetMsg() && { return std::move(m_message); };
 
 private:
 	std::string m_message;
