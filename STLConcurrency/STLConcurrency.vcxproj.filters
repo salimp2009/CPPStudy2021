@@ -41,5 +41,8 @@
     <ClInclude Include="src\JThreadsTokenBasics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ThreadLocksLocalStorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

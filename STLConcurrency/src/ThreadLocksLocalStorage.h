@@ -1,0 +1,107 @@
+#pragma once
+
+inline void DeadLockSolution()
+{
+	std::printf("\n---------------Dead Lock Solution---------------------\n");
+	/* alternatives that will not cause a deadlock between threads*/
+	struct CriticalData
+	{
+		std::mutex mut;
+	};
+
+	auto deadLock = [](CriticalData& a, CriticalData& b)
+	{
+		/* defer lock allows to lock mutex when needed*/
+		//std::unique_lock<std::mutex> guard1(a.mut, std::defer_lock);
+		fmt::print("Thread: {}, first mutex!\n", std::this_thread::get_id());
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+		//std::unique_lock<std::mutex> guard2(b.mut, std::defer_lock);
+		fmt::print("Thread: {}, second mutex!\n", std::this_thread::get_id());
+
+		/* lock guard will lock either both or none !*/
+		//std::lock(guard1, guard2);
+		
+		/* C++17 addition; it can lock multiple locks*/
+		std::scoped_lock guard(a.mut, b.mut);
+		/* critical section!!*/
+		fmt::print("Thread: {}, got both mutex!\n", std::this_thread::get_id());
+
+	};
+
+	CriticalData c1;
+	CriticalData c2;
+
+	std::thread t1([&] {deadLock(c1, c2); });
+	std::thread t2(deadLock, std::ref(c1), std::ref(c2));
+
+	t1.join();
+	t2.join();
+
+}
+
+inline void SharedLock_Example()
+{
+	std::printf("\n---------------Shared Lock_Example---------------------\n");
+	/*writer-reader lock;
+	  NOTE: Reader-writer locks do not solve the fundamental problem - threads competing for access to a critical
+	  region, but they do help to minimise the bottleneck
+	*/
+
+	std::map<std::string, int> teleBook{ {"Dijkstra", 1972}, {"Scott", 1976}, {"Ritchie", 1983} };
+
+	std::shared_timed_mutex teleBookMutex;
+
+	auto addToTeleBook = [&](const std::string& name, int year)
+	{
+		std::lock_guard<std::shared_timed_mutex> writerlock(teleBookMutex);
+		fmt::print("Starting Update: {}\n", name);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		teleBook[name] = year;
+		fmt::print("Ending Update: {}\n", name);
+	};
+
+	auto printNumber = [&](const std::string& name)
+	{
+		std::shared_lock<std::shared_timed_mutex> readerLock(teleBookMutex);
+		auto searchResult = teleBook.find(name.data());
+		if (searchResult != teleBook.end())
+		{
+			fmt::print("Reader result for name: {0}: {1}\n", name, teleBook[name]);
+		}
+		else
+		{
+			fmt::print("Reader : name: {0} not found!!!\n", name);
+		}
+	};
+
+
+	std::thread reader1([&]() {printNumber("Scott"); });
+	std::thread reader2([&]() {printNumber("Ritchie"); });
+	std::thread w1([&](){addToTeleBook("Scott",1968);});
+	std::thread reader3([&]() {printNumber("Dijkstra"); });
+	std::thread reader4([&]() {printNumber("Scott"); });
+	std::thread w2([&]() {addToTeleBook("Bjarne", 1965); });
+	std::thread reader5([&]() {printNumber("Scott"); });
+	std::thread reader6([&]() {printNumber("Ritchie"); });
+	std::thread reader7([&]() {printNumber("Scott"); });
+	std::thread reader8([&]() {printNumber("Bjarne"); });
+
+	reader1.join();
+	reader2.join();
+	reader3.join();
+	reader4.join();
+	reader5.join();
+	reader6.join();
+	reader7.join();
+	reader8.join();
+	w1.join();
+	w2.join();
+
+	for (const auto& [name, year] : teleBook)
+	{
+		fmt::print("name: {0}, year: {1}\n", name, year);
+	}
+}
+

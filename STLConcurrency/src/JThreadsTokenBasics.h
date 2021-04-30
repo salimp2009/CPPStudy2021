@@ -41,6 +41,7 @@ inline void StopToken_Example()
 	}
 }
 
+
 inline void StopToken_ConditionVar()
 {
 	std::printf("\n---------------StopToken with Condition Var---------------------\n");

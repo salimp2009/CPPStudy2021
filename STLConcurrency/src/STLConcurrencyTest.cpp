@@ -3,6 +3,7 @@
 #include "MemoryOrderBasics.h"
 #include "SemaphoreLatchBarriers.h"
 #include "JThreadsTokenBasics.h"
+#include "ThreadLocksLocalStorage.h"
 
 int main()
 {
@@ -32,9 +33,10 @@ int main()
 	//Barrier_Example();
 	//StopToken_Example();
 	//StopToken_ConditionVar();
-	JThread_Basics();
+	//JThread_Basics();
 #endif
-
+	//DeadLockSolution();
+	SharedLock_Example();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
