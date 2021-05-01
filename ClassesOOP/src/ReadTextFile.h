@@ -9,8 +9,6 @@
 #include "spdlog/spdlog.h"
 
 
-
-
 inline void ReadFromFile()
 {
 	constexpr auto filename = "src/test.txt";
@@ -26,8 +24,15 @@ inline void ReadFromFile()
 	//std::cout <<"Filename: "<< filename <<", Is File Open: "<<inFile.is_open()<< '\n';
 	fmt::print("Filename: {0}, is File Open: {1}\n ", filename, inFile.is_open());
 
-	//while (!inFile.eof())
-	//{
-	//	
-	//}
+	std::string line;
+
+
+	while (!inFile.eof())
+	{
+		inFile >> line;
+		fmt::print("File content: {}\n", line);
+	}
+
+	
+	inFile.close();
 }

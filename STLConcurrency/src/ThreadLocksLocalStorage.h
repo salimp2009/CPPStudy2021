@@ -105,3 +105,57 @@ inline void SharedLock_Example()
 	}
 }
 
+/* constant expression can be safe initialized in multithread environments so as constexpr*/
+class MyDouble
+{
+private:
+	double val1;
+	double val2;
+public:
+	constexpr MyDouble(double v1, double v2) noexcept : val1{ v1 }, val2{ v2 } {}
+	[[nodiscard]] constexpr auto GetValues() const { return std::make_pair(val1, val2); }
+	[[nodiscard]] constexpr auto GetSum() const { return val1+val2; }
+};
+
+inline void ThreadSafeInitialize()
+{
+	std::printf("\n--------Thread Safe Initialize With Constants--------\n");
+
+	/* All of the below are considered thread safe initialization*/
+	constexpr auto myval = 25.0;
+	
+	constexpr MyDouble mystatics(10.0, myval);
+	constexpr auto mystaticValues = mystatics.GetValues();
+
+	const auto [v1, v2] = mystaticValues;
+
+}
+
+
+inline void CallOnce_ThreadSafeInit()
+{
+	std::printf("\n-------- CallOnce & Thread Safe Init--------\n");
+
+	/* can be called once with multiple function but only one of the functions only one time executed!*/
+	std::once_flag onceFlag;
+
+	auto doOnce = [&]()
+	{
+		std::call_once(onceFlag, []() {fmt::print("calling only once!\n"); });
+	};
+
+	auto doOnce2 = [&]()
+	{
+		std::call_once(onceFlag, []() {fmt::print("calling only once2!\n"); });
+	};
+
+	std::thread t1{ doOnce };
+	std::thread t2{ doOnce };
+	std::thread t3{ doOnce2 };
+	std::thread t4{ doOnce2 };
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+}

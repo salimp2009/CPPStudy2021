@@ -36,7 +36,8 @@ int main()
 	//JThread_Basics();
 #endif
 	//DeadLockSolution();
-	SharedLock_Example();
+	//SharedLock_Example();
+	CallOnce_ThreadSafeInit();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

@@ -205,17 +205,16 @@ int main()
 	//Test_CString();
 	
 
-	try
-	{
-		DivideByZero(-200.0, 0.0);
-	}
-	catch (const DivisionByZeroException& e) {
-		std::cout <<"Cant Divide by Zero: " <<e.GetMsg()<< '\n';
-	}
-	catch ([[maybe_unused]] const NegativeValueException& ex) {
-		std::cout << "Negative values not excepted!!!"<< '\n';
-	}
+	//try
+	//{
+	//	DivideByZero(-200.0, 0.0);
+	//}
+	//catch (const DivisionByZeroException& e) {
+	//	std::cout <<"Cant Divide by Zero: " <<e.GetMsg()<< '\n';
+	//}
+	//catch ([[maybe_unused]] const NegativeValueException& ex) {
+	//	std::cout << "Negative values not excepted!!!"<< '\n';
+	//}
 
-	
-	std::cout << "program continues; from main \n";
+	//std::cout << "program continues; from main \n";
 }
