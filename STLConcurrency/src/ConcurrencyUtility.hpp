@@ -41,3 +41,66 @@ constexpr void printCont(Cont& cont)
 	fmt::print("\n");
 }
 
+class MySingleton
+{
+private:
+	inline static std::once_flag initInstanceFlag{};
+	inline static MySingleton* instance=nullptr;
+	MySingleton() = default;
+	~MySingleton() = default;
+
+public:
+	MySingleton(const MySingleton&) = delete;
+	MySingleton operator=(const MySingleton&) = delete;
+
+	[[nodiscard]] static MySingleton* getInstance()
+	{
+		std::call_once(initInstanceFlag, MySingleton::initSingleton);
+		return instance;
+	}
+
+	/* instance of a Singleton will create only one time when it is first called */
+	static void initSingleton()
+	{
+		instance = new MySingleton();
+	}
+};
+
+/* Thread Safe with a know method by Richar Meirs Singleton
+	NOTE: check if your compiler support static thread safe !!!!
+	VS Studio blog indicates since c++11 static variable are thread safe but it might not be in another compiler
+	see: https://docs.microsoft.com/en-us/cpp/cpp/storage-classes-cpp?view=msvc-160
+*/
+class MySingletonRM
+{
+public:
+	[[nodiscard]] static MySingletonRM& getInstance() 
+	{
+		static MySingletonRM instance;
+		return instance;
+	}
+
+private:
+	MySingletonRM() = default;
+	~MySingletonRM() = default;
+	MySingletonRM(const MySingletonRM&) = delete;
+	MySingletonRM operator=(const MySingletonRM&) = delete;
+};
+
+struct MyData
+{
+	inline static std::string gName = "global";					// unique in program/struct/class
+	inline static thread_local std::string tName = "tlocal";	// unique per thread
+	std::string lName = "local";								// unique per object
+
+	void printData(const std::string& msg)
+	{
+		std::cout << msg << "\n";
+		std::cout << " - gName : " << gName << '\n';
+		std::cout << " - tName : " << tName << '\n';
+		std::cout << " - lName : " << lName << '\n';
+	}
+
+};
+
+inline thread_local MyData myThreadData;  // one object per thread

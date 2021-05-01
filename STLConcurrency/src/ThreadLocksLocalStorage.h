@@ -1,4 +1,6 @@
 #pragma once
+#include "ConcurrencyUtility.hpp"
+
 
 inline void DeadLockSolution()
 {
@@ -75,7 +77,6 @@ inline void SharedLock_Example()
 			fmt::print("Reader : name: {0} not found!!!\n", name);
 		}
 	};
-
 
 	std::thread reader1([&]() {printNumber("Scott"); });
 	std::thread reader2([&]() {printNumber("Ritchie"); });
@@ -159,3 +160,84 @@ inline void CallOnce_ThreadSafeInit()
 	t3.join();
 	t4.join();
 }
+
+inline void Singleton_ThreadSafe()
+{
+	std::printf("\n------Singleton ThreadSafe with CallOnce------\n");
+
+	std::cout << "MySingleton::getInstance(): " << MySingleton::getInstance() << '\n';
+	std::cout << "MySingleton::getInstance(): " << MySingleton::getInstance() << '\n';
+
+	std::cout << "MySingletonRM::getInstance(): " <<&(MySingletonRM::getInstance()) << '\n';
+	std::cout << "MySingletonRM::getInstance(): " <<&(MySingletonRM::getInstance()) << '\n';
+}
+
+thread_local std::string threadName = "Hello from";
+
+inline void ThreadLocalStorage_Basics()
+{
+	std::printf("\n------Thread Local StorageBasics------\n");
+	
+	std::mutex coutMutex;
+	
+	auto first = []() noexcept  {threadName += " first"; };
+	auto second = []() noexcept {threadName += " second"; };
+	auto third= []() noexcept  {threadName += " third"; };
+
+	auto addThreadLocal = [&](const std::string& message)
+	{
+		/* global static variable thread_local does not need to be captured!!*/
+		threadName += message;
+		
+		/* each thread will call the function and add that local variable 
+		   to the threadName which at this point has the message of each thread*/
+		first();
+		second();
+		third();
+		std::lock_guard lock{ coutMutex };
+		std::cout << "threadName: " << threadName << ", &threadName: " << &threadName << '\n';
+		
+		//fmt::print("fmt thread message : {0}, the message address: {1}\n", threadName,(void*)&threadName);
+	};
+
+	std::thread t1{ addThreadLocal," t1" };
+	std::thread t2{ addThreadLocal, " t2" };
+	std::thread t3{ addThreadLocal, " t3" };
+	std::thread t4{ addThreadLocal, " t4" };
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+
+}
+
+inline void ThreadLocalStorage_Basics2()
+{
+	std::printf("\n------Thread Local Storage Basics 2------\n");
+
+	myThreadData.printData("function Basic2() begin: ");
+
+	myThreadData.gName = "thread t1 name";
+	myThreadData.lName = "thread t1 name";
+	myThreadData.tName = "thread t1 name";
+
+	myThreadData.printData("function Basic2() later: ");
+
+
+	auto foo = []()
+	{
+		myThreadData.printData("foo lambda (): begin:");
+		myThreadData.gName = "thread t2 name";
+		myThreadData.lName = "thread t2 name";
+		myThreadData.tName = "thread t2 name";
+		myThreadData.printData("foo lambda (): end:");
+	};
+
+	std::thread t1(foo);
+	t1.join();
+
+	myThreadData.printData("function Basic2() end: ");
+
+}
+

@@ -37,7 +37,10 @@ int main()
 #endif
 	//DeadLockSolution();
 	//SharedLock_Example();
-	CallOnce_ThreadSafeInit();
+	//CallOnce_ThreadSafeInit();
+	//Singleton_ThreadSafe();
+	ThreadLocalStorage_Basics();
+	//ThreadLocalStorage_Basics2();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
