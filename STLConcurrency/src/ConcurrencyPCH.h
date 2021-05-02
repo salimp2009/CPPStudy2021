@@ -14,8 +14,13 @@
 #include <random>
 #include <exception>
 
+
 #include <numeric>
 #include <variant>
+
+#if __has_include(<span>)
+	#include <span>
+#endif
 
 #if __has_include(<ranges>)
 	#include <ranges>

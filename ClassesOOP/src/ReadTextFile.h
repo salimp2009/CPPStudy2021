@@ -24,7 +24,7 @@ inline void ReadFromFile()
 	//std::cout <<"Filename: "<< filename <<", Is File Open: "<<inFile.is_open()<< '\n';
 	fmt::print("Filename: {0}, is File Open: {1}\n ", filename, inFile.is_open());
 
-	std::string line;
+	char line[10];
 
 
 	while (!inFile.eof())

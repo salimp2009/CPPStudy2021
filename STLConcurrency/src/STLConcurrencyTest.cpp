@@ -4,6 +4,7 @@
 #include "SemaphoreLatchBarriers.h"
 #include "JThreadsTokenBasics.h"
 #include "ThreadLocksLocalStorage.h"
+#include "TaskPromiseFuturesBase.h"
 
 int main()
 {
@@ -39,8 +40,11 @@ int main()
 	//SharedLock_Example();
 	//CallOnce_ThreadSafeInit();
 	//Singleton_ThreadSafe();
-	ThreadLocalStorage_Basics();
+	//ThreadLocalStorage_Basics();
 	//ThreadLocalStorage_Basics2();
+	//FireForgetFutures();
+	dotProductAsync();
+	
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
