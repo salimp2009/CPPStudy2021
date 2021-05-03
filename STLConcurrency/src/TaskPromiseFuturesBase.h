@@ -22,7 +22,6 @@ inline void FireForgetFutures()
 			fmt::print("second thread!!\n");
 		});
 
-
 	fmt::print("main thread!!\n");
 }
 
@@ -31,9 +30,12 @@ inline void dotProductAsync()
 {
 	std::printf("\n------ dot Product with Async------\n");
 
-	static const int NUM = 100'000;
+	static const int NUM = 100;
 
-	auto dotProduct = [](const std::vector<int>& v, const std::vector<int>& w) noexcept
+	//auto dotProduct = [](const std::vector<int>& v, const std::vector<int>& w) noexcept
+	/* ALTERNATIVE Using std::span ; C++20*/
+	auto dotProduct = [](std::span<int> v, std::span<int> w) noexcept
+
 	{
 		auto vSize = v.size();
 
@@ -79,6 +81,11 @@ inline void dotProductAsync()
 	}
 	std::cout<<"dot product : "<<dotProduct(v, w)<<'\n';
 
+	/* NOTE: this is for testing a bug in std::inner_procut implementation of VS 2019 16.9.4
+		the end of the container gives exception error if passed with &vec1[vec1.size()]
+		and if &vec1[vec1.size()-1] then it does not take the last elements into account!
+		reported VS Developer web site; 
+	*/
 	//std::vector<int> vec1 = { 1,2,3,4 };
 	//std::vector<int> vec2 = { 1,2,3,4 };
 
@@ -87,4 +94,120 @@ inline void dotProductAsync()
 	//std::cout << result << '\n';
 
 }
+
+
+
+inline void PackagedTask_Basics()
+{
+	std::printf("\n------ Packaged Task_Basics------\n");
+
+	
+	auto sumUp = [](int beg, int end) 
+	{
+		long long int sum{ 0 };
+		for (int i = beg; i < end; ++i)
+		{
+			sum += i;
+		}
+		return sum;
+	};
+
+
+	std::packaged_task<long long(int, int)> sumTask1(sumUp);
+	std::packaged_task<long long(int, int)> sumTask2(sumUp);
+	std::packaged_task<long long(int, int)> sumTask3(sumUp);
+	std::packaged_task<long long(int, int)> sumTask4(sumUp);
+
+	auto fut1 = sumTask1.get_future();
+	auto fut2 = sumTask2.get_future();
+	auto fut3 = sumTask3.get_future();
+	auto fut4 = sumTask4.get_future();
+
+	std::deque<std::packaged_task<long long(int,int)>> allTasks;
+
+	allTasks.push_back(std::move(sumTask1));
+	allTasks.push_back(std::move(sumTask2));
+	allTasks.push_back(std::move(sumTask3));
+	allTasks.push_back(std::move(sumTask4));
+
+	int begin{ 1 };
+	int increment{ 2500 };
+	int end = begin + increment;
+
+	while (not allTasks.empty())
+	{
+		auto myTask = std::move(allTasks.front());
+		allTasks.pop_front();
+		std::thread sumThread(std::move(myTask), begin, end);
+		begin = end;
+		end += increment;
+		sumThread.detach();
+	}
+
+	auto sum = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+	fmt::print("sum of 0...10'000: {}\n", sum);
+
+}
+
+inline void PackagedTask_Reuse()
+{
+	std::printf("\n------ Packaged Task Reuse------\n");
+
+	auto calcProducts = [](std::packaged_task<int(int, int)>& task, const std::vector<std::pair<int, int>>& pairs)
+	{
+		fmt::print("thread id {}\n", std::this_thread::get_id());
+		for (auto& [first, second] : pairs)
+		{
+			auto fut = task.get_future();
+			task(first, second);
+			fmt::print("first: {0}, second: {1} = {2}\n", first, second, fut.get());
+			/* once we use the task we reset to use again with the next task*/
+			task.reset();
+		}
+		std::printf("\n");
+	};
+
+	std::vector<std::pair<int, int>> allPairs;
+	allPairs.emplace_back(1, 2);
+	allPairs.emplace_back(2, 3);
+	allPairs.emplace_back(3, 4);
+	allPairs.emplace_back(4, 5);
+	allPairs.emplace_back(7, 8);
+
+	std::packaged_task<int(int, int)> task{ [] (int first, int second)
+		{
+			return first * second;
+		} };
+
+	/* send by main thread*/
+	calcProducts(task, allPairs);
+
+	/* child thread*/
+	std::thread t(calcProducts, std::ref(task), std::ref(allPairs));
+
+	t.join();
+}
+
+
+inline void PromiseFuture_Basics()
+{
+	std::printf("\n-----Promise Future Basics-----\n");
+
+	auto product = [](std::promise<int>&& intPromise, int a, int b)
+	{
+		intPromise.set_value(a * b);
+	};
+
+
+	auto div = [] (std::promise<int> && intPromise, int a, int b) 
+	{
+		assert(b > 0);
+		intPromise.set_value(a / b);
+	};
+
+
+
+}
+
 

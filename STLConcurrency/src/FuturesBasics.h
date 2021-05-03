@@ -80,6 +80,7 @@ inline void Futures_WaitingTwoTasks()
 
 }
 
+
 inline void SharedFutures_Example()
 {
 	std::printf("\n---------------Shared Futures-------------------------\n");
@@ -126,6 +127,7 @@ inline void SharedFutures_Example()
 
 
 }
+
 
 inline void ThreadPromises_Example()
 {
@@ -186,6 +188,7 @@ inline void ThreadPromises_Example()
 
 }
 
+
 inline void MutexLock_Basics()
 {
 	std::printf("\n---------------Mutex and Guard Lock-------------------------\n");
@@ -210,6 +213,7 @@ inline void MutexLock_Basics()
 	print("hi from main thread");
 
 }
+
 
 inline void ConditionVariable_Basics()
 {
@@ -256,6 +260,7 @@ inline void ConditionVariable_Basics()
 	auto fut2 = std::async(std::launch::async, consume);
 
 }
+
 
 inline void Atomics_Basics()
 {

@@ -230,7 +230,7 @@ constexpr void capture(Args&&... args) noexcept
 	template<typename T, typename U, typename V>
 	struct Triple 
 	{ 
-		/* added constructor otherwise gives false error although it work even without it */
+		/* added constructor otherwise gives false error although it works even without it */
 		Triple(T tt, U uu, V vv) :t{ tt }, u{ uu }, v{ vv } {}
 		T t; U u; V v; 
 	};
