@@ -46,7 +46,9 @@ int main()
 	//FireForgetFutures();
 	
 	//PackagedTask_Basics();
-	PackagedTask_Reuse();
+	//PackagedTask_Reuse();
+	//PromiseFuture_Basics();
+	WaitFor_Basics();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

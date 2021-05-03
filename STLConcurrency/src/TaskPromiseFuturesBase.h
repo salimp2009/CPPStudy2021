@@ -200,14 +200,61 @@ inline void PromiseFuture_Basics()
 	};
 
 
-	auto div = [] (std::promise<int> && intPromise, int a, int b) 
+	auto div = []<typename T> (std::promise<int>&& intPromise,	T a, T b) 
+	requires requires(T a, T b) { (std::is_same_v<T, int> && b!=0); }
 	{
-		assert(b > 0);
-		intPromise.set_value(a / b);
+		intPromise.set_value(a /  b);
 	};
 
+	int a = 20;
+	int b = 10;
+
+	std::promise<int> prodPromise;
+	std::promise<int> divPromise;
+
+	auto prodResult = prodPromise.get_future();
+	auto divResult = divPromise.get_future();
+
+	std::thread prodThread(product, std::move(prodPromise), a, b);
+	std::thread divThread(div, std::move(divPromise), a, b);
+
+	fmt::print("prod : {}\n", prodResult.get());
+	fmt::print("div : {}\n", divResult.get());
+	
+	prodThread.join();
+	divThread.join();
+
+}
 
 
+inline void WaitFor_Basics()
+{
+	std::printf("\n-----Promise Future Basics-----\n");
+
+	using namespace std::literals::chrono_literals;
+
+	auto getAnswer = [](std::promise<int> intPromise)
+	{
+		std::this_thread::sleep_for(3s);
+		intPromise.set_value(42);
+	};
+
+	std::promise<int> answerPromise;
+	auto fut = answerPromise.get_future();
+
+	std::thread answerThread(getAnswer, std::move(answerPromise));
+
+	std::future_status status;
+	do 
+	{
+		status = fut.wait_for(0.2s);
+		std::printf("...doing somethng else\n");
+	} while (status != std::future_status::ready);
+
+	
+	fmt::print("The answer is: {}", fut.get());
+
+	answerThread.join();
 }
 
 
