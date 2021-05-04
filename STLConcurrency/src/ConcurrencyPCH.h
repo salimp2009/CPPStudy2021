@@ -38,6 +38,7 @@
 #include <atomic>
 #include <csignal>
 #include <shared_mutex>
+#include <execution>
 
 #if __has_include(<semaphore>)
 	#include <semaphore>

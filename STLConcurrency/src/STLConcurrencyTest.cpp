@@ -5,6 +5,7 @@
 #include "JThreadsTokenBasics.h"
 #include "ThreadLocksLocalStorage.h"
 #include "TaskPromiseFuturesBase.h"
+#include "ParalelAlgorithmsBasics.h"
 
 int main()
 {
@@ -36,8 +37,7 @@ int main()
 	//StopToken_ConditionVar();
 	//JThread_Basics();
 	//dotProductAsync();
-
-	SharedFuturePromise_Basics();
+	//SharedFuturePromise_Basics();
 #endif
 	//DeadLockSolution();
 	//SharedLock_Example();
@@ -51,6 +51,10 @@ int main()
 	//PackagedTask_Reuse();
 	//PromiseFuture_Basics();
 	//WaitFor_Basics();
+
+	//SortParallel_Basics();
+	ForEachParallel_Basics();
+
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
@@ -66,5 +70,6 @@ int main()
 		use alignas at least with the size of destructor or smaller ; sharing same cache is thread safe but expensive !!!"
 	*/
 	//std::cout <<"hardware_destructive_interference_size: " <<std::hardware_destructive_interference_size << '\n';
+
 
 }

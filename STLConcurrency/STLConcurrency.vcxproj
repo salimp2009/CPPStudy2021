@@ -115,6 +115,7 @@
     <ClInclude Include="src\ConcurrencyUtility.hpp" />
     <ClInclude Include="src\FuturesBasics.h" />
     <ClInclude Include="src\MemoryOrderBasics.h" />
+    <ClInclude Include="src\ParalelAlgorithmsBasics.h" />
     <ClInclude Include="src\SemaphoreLatchBarriers.h" />
     <ClInclude Include="src\TaskPromiseFuturesBase.h" />
     <ClInclude Include="src\ThreadLocksLocalStorage.h" />
