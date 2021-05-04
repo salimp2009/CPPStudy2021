@@ -36,6 +36,8 @@ int main()
 	//StopToken_ConditionVar();
 	//JThread_Basics();
 	//dotProductAsync();
+
+	SharedFuturePromise_Basics();
 #endif
 	//DeadLockSolution();
 	//SharedLock_Example();
@@ -48,7 +50,7 @@ int main()
 	//PackagedTask_Basics();
 	//PackagedTask_Reuse();
 	//PromiseFuture_Basics();
-	WaitFor_Basics();
+	//WaitFor_Basics();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

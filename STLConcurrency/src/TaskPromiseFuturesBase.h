@@ -233,7 +233,7 @@ inline void WaitFor_Basics()
 
 	using namespace std::literals::chrono_literals;
 
-	auto getAnswer = [](std::promise<int> intPromise)
+	auto getAnswer = [](std::promise<int>&& intPromise)
 	{
 		std::this_thread::sleep_for(3s);
 		intPromise.set_value(42);
@@ -258,3 +258,48 @@ inline void WaitFor_Basics()
 }
 
 
+
+
+inline void SharedFuturePromise_Basics()
+{
+	std::printf("\n-----Shared Future Promise Basics-----\n");
+
+	/* ONLY to prevent interleaving of output*/
+	std::mutex coutMut;
+
+	auto div = []<typename T>(std::promise<T> && inPromise, T a, T b)  requires std::integral<T> || std::floating_point<T>
+	{
+		assert(b != 0);
+		inPromise.set_value(a / b);
+	};
+
+	auto requestor = [&]<typename T>(std::shared_future<T> shaFut) requires std::integral<T> || std::floating_point<T>
+	//auto requestor = [&](std::shared_future<int> shaFut) 
+	{
+		std::lock_guard<std::mutex> coutGuard(coutMut);
+
+		fmt::print("thread ID:({0}): {1}\n", std::this_thread::get_id(), shaFut.get());
+
+	};
+
+
+	std::promise<int> divPromise;
+	std::shared_future divResult = divPromise.get_future();
+
+	// calculate division in a seperate thread
+	std::thread divThread(div, std::move(divPromise), 20, 10);
+
+	// send the result to other threads
+	std::thread reqThread1(requestor, divResult);
+	std::thread reqThread2(requestor, divResult);
+	std::thread reqThread3(requestor, divResult);
+	std::thread reqThread4(requestor, divResult);
+
+	divThread.join();
+
+	reqThread1.join();
+	reqThread2.join();
+	reqThread3.join();
+	reqThread4.join();
+
+}
