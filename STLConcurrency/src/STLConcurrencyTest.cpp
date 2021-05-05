@@ -55,8 +55,8 @@ int main()
 	//SortParallel_Basics();
 	//ForEachParallel_Basics();
 	/* run this code on Release to see better results !!*/
-	TransformParallel_Basics();
-
+	//TransformParallel_Basics();
+	AccumulateReduce_Basics(20'000'000);
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

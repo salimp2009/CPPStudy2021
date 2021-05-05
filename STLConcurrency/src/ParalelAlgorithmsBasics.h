@@ -74,3 +74,34 @@ inline void TransformParallel_Basics(std::size_t vectorSize= 4'000'000)
 
 }
 
+inline void AccumulateReduce_Basics(std::size_t vectorSize = 4'000'000)
+{
+	std::printf("\n----- Accumulate Seq vs Reduce Parallel----\n");
+
+	const std::size_t vecSize = vectorSize;
+	fmt::print("vector size: {}\n", vecSize);
+	std::vector<double>vec(vecSize, 0.5);
+	
+	RunAndMeasure("std::accumulate seq", [&vec]()
+		{
+			 return std::accumulate(vec.begin(), vec.end(), 0.0);
+		});
+
+	RunAndMeasure("std::reduce seq", [&vec]()
+		{
+			return std::reduce(std::execution::seq, vec.begin(), vec.end(), 0.0);
+		});
+
+	RunAndMeasure("std::reduce par", [&vec]()
+		{
+			return std::reduce(std::execution::par, vec.begin(), vec.end(), 0.0);
+		});
+
+
+}
+
+
+
+
+
+
