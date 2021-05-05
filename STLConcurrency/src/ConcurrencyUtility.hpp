@@ -104,3 +104,18 @@ struct MyData
 };
 
 inline thread_local MyData myThreadData;  // one object per thread
+
+
+template<typename TFunct>
+constexpr void RunAndMeasure(std::string_view title, TFunct&& func) 
+{
+	auto start = std::chrono::high_resolution_clock::now();
+	
+	auto retSize = func();
+	const auto end = std::chrono::high_resolution_clock::now();
+	
+	auto duration = std::chrono::duration<double, std::milli>(end - start).count();
+
+	fmt::print("title: {0}, duration: {1}, returned Size: {2}\n", title, duration, retSize);
+
+}

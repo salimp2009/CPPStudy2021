@@ -26,7 +26,6 @@ inline void ForEachParallel_Basics()
 	std::vector<int> vec1 = { 1,2,3,4,5,6,7,8,9 };
 	std::atomic<int> sum{ 0 };
 	
-
 //	std::for_each(std::execution::par, vec1.begin(), vec1.end(), [&](auto&& elem) {sum += elem+elem; });
 	std::for_each(std::execution::par_unseq, vec1.begin(), vec1.end(), [&](auto&& elem) 
 		{
@@ -39,9 +38,39 @@ inline void ForEachParallel_Basics()
 
 	fmt::print("sum: {}\n", sum);
 
+}
+
+inline void TransformParallel_Basics(std::size_t vectorSize= 4'000'000)
+{
+	std::printf("\n-----Transform Parallel-----\n");
+
+	const std::size_t vecSize = vectorSize;
+	fmt::print("vector size: {}\n", vecSize);
+	std::vector<double>vec(vecSize, 0.5);
+	std::vector out(vec);
+
+	RunAndMeasure("std::transform seq", [&vec, &out]()
+		{
+			std::transform(std::execution::seq, vec.begin(), vec.end(), out.begin(), 
+				[](auto&& elem) 
+				{
+					return std::sin(elem) * std::cos(elem); 
+				});
+
+			return out.size();
+		});
+
+	RunAndMeasure("std::transform par", [&vec, &out]()
+		{
+			std::transform(std::execution::par, vec.begin(), vec.end(), out.begin(),
+				[](auto&& elem)
+				{
+					return std::sin(elem) * std::cos(elem);
+				});
+
+			return out.size();
+		});
 
 
 }
-
-
 
