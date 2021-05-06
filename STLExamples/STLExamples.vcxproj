@@ -99,6 +99,8 @@
     <ClCompile Include="src\STLtest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Allocators\CustomAllocatorTests.hpp" />
+    <ClInclude Include="src\Allocators\MyAlloc.hpp" />
     <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
     <ClInclude Include="src\FunctObjLambdaUtils.hpp" />

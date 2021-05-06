@@ -6,6 +6,7 @@
 #include "ChronoExamples.hpp"
 #include "FunctionObjectsLambdas.h"
 #include "STLAlgorithmTest.h"
+#include "Allocators/CustomAllocatorTests.hpp"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -357,10 +358,12 @@ int main()
 	//FunctionObjLamb_TestC17();
 	//LambdaIIFE_C17();
 	//LambdasInConcurency();
-	STLAlgorithms_Test();
-	STLAlgorithms_Test2();
-	STLAlgorithms_Test3();
-	STLAlgorithms_Test4();
+	//STLAlgorithms_Test();
+	//STLAlgorithms_Test2();
+	//STLAlgorithms_Test3();
+	//STLAlgorithms_Test4();
+	CustomAllocator_Basics();
+
 
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
