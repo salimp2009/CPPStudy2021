@@ -62,7 +62,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>;../vendor/spdlog/include;../vendor;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;../vendor/spdlog/include;../vendor;;src\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,7 +80,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectName)\src;../vendor/spdlog/include;../vendor;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectName)\src;../vendor/spdlog/include;../vendor;;src\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Allocators\StackAllocator.cpp" />
     <ClCompile Include="src\STLpch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">STLpch.h</PrecompiledHeaderFile>
@@ -101,6 +102,7 @@
   <ItemGroup>
     <ClInclude Include="src\Allocators\CustomAllocatorTests.hpp" />
     <ClInclude Include="src\Allocators\MyAlloc.hpp" />
+    <ClInclude Include="src\Allocators\StackAllocator.h" />
     <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
     <ClInclude Include="src\FunctObjLambdaUtils.hpp" />

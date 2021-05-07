@@ -1,13 +1,18 @@
 #pragma once
 
 #include "MyAlloc.hpp"
+#include "StackAllocator.h"
+
 
 inline void CustomAllocator_Basics()
 {
 	fmt::print("\n---------------Custom Allocator Basics--------------------------\n");
 
+	
 
 	std::vector<int, MyAlloc<int>> vec1{ 1,2,3,4,5 };
+
+	//std::cout << allocCount << '\n';
 
 	printCont(vec1);
 
