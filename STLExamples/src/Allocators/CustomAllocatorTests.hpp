@@ -2,14 +2,12 @@
 
 #include "MyAlloc.hpp"
 #include "Allocators/StackMemoryPool.h"
-#include "Allocators/StackAllocator.h"
+#include "Allocators/StackAllocator.hpp"
 
 
 inline void CustomAllocator_Basics()
 {
 	fmt::print("\n---------------Custom Allocator Basics--------------------------\n");
-
-	
 
 	std::vector<int, MyAlloc<int>> vec1{ 1,2,3,4,5 };
 
@@ -24,3 +22,26 @@ inline void CustomAllocator_Basics()
 	Vec<int> vec2{ vec1 };
 	printCont(vec2);
 }
+
+inline void StackAllocator_MemoryPool()
+{
+	fmt::print("\n---------------StackAllocator_MemoryPool-------------------------\n");
+
+	StackAllocator<char, false> alloc(128);
+
+	using Str = std::basic_string<char, std::char_traits<char>, StackAllocator<char, false>>;
+
+	Str str(alloc);
+
+	str = "lalala";
+	str = "OOOOOOlalala";
+
+	
+	using Str2 = std::basic_string<char, std::char_traits<char>, MyAlloc<char>>;
+
+	Str2 str2;
+	str2 = "str2sttttttttt";
+	str2 = "wortwotrtttttttttttttt22222222222222";
+
+}
+

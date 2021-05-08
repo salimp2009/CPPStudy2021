@@ -78,7 +78,11 @@ void* StackMemoryPool::allocate(PtrSize size) noexcept
 		out = nullptr;
 		fmt::print("Not enough memory size!");
 	}
+#if  _DEBUG
+	std::printf("Memory pool: Allocating\n");
+#endif //  _DEBUG
 
+	
 	return static_cast<void*>(out);
 }
 

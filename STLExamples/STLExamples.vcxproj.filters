@@ -59,7 +59,7 @@
     <ClInclude Include="src\Allocators\StackMemoryPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Allocators\StackAllocator.h">
+    <ClInclude Include="src\Allocators\StackAllocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

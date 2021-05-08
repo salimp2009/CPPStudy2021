@@ -9,7 +9,9 @@ concept ConvertibleType = std::is_convertible_v<T2, T1>;
 template<typename T>
 class MyAlloc
 {
+
 private:
+
 	static inline uint32_t allocCount{ 0 };
 public:
 	typedef T value_type;

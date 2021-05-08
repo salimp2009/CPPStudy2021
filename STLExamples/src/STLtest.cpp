@@ -362,9 +362,9 @@ int main()
 	//STLAlgorithms_Test2();
 	//STLAlgorithms_Test3();
 	//STLAlgorithms_Test4();
-	CustomAllocator_Basics();
-
-
+	//CustomAllocator_Basics();
+	StackAllocator_MemoryPool();
+	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20
