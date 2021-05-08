@@ -198,6 +198,7 @@ int main()
 {
 
 	ReadFromFile();
+	ReadFromFile_Poem();
 
 	//TestMyString();
 

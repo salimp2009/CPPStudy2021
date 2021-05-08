@@ -56,5 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\test.txt" />
+    <Text Include="src\poem.txt" />
   </ItemGroup>
 </Project>

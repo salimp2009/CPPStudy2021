@@ -1,5 +1,5 @@
 #include "STLpch.h"
-#include "Allocators/StackAllocator.h"
+#include "Allocators/StackMemoryPool.h"
 
 
 struct MemoryBlockHeader
@@ -56,13 +56,13 @@ PtrSize StackMemoryPool::getAllocatedSize() const noexcept
 	return top.load()-memory;
 }
 
-void* StackMemoryPool::allocate(PtrSize size)
+void* StackMemoryPool::allocate(PtrSize size) noexcept
 {
 	assert(memory != nullptr);
-	PtrSize realsize = calcAlignSize(size + sizeof(MemoryBlockHeader));
+	size = calcAlignSize(size + sizeof(MemoryBlockHeader));
 
 	/*check if the size is bigger to fit in 32 bits*/
-	assert(realsize < std::numeric_limits<U32>::max());
+	assert(size < std::numeric_limits<U32>::max());
 
 	U8* out = top.fetch_add(size);
 
@@ -84,16 +84,34 @@ void* StackMemoryPool::allocate(PtrSize size)
 
 bool StackMemoryPool::free(void* p) noexcept
 {
-	return false;
+	/* Correct the p for the added memory block header*/
+	U8* realptr = static_cast<U8*>(p) - sizeof(MemoryBlockHeader);
+	
+	/* check realptr is within the pools preallocated memory*/
+	assert(realptr >= memory && realptr < memory + memSize);
+
+	U32 size = ((MemoryBlockHeader*)realptr)->size;
+
+	/* the top of the stack has to be revised to free memory from the stack via atomic operations
+		TODO : check if desired should be const so it can be adjusted by another thread
+	*/
+	U8* expected = realptr + size;
+	U8* desired = realptr;
+	auto exchange = top.compare_exchange_strong(expected, desired);
+		
+	return exchange;
 }
 
 void StackMemoryPool::reset() noexcept
 {
+	/*memory might be nullptr if moved*/
+	assert(memory != nullptr);
+
+	/* revised this from top = memory to make it safe for multithread*/
+	top.store(memory);
 }
-
-
 
 const PtrSize StackMemoryPool::calcAlignSize(PtrSize size) const noexcept
 {
-	return size;
+	return size + (size%(alignmentBits/8));
 }

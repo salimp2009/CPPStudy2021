@@ -70,6 +70,7 @@ public:
 	NOTE: check if your compiler support static thread safe !!!!
 	VS Studio blog indicates since c++11 static variable are thread safe but it might not be in another compiler
 	see: https://docs.microsoft.com/en-us/cpp/cpp/storage-classes-cpp?view=msvc-160
+	TODO: ADD a volatile dummy variable in getInstance() to prevent reordering ; see the Concurrency with Moderness book!!!
 */
 class MySingletonRM
 {

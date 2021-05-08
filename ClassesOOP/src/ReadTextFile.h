@@ -36,3 +36,28 @@ inline void ReadFromFile()
 	
 	inFile.close();
 }
+
+inline void ReadFromFile_Poem()
+{
+	constexpr auto filename = "src/poem.txt";
+	std::ifstream inFile;
+	inFile.open(filename);
+
+	if (!inFile)
+	{
+		std::cerr << "File Not Found!!\n";
+		return;
+	}
+
+	fmt::print("Filename: {0}, is File Open: {1}\n", filename, inFile.is_open());
+
+	std::string line;
+
+	while (std::getline(inFile, line))
+	{
+		fmt::print("{}\n", line);
+	}
+
+	inFile.close();
+}
+

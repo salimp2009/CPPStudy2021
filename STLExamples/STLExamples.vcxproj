@@ -90,7 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Allocators\StackAllocator.cpp" />
+    <ClCompile Include="src\Allocators\StackMemoryPool.cpp" />
     <ClCompile Include="src\STLpch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">STLpch.h</PrecompiledHeaderFile>
@@ -103,6 +103,7 @@
     <ClInclude Include="src\Allocators\CustomAllocatorTests.hpp" />
     <ClInclude Include="src\Allocators\MyAlloc.hpp" />
     <ClInclude Include="src\Allocators\StackAllocator.h" />
+    <ClInclude Include="src\Allocators\StackMemoryPool.h" />
     <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
     <ClInclude Include="src\FunctObjLambdaUtils.hpp" />

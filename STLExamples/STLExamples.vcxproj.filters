@@ -21,7 +21,7 @@
     <ClCompile Include="src\STLpch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Allocators\StackAllocator.cpp">
+    <ClCompile Include="src\Allocators\StackMemoryPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Allocators\MyAlloc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Allocators\StackMemoryPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Allocators\StackAllocator.h">

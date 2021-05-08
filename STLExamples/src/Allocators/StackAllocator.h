@@ -1,49 +1,18 @@
 #pragma once
+#include "Allocators/StackMemoryPool.h"
 
-using PtrSize			= std::size_t;
-using difference_type	= std::ptrdiff_t;
-using U8				= std::uint8_t;
-using U32				= std::uint32_t;
+/* TODO ; check if the type of the stack allocator "T" needs to atomic constraint to use with custom types!!!*/
+template<typename T>
+concept atomicTypes = !std::is_polymorphic_v<T> && std::is_trivially_copy_constructible_v<T> && std::is_trivial_v<T>;
 
-class StackMemoryPool
+
+template<typename T, bool deallocationFlag=false, U32 alignmentBits=16>
+class StackAllocator
 {
-private:
-		
-public:
-	StackMemoryPool(PtrSize size, U32 alignbits = 16);
 
-	StackMemoryPool(const StackMemoryPool&) = delete;
-	StackMemoryPool& operator=(const StackMemoryPool&) = delete;
 
-	StackMemoryPool(StackMemoryPool&& other) noexcept
-	{
-		*this = std::move(other);
-	}
 
-	StackMemoryPool& operator=(StackMemoryPool&& other) noexcept;
-	
-	~StackMemoryPool();
 
-	PtrSize getSize() const noexcept { return memSize; }
 
-	PtrSize getAllocatedSize() const noexcept ;
 
-	void* allocate(PtrSize size);
-
-	bool free(void* p) noexcept;
-
-	void reset() noexcept;
-
-private:
-	U8* memory{ nullptr };
-	
-	/*Size of pre-allocated memory chunck*/
-	PtrSize memSize{ 0 };
-	
-	/* pointer to top of the memory stack*/
-	std::atomic<U8*>top{ nullptr };
-
-	U32 alignmentBits{ 0 };
-
-	const PtrSize calcAlignSize(PtrSize size) const noexcept;
 };
