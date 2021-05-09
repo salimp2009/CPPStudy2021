@@ -28,6 +28,7 @@ StackMemoryPool::~StackMemoryPool()
 	if (memory != nullptr)
 	{
 		::_aligned_free(memory);
+		
 	}
 }
 
@@ -113,6 +114,7 @@ void StackMemoryPool::reset() noexcept
 
 	/* revised this from top = memory to make it safe for multithread*/
 	top.store(memory);
+	
 }
 
 const PtrSize StackMemoryPool::calcAlignSize(PtrSize size) const noexcept

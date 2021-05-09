@@ -9,6 +9,7 @@
 #include "Allocators/CustomAllocatorTests.hpp"
 
 
+
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
 template<typename V, typename R>
 std::ostream& operator<<(std::ostream& os, const std::chrono::duration<V, R>& dur)
@@ -364,6 +365,7 @@ int main()
 	//STLAlgorithms_Test4();
 	//CustomAllocator_Basics();
 	StackAllocator_MemoryPool();
+	
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();

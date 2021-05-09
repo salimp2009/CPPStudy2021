@@ -33,15 +33,19 @@ inline void StackAllocator_MemoryPool()
 
 	Str str(alloc);
 
-	str = "lalala";
-	str = "OOOOOOlalala";
-
+	str = "str2sttttt";
+	fmt::print("max size: {0}, allocated size: {1} \n", alloc.maxSize(), alloc.allocatedSize());
+	str = "wt222daaaaaaaaaaaaaaaaaaaaaaaaaaaaad2222";
+	fmt::print("max size: {0}, allocated size: {1} \n", alloc.maxSize(), alloc.allocatedSize());
 	
+
+
 	using Str2 = std::basic_string<char, std::char_traits<char>, MyAlloc<char>>;
 
 	Str2 str2;
-	str2 = "str2sttttttttt";
-	str2 = "wortwotrtttttttttttttt22222222222222";
+	str2 = "str2sttttt";
+	str2 = "wt222daaaaaaaaaaaad2222";
 
+	
 }
 

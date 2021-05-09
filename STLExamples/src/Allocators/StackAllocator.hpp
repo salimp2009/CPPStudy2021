@@ -1,65 +1,68 @@
 #pragma once
 #include "Allocators/StackMemoryPool.h"
 
+// test
 
-template<typename T, bool deallocationFlag=false, U32 alignmentBits=16>
+
+template<typename T, bool deallocationFlag = false, U32 alignmentBits = 16>
 class StackAllocator
 {
 	template<typename U, bool deallocationflag, U32 alignmentbits>
 	friend class StackAllocator;
 public:
-	using size_type				= std::size_t;
-	using difference_type		= std::ptrdiff_t;
+	using size_type = std::size_t;
+	using difference_type = std::ptrdiff_t;
 	//using pointer				= T*;
 	//using const_pointer			= const T*;
 	//using reference				= T& // depreciate in c++17; removed in c++20
 	//using const_reference		= const T&; // depreciate in c++17; removed in c++20
-	using value_type			= T;
-	
+	using value_type = T;
+
 	using propagate_on_container_move_assignment = std::true_type;
 
 
 	constexpr StackAllocator() noexcept : mpool{ nullptr } {}
 
-	constexpr StackAllocator(const StackAllocator& other) noexcept { *this = other; }
+	constexpr StackAllocator(const StackAllocator& b) noexcept { *this = b; }
 
 	template<typename U>
-	constexpr StackAllocator(const StackAllocator<U, deallocationFlag, alignmentBits>& other) noexcept
+	constexpr StackAllocator(const StackAllocator<U, deallocationFlag, alignmentBits>& b) noexcept
 	{
-		*this = other;
+		*this = b;
 	}
 
-	constexpr StackAllocator(size_type size) noexcept 
+	constexpr StackAllocator(size_type size) noexcept
 	{
 		mpool.reset(new StackMemoryPool(size, alignmentBits));
 	}
 
 	constexpr ~StackAllocator() noexcept {}
 
-	constexpr StackAllocator& operator=(const StackAllocator& other) noexcept
+	constexpr StackAllocator& operator=(const StackAllocator& b) noexcept
 	{
-		mpool = other.mpool;
+		mpool = b.mpool;
 		return *this;
 	}
 
 	template<typename U>
-	constexpr StackAllocator& operator=(const StackAllocator<U, deallocationFlag, alignmentBits>& other) noexcept
+	constexpr StackAllocator& operator=(const StackAllocator<U, deallocationFlag, alignmentBits>& b) noexcept
 	{
-		mpool = other.mpool;
+		mpool = b.mpool;
 		return *this;
 	}
 
-	[[nodiscard]] constexpr T* allocate(size_type size) 
+	[[nodiscard]] constexpr T* allocate(size_type num)
 	{
 		assert(mpool != nullptr);
+		size_type size = num * sizeof(value_type);
 		void* out = mpool->allocate(size);
 		if (out == nullptr)
 		{
 			fmt::print("Allocation Failed!: not enough memory!\n");
 		}
-		#if _DEBUG
-			std::printf("StackAllocator: Allocating\n");
-		#endif //  _DEBUG
+#if _DEBUG
+		std::printf("StackAllocator test: Allocating\n");
+#endif //  _DEBUG
 		return static_cast<T*>(out);
 	}
 
@@ -70,9 +73,9 @@ public:
 
 		if (deallocationFlag)
 		{
-			#if _DEBUG
-						std::printf("StackAllocator: Allocating\n");
-			#endif //  _DEBUG
+#if _DEBUG
+			std::printf("StackAllocator: Allocating\n");
+#endif //  _DEBUG
 
 			auto ok = mpool->free(p);
 			if (!ok)
@@ -80,7 +83,19 @@ public:
 				fmt::print("Freeing wrong pointer!!; DeAllocations should be in order!!\n");
 			}
 		}
-	
+
+	}
+
+	constexpr size_type maxSize() noexcept
+	{
+		assert(mpool != nullptr);
+		return mpool->getSize();
+	}
+
+	constexpr size_type allocatedSize() noexcept
+	{
+		assert(mpool != nullptr);
+		return mpool->getAllocatedSize();
 	}
 
 	constexpr void reset() noexcept

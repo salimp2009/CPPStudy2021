@@ -7,8 +7,6 @@ using U32				= std::uint32_t;
 
 class StackMemoryPool
 {
-private:
-		
 public:
 	StackMemoryPool(PtrSize size, U32 alignbits = 16);
 
