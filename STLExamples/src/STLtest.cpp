@@ -366,9 +366,10 @@ int main()
 	//STLAlgorithms_Test4();
 	//CustomAllocator_Basics();
 	//StackAllocator_MemoryPool();
-	PmrMemoryResource_Basics();
-	PmrMonotonicBuffer_Basics();
-	
+	//PmrMemoryResource_Basics();
+	//PmrMonotonicBuffer_Basics();
+	PmrSynchronizedPool_Reason();
+	PmrSynchronizedPool_Basics();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();

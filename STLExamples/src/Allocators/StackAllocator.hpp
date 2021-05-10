@@ -1,8 +1,6 @@
 #pragma once
 #include "Allocators/StackMemoryPool.h"
 
-// test
-
 
 template<typename T, bool deallocationFlag = false, U32 alignmentBits = 16>
 class StackAllocator
@@ -122,3 +120,29 @@ private:
 
 
 };
+
+
+template<typename T1, typename T2, bool deallocationFlag, U32 alignmentBits>
+constexpr bool operator ==(const StackAllocator<T1, deallocationFlag, alignmentBits>&, const StackAllocator<T1, deallocationFlag, alignmentBits>&)
+{
+	return true;
+}
+
+
+template<typename T1, typename AnotherAllocator, bool deallocationFlag, U32 alignmentBits>
+constexpr bool operator ==(const StackAllocator<T1, deallocationFlag, alignmentBits>&, const AnotherAllocator&)
+{
+	return true;
+}
+
+template<typename T1, typename T2, bool deallocationFlag, U32 alignmentBits>
+constexpr bool operator !=(const StackAllocator<T1, deallocationFlag, alignmentBits>&, const StackAllocator<T1, deallocationFlag, alignmentBits>&)
+{
+	return false;
+}
+
+template<typename T1, typename AnotherAllocator, bool deallocationFlag, U32 alignmentBits>
+constexpr bool operator !=(const StackAllocator<T1, deallocationFlag, alignmentBits>&, const AnotherAllocator&)
+{
+	return false;
+}

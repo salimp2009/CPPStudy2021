@@ -1,8 +1,8 @@
 #pragma once
 
 #include "TupplePairUtilities.hpp"
-//#include "Allocators/tracknew.hpp"
-#include "AllocationMetrics.h"
+#include "Allocators/tracknew.hpp"
+//#include "AllocationMetrics.h"
 
 
 
@@ -11,15 +11,15 @@ inline void PmrMemoryResource_Basics()
 	fmt::print("\n---------Pmr Memory Resource w/ Standart Alloc---------\n");
 
     //TrackNew::reset();
-    AllocationMetrics::reset();
-    AllocationMetrics::printAllocMetrics();
+   // AllocationMetrics::reset();
+   // AllocationMetrics::printAllocMetrics();
     std::vector<std::string> vecStrng;
     for (auto i = 0; i < 1000; ++i)
     {
        vecStrng.emplace_back("just a non-SSO string");
        
     }
-    AllocationMetrics::printAllocMetrics();
+    //AllocationMetrics::printAllocMetrics();
     //TrackNew::status();
    // std::cout << allocCount <<", size: "<<allocSize<<'\n';
   
@@ -28,26 +28,80 @@ inline void PmrMemoryResource_Basics()
 inline void PmrMonotonicBuffer_Basics()
 {
     fmt::print("\n---------------StackAllocator_MemoryPool-------------------------\n");
+      
+    static std::array<std::byte, 256> buffer;
 
-    //TrackNew::reset();
-    AllocationMetrics::reset();
-   
-    std::array<std::byte, 200'000> buffer;
+    std::cout << &*(buffer.data()) << '\n';
 
-    std::pmr::monotonic_buffer_resource pool{ buffer.data(), buffer.size() };
-
-    std::pmr::vector<std::string> coll{ &pool };
-
-    for (auto i = 0; i < 1000; ++i)
+    for (int num : {1000, 2000, 500, 2000, 3000, 50000, 1000})
     {
-        coll.emplace_back("just a non-SSO string");
+        std::printf("--check with %d elements\n", num);
+        TrackNew::reset();
+        // AllocationMetrics::reset();
 
+        std::pmr::monotonic_buffer_resource pool{ buffer.data(), buffer.size() };
+        std::pmr::vector<std::pmr::string> coll{ &pool };
+        for (auto i = 0; i < num; ++i)
+        {
+            coll.emplace_back("just a noo00000000000ooooon-SSO string");
+
+        } 
+        // AllocationMetrics::printAllocMetrics();
+        TrackNew::status();
+
+        }
+}
+
+inline void PmrSynchronizedPool_Reason()
+{
+    fmt::print("\n---------------Example to Show SynchronizedPool_Reason-------------------------\n");
+    /* Example shows the address of each item in map can  be spread out in the memory
+        which is in-efficient and also cause memory fragmentation that is why using a memory source that is allocated
+        will make sure the items are stored contigously ; see next pmr::asynch example for that
+    */
+    std::map<long, std::string>coll1;
+
+    for (int i = 0; i < 10; ++i)
+    {
+        std::string s{ "Customer: " + std::to_string(i) };
+        coll1.emplace(i, s);
     }
-    AllocationMetrics::printAllocMetrics();
-    //TrackNew::status();
-   // std::cout << allocCount <<", size: "<<allocSize<<'\n';
+
+    for (const auto& elem: coll1)
+    {
+        static long long lastVal = 0;
+        long long val = reinterpret_cast<long long>(&elem);
+        fmt::print("diff: {}\n", (lastVal - val));
+        lastVal = val;
+    }
+}
+
+
+inline void PmrSynchronizedPool_Basics()
+{
+    fmt::print("\n--------------PmrSynchronizedPool_Basics-------------------\n");
+    
+    /*if not specified this will use a default memory resource and synchronize_pool is thread safe!*/
+    std::pmr::synchronized_pool_resource pool;
+    std::pmr::map<long, std::pmr::string>coll2{ &pool };
+
+    for (int i = 0; i < 10; ++i)
+    {
+        std::string s{ "Customer: " + std::to_string(i) };
+        coll2.emplace(i, s);
+    }
+
+    for (const auto& elem : coll2)
+    {
+        static long long lastVal = 0;
+        long long val = reinterpret_cast<long long>(&elem);
+        fmt::print("diff: {}\n", (lastVal - val));
+        lastVal = val;
+    }
+
 
 }
+
 
 
 
