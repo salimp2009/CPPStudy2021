@@ -10,6 +10,7 @@
 #include "UnorderedCont/UnderOrderedCont_Test.h"
 #include "UnorderedCont/HashVal.hpp"
 #include "ContainerAdapaters.h"
+#include "delete.h"
 
 
 void Array_Test()
@@ -220,5 +221,5 @@ int main()
 	 StackExamples();
 	 Queues_Examples();
 	 PriorityQueue_Examples();
-	
+
 }

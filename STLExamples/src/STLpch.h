@@ -13,9 +13,9 @@
 #include <functional>
 #include <ratio>
 #include <chrono>
-
 #include <numeric>
 #include <variant>
+#include <memory_resource>
 
 #if __has_include(<ranges>)
 	#include <ranges>

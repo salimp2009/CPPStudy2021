@@ -7,6 +7,7 @@
 #include "FunctionObjectsLambdas.h"
 #include "STLAlgorithmTest.h"
 #include "Allocators/CustomAllocatorTests.hpp"
+#include "Allocators/PmrMemoryResources.h"
 
 
 
@@ -364,7 +365,9 @@ int main()
 	//STLAlgorithms_Test3();
 	//STLAlgorithms_Test4();
 	//CustomAllocator_Basics();
-	StackAllocator_MemoryPool();
+	//StackAllocator_MemoryPool();
+	PmrMemoryResource_Basics();
+	PmrMonotonicBuffer_Basics();
 	
 	
 #ifdef  _HAS_CXX20
