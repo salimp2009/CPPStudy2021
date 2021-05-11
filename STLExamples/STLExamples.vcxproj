@@ -104,6 +104,8 @@
     <ClInclude Include="src\Allocators\CustomAllocatorTests.hpp" />
     <ClInclude Include="src\Allocators\MyAlloc.hpp" />
     <ClInclude Include="src\Allocators\PmrMemoryResources.h" />
+    <ClInclude Include="src\Allocators\PmrMemoryTracker.hpp" />
+    <ClInclude Include="src\Allocators\PmrUseInCustomTypes.hpp" />
     <ClInclude Include="src\Allocators\StackAllocator.hpp" />
     <ClInclude Include="src\Allocators\StackMemoryPool.h" />
     <ClInclude Include="src\Allocators\tracknew.hpp" />

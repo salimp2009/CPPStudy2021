@@ -3,6 +3,8 @@
 #include "TupplePairUtilities.hpp"
 #include "Allocators/tracknew.hpp"
 //#include "AllocationMetrics.h"
+#include "Allocators/PmrMemoryTracker.hpp"
+#include "PmrUseInCustomTypes.hpp"
 
 
 
@@ -106,7 +108,7 @@ inline void PmrMonotonicBuff_SynchPool()
     TrackNew::reset();
 
     /*allocated chunk of memory and start with 10k and no deallocation*/
-    std::pmr::monotonic_buffer_resource keepAllocatedPool{ 10000 };
+    std::pmr::monotonic_buffer_resource keepAllocatedPool{ 10000};
     /* synch pool will use first allocated at  monotonic buffer until it is full
        if needed synch will ask more and monotonic_buffer will allocate more
     */
@@ -127,6 +129,83 @@ inline void PmrMonotonicBuff_SynchPool()
 } // now the lifetime ends and the buffer deallocated all the memory
 
 
+inline void PmrMonotonicBuff_NoHeap()
+{
+    fmt::print("\n------Using Pmr MonotonicBuff That does not use Heap Ever---------\n");
+
+    std::array<std::byte, 10000> buffer;
+
+    /*null_memory_resource is a upstream that does not use heap allocation therefore
+      if the buffer is exhausted it throw bad_alloc exception
+    */
+    std::pmr::monotonic_buffer_resource pool{ buffer.data(), buffer.size(), std::pmr::null_memory_resource()};
+
+    std::pmr::unordered_map<long, std::pmr::string>coll4{ &pool };
+    try
+    {
+        for (int i = 0; i < buffer.size(); ++i)
+        {
+            std::string s{ "Customer" + std::to_string(i) };
+            coll4.emplace(i, s);
+        }
+
+    }
+    catch (const std::bad_alloc& e)
+    {
+        std::cerr << "BAD ALLOCATION: " << e.what() << '\n';
+    }
+
+    std::printf("buffer size: %zu", buffer.size());
+}
+
+
+inline void PmrMonotonicSynch_Tracker()
+{
+    fmt::print("\n------Using Pmr Monotonic - Synch Buff and Custom Tracker Derived from Memory_Resource---------\n");
+    {
+        /* uses default memory from get_default_memory*/
+        Tracker track1{ "keeppool:" };
+        /*since track1 is derived std::memory_resource the constructor uses track1*/
+        std::pmr::monotonic_buffer_resource keeppool{ 10000, &track1 };
+        {
+            Tracker track2{ "   syncpool:", &keeppool };
+            std::pmr::synchronized_pool_resource pool{ &track2 };
+
+            for (int j = 0; j < 100; ++j)
+            {
+                std::pmr::vector<std::pmr::string> coll5{ &pool };
+                coll5.reserve(100);
+                for (int i = 0; i < 100; ++i)
+                {
+                    coll5.emplace_back("just a non SSO string");
+                }
+                if (j == 2) std::printf("--- third iteration done\n");
+            } // deallocations are given back to pool but not deallocated
+
+            //nothing allocated
+            std::printf("--- leave scope of pool\n");
+        }
+        std::printf("leave scope of keeppool\n");
+    }
+}
+
+inline void PmrForCustomTypes()
+{
+    fmt::print("\n------Using Pmr For Custom Types---------\n");
+    Tracker track1;
+    std::pmr::vector<PmrCustomer>coll6{ &track1 };   // allocates using track1 which underthehood use get_default_resource()
+    coll6.reserve(100);
+
+    PmrCustomer c1{ "Peter, Paul & Mary"};         // allocates with get_default_resource()
+    coll6.push_back(c1);                            // allocates with vector's track1 allocator
+    coll6.push_back(std::move(c1));                 // copies the allocator since PmrCustomer and vector uses different allocators but still goes into move constructor to move the name 
+
+    for (const auto& cust : coll6)
+    {
+        std::printf(" cust name : %s\n", cust.getNameAsString().c_str());
+    }
+
+}
 
 
 

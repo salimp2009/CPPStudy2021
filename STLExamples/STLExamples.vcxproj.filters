@@ -71,5 +71,11 @@
     <ClInclude Include="src\Allocators\AllocationMetrics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Allocators\PmrMemoryTracker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Allocators\PmrUseInCustomTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

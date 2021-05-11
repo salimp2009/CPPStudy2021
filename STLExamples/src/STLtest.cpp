@@ -370,7 +370,10 @@ int main()
 	//PmrMonotonicBuffer_Basics();
 	//PmrSynchronizedPool_Reason();
 	//PmrSynchronizedPool_Basics();
-	PmrMonotonicBuff_SynchPool();
+	//PmrMonotonicBuff_SynchPool();
+	//PmrMonotonicBuff_NoHeap();
+	//PmrMonotonicSynch_Tracker();
+	PmrForCustomTypes();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
