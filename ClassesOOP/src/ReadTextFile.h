@@ -53,10 +53,26 @@ inline void ReadFromFile_Poem()
 
 	std::string line;
 
+	std::printf("\nReading with .getline()\n\n");
+
 	while (std::getline(inFile, line))
 	{
 		fmt::print("{}\n", line);
 	}
+
+	/* since we reached the end of file cleaer .eof; end of file flag and go back to beginning*/
+	inFile.clear();
+	inFile.seekg(0);
+
+	std::printf("\nReading with .get()\n\n");
+
+	char readChar;
+	while (inFile.get(readChar))
+	{
+		std::printf("%c", readChar);
+	}
+
+	std::printf("\n");
 
 	inFile.close();
 }

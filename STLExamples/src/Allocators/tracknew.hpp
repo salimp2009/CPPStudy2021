@@ -3,12 +3,6 @@
 #define TRACKNEW_HPP
 
 #include "STLpch.h"
-//#include <new>       // for std::align_val_t
-//#include <cstdio>    // for printf()
-//#include <cstdlib>   // for malloc() and aligned_alloc()
-//#ifdef _MSC_VER
-//#include <malloc.h>  // for _aligned_malloc() and _aligned_free()
-//#endif
 
 class TrackNew
 {

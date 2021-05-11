@@ -368,8 +368,9 @@ int main()
 	//StackAllocator_MemoryPool();
 	//PmrMemoryResource_Basics();
 	//PmrMonotonicBuffer_Basics();
-	PmrSynchronizedPool_Reason();
-	PmrSynchronizedPool_Basics();
+	//PmrSynchronizedPool_Reason();
+	//PmrSynchronizedPool_Basics();
+	PmrMonotonicBuff_SynchPool();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();

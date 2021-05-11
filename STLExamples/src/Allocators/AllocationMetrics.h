@@ -1,4 +1,5 @@
 #pragma once
+#include "STLpch.h"
 
 struct AllocationMetrics
 {

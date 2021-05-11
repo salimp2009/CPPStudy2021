@@ -98,9 +98,36 @@ inline void PmrSynchronizedPool_Basics()
         fmt::print("diff: {}\n", (lastVal - val));
         lastVal = val;
     }
-
-
 }
+
+inline void PmrMonotonicBuff_SynchPool()
+{
+    fmt::print("\n------Using Pmr MonotonicBuff andSynchPool---------\n");
+    TrackNew::reset();
+
+    /*allocated chunk of memory and start with 10k and no deallocation*/
+    std::pmr::monotonic_buffer_resource keepAllocatedPool{ 10000 };
+    /* synch pool will use first allocated at  monotonic buffer until it is full
+       if needed synch will ask more and monotonic_buffer will allocate more
+    */
+    std::pmr::synchronized_pool_resource pool{ &keepAllocatedPool };
+
+    for (int j = 0; j < 100; ++j)
+    {
+       std::pmr::vector<std::pmr::string> coll3{ &pool };
+       for (int i = 0; i < 100; ++i)
+       {
+           coll3.emplace_back("just a non-SSO string");
+       }
+
+      
+    }        // deallocations from pmr::Vector are given back to back to pool but not deallocated
+    TrackNew::status();
+    // the main buffer has not deallocated anythng since it still exists;
+} // now the lifetime ends and the buffer deallocated all the memory
+
+
+
 
 
 
