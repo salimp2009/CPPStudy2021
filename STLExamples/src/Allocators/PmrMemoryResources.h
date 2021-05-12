@@ -1,10 +1,18 @@
 #pragma once
 
+#define TRACKON 0
+
 #include "TupplePairUtilities.hpp"
-#include "Allocators/tracknew.hpp"
-//#include "AllocationMetrics.h"
-#include "Allocators/PmrMemoryTracker.hpp"
 #include "PmrUseInCustomTypes.hpp"
+#include "Allocators/PmrMemoryTracker.hpp"
+
+/* this is used to prevent using global new / delete overloads to be used if not neccessary
+   but to try some of the examples change TRACKON to 1
+*/
+#if TRACKON
+//#include "AllocationMetrics.h"
+#include "Allocators/tracknew.hpp"
+#endif
 
 
 
@@ -38,8 +46,11 @@ inline void PmrMonotonicBuffer_Basics()
     for (int num : {1000, 2000, 500, 2000, 3000, 50000, 1000})
     {
         std::printf("--check with %d elements\n", num);
+        
+#if TRACKON
         TrackNew::reset();
         // AllocationMetrics::reset();
+#endif
 
         std::pmr::monotonic_buffer_resource pool{ buffer.data(), buffer.size() };
         std::pmr::vector<std::pmr::string> coll{ &pool };
@@ -48,9 +59,10 @@ inline void PmrMonotonicBuffer_Basics()
             coll.emplace_back("just a noo00000000000ooooon-SSO string");
 
         } 
+#if TRACKON
         // AllocationMetrics::printAllocMetrics();
         TrackNew::status();
-
+#endif
         }
 }
 
@@ -105,7 +117,9 @@ inline void PmrSynchronizedPool_Basics()
 inline void PmrMonotonicBuff_SynchPool()
 {
     fmt::print("\n------Using Pmr MonotonicBuff andSynchPool---------\n");
+#if TRACKON
     TrackNew::reset();
+#endif
 
     /*allocated chunk of memory and start with 10k and no deallocation*/
     std::pmr::monotonic_buffer_resource keepAllocatedPool{ 10000};
@@ -124,7 +138,9 @@ inline void PmrMonotonicBuff_SynchPool()
 
       
     }        // deallocations from pmr::Vector are given back to back to pool but not deallocated
+#if TRACKON
     TrackNew::status();
+#endif
     // the main buffer has not deallocated anythng since it still exists;
 } // now the lifetime ends and the buffer deallocated all the memory
 
@@ -196,9 +212,9 @@ inline void PmrForCustomTypes()
     std::pmr::vector<PmrCustomer>coll6{ &track1 };   // allocates using track1 which underthehood use get_default_resource()
     coll6.reserve(100);
 
-    PmrCustomer c1{ "Peter, Paul & Mary"};         // allocates with get_default_resource()
-    coll6.push_back(c1);                            // allocates with vector's track1 allocator
-    coll6.push_back(std::move(c1));                 // copies the allocator since PmrCustomer and vector uses different allocators but still goes into move constructor to move the name 
+    PmrCustomer c1{ "Peter, Paul & Mary"};         // allocates with get_default_resource() (Alternatively  track1 or another memory resource can be passed in the constructor as an argument
+    coll6.push_back(c1);                           // allocates with vector's track1 allocator
+    coll6.push_back(std::move(c1));                // copies the allocator since PmrCustomer and vector uses different allocators but still goes into move constructor to move the name 
 
     for (const auto& cust : coll6)
     {
@@ -206,6 +222,28 @@ inline void PmrForCustomTypes()
     }
 
 }
+
+inline void PmrString_RegularStrings()
+{
+    fmt::print("\n------Using Pmr String and Regular String---------\n");
+
+    std::string s{ "Salim" };
+    std::pmr::string t1{ s+"move on" };
+   // std::pmr::string t2 = s;  // error; no copy constructor
+    s = t1;
+    std::string s2 = std::string(t1); // this is expensive
+    s2 = t1 + t1;
+    
+    std::cout << "s2: " << s2 << '\n';
+
+    std::cout << "size of string s: " << sizeof s << '\n';
+    std::cout << "size of pmr string t1: " << sizeof t1 << '\n';
+
+    std::string s3{ "Salim and Didem Pamukcu" };
+    PmrCustomer c1{ std::pmr::string{s3} }; // implicitly converts s3 to string_view 
+
+}
+
 
 
 

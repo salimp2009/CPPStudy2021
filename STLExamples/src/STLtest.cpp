@@ -373,13 +373,15 @@ int main()
 	//PmrMonotonicBuff_SynchPool();
 	//PmrMonotonicBuff_NoHeap();
 	//PmrMonotonicSynch_Tracker();
-	PmrForCustomTypes();
+	//PmrForCustomTypes();
+	PmrString_RegularStrings();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20
 
 	return 0;
+
 }
 
 

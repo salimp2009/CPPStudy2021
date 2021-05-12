@@ -1,6 +1,9 @@
 #pragma once
 #include "STLpch.h"
 
+/* to enable go PMRMemoryResources.h and change the value TRACKON 1*/
+#if TRACKON
+
 struct AllocationMetrics
 {
 	static inline int allocCount{ 0 };
@@ -74,3 +77,5 @@ void operator delete (void* p, std::align_val_t) noexcept {
     std::free(p);      // C++17 API
 #endif
 }
+
+#endif // TRACKON macro to disable/enable global overloads

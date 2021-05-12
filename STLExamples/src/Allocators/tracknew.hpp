@@ -4,6 +4,8 @@
 
 #include "STLpch.h"
 
+/* to enable go PMRMemoryResources.h and change the value TRACKON 1*/
+#if TRACKON
 class TrackNew
 {
 private:
@@ -108,5 +110,7 @@ void operator delete (void* p, std::size_t,
                                std::align_val_t align) noexcept {
   ::operator delete(p, align);
 }
+
+#endif
 
 #endif // TRACKNEW_HPP
