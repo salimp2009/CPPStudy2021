@@ -1,5 +1,7 @@
 #pragma once
 #include "TemplateStack.hpp"
+#include "StringStackSpecialize.hpp"
+#include "Stack2VectorCont.hpp"
 
 inline void StackExamples()
 {
@@ -73,6 +75,19 @@ inline void StackExamples()
 
 	std::vector<std::pair<int, float>> vec1{ { 4,45.0f } };
 	vec1.emplace_back(12, 12.5f);
+
+	SPStack2<std::pair<int, float>>vecstck1;
+	vecstck1.emplace({ 12, 34.4f });
+	vecstck1.push({ 4, 45.f });
+	fmt::print("vector stack top: {}\n", vecstck1.top().second);
+
+	SPStack2 strstck2{ std::string{"salim"} };
+	strstck2.push("Didem");
+	fmt::print("string stack top: {}\n", strstck2.top());
+
+	SPStack stringStack{ "Demir" };
+	SPStack2<std::string> stringStack2={ "Salitos" };
+	SPStack2 intStack = {1};
 
 }
 

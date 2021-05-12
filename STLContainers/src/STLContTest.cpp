@@ -208,8 +208,13 @@ void ForwardList_Test()
 }
 
 
+
+
+
+
 int main()
 {
+
 	//Array_Test();
 	//Vector_Test();
 	//Deque_Test();
@@ -219,7 +224,7 @@ int main()
 	//MapMultiMap_Test();
 	//UnorderedCont_Test();
 	 StackExamples();
-	 Queues_Examples();
-	 PriorityQueue_Examples();
+	Queues_Examples();
+	PriorityQueue_Examples();
 
 }

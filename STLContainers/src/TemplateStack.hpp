@@ -1,12 +1,14 @@
 #pragma once
 
-template<typename T, typename Cont = std::vector<T>>
+template<typename T, class Cont = std::vector<T>>
 class SPStack
 {
 private:
 	Cont cont;
 public:
 	SPStack() = default;
+
+	SPStack(T elem) : cont({std::move(elem) }) {}
 
 	/* just implemented for learning purposes otherwise the below constructor with variadic is enough*/
 	SPStack(std::initializer_list<T> ls) :cont{ ls } {}
@@ -42,6 +44,7 @@ public:
 	Cont::reverse_iterator rend() const { return cont.rend(); }
 
 };
+
 
 template<typename T, typename Cont>
 const T& SPStack<T,Cont>::top() const&

@@ -106,6 +106,8 @@
     <ClInclude Include="src\RuntimeComp.h" />
     <ClInclude Include="src\SetMultiSetTest.h" />
     <ClInclude Include="src\STLContpch.h" />
+    <ClInclude Include="src\Stack2VectorCont.hpp" />
+    <ClInclude Include="src\StringStackSpecialize.hpp" />
     <ClInclude Include="src\TemplateStack.hpp" />
     <ClInclude Include="src\UnorderedCont\CustomHashEqual.h" />
     <ClInclude Include="src\UnorderedCont\HashVal.hpp" />

@@ -56,5 +56,11 @@
     <ClInclude Include="src\TemplateStack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\StringStackSpecialize.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Stack2VectorCont.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
