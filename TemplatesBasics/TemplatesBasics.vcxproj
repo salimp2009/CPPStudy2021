@@ -98,7 +98,9 @@
     <ClInclude Include="src\EnableIf_Utils.hpp" />
     <ClInclude Include="src\Max5.hpp" />
     <ClInclude Include="src\NontypeTemplateParams.hpp" />
+    <ClInclude Include="src\TemplateBasicsExamples.hpp" />
     <ClInclude Include="src\Templpch.h" />
+    <ClInclude Include="src\VariadicTemplates.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
