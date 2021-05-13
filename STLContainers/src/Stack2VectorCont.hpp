@@ -13,7 +13,7 @@ public:
 	SPStack2(T elem) : cont({ std::move(elem) }) {}
 
 	/* just implemented for learning purposes otherwise the below constructor with variadic is enough*/
-	SPStack2(std::initializer_list<T> ls) :cont{ ls } {}
+	//SPStack2(std::initializer_list<T> ls) :cont{ ls } {}
 
 	template<typename... U, typename = std::enable_if_t<(std::is_convertible_v<U, T> && ...)>>
 	SPStack2(U&&... args) noexcept(noexcept(U())) : cont{ std::forward<U>(args)... } { }

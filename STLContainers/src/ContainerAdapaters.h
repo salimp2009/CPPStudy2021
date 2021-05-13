@@ -3,6 +3,7 @@
 #include "StringStackSpecialize.hpp"
 #include "Stack2VectorCont.hpp"
 
+
 inline void StackExamples()
 {
 	std::printf("\n---------------------Stack Test- LIFO(Last in First Out)------------------------------------\n\n");
@@ -70,7 +71,7 @@ inline void StackExamples()
 	SPStack<std::pair<int, float>>mstack6;
 	mstack6.push({ 4,45.0f });
 	fmt::print("mstack top: {}\n", mstack6.top().second);
-	mstack6.emplace(std::make_pair(12, 12.5f ), std::make_pair( 12, 35.5F ));
+	mstack6.emplace(std::make_pair(12, 12.5f), std::make_pair(12, 35.5F));
 	mstack6.emplace({ 12, 34.4f });
 
 	std::vector<std::pair<int, float>> vec1{ { 4,45.0f } };
@@ -81,13 +82,14 @@ inline void StackExamples()
 	vecstck1.push({ 4, 45.f });
 	fmt::print("vector stack top: {}\n", vecstck1.top().second);
 
-	SPStack2 strstck2{ std::string{"salim"} };
+	SPStack2 strstck2{"salim"};
 	strstck2.push("Didem");
 	fmt::print("string stack top: {}\n", strstck2.top());
 
-	SPStack stringStack{ "Demir" };
-	SPStack2<std::string> stringStack2={ "Salitos" };
+	SPStack stringStack="Demir";
+	SPStack2 stringStack2{ "Salitos" };
 	SPStack2 intStack = {1};
+
 
 }
 

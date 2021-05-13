@@ -11,15 +11,15 @@ public:
 	SPStack(T elem) : cont({std::move(elem) }) {}
 
 	/* just implemented for learning purposes otherwise the below constructor with variadic is enough*/
-	SPStack(std::initializer_list<T> ls) :cont{ ls } {}
+	//SPStack(std::initializer_list<T> ls) :cont{ ls } {}
 
 	template<typename... U, typename =std::enable_if_t<(std::is_convertible_v<U,T> && ...)>>
-	SPStack(U&&... args) noexcept(noexcept(Cont()) && noexcept(U())) : cont{std::forward<U>(args)...} { }
+	SPStack(U&&... args) noexcept(noexcept(Cont())) : cont{std::forward<U>(args)...} { }
 	
 	template<typename... U, typename=std::enable_if_t<(std::is_convertible_v<U,T> && ...)>>
 	constexpr decltype(auto) emplace(U&&... elems) noexcept(noexcept(Cont())) 
 	{ 
-		return (cont.emplace_back(std::forward<U>(elems)), ...); 
+		return (cont.emplace_back(std::forward<decltype(elems)>(elems)), ...); 
 	}
 
 	constexpr decltype(auto) emplace(T&& elems) noexcept(noexcept(Cont()))
@@ -44,6 +44,8 @@ public:
 	Cont::reverse_iterator rend() const { return cont.rend(); }
 
 };
+
+SPStack(const char*)->SPStack<std::string>;
 
 
 template<typename T, typename Cont>

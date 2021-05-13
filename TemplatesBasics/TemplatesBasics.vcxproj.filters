@@ -32,5 +32,8 @@
     <ClInclude Include="src\Templpch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NontypeTemplateParams.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

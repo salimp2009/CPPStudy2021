@@ -2,6 +2,7 @@
 
 #include "Max5.hpp"
 #include "EnableIf_Utils.hpp"
+#include "NontypeTemplateParams.hpp"
 
 
 
@@ -133,8 +134,18 @@ int main()
 
 	// Raw string example ; R"(SOME TEXT)"
 	// To include )" inside the string add delimiters; e.g. R"nc(SOME TEXT)nc"
-	std::cout << R"nc(a()
-					b)")nc";
+	std::cout << R"([a()
+					b"])"<<'\n';
+
+
+	Message<42> mymsg1;
+	mymsg1.printMsg();
+
+	static const char cstrng[] = "saSASD";
+	Message<cstrng> mymsg2;
+	mymsg2.printMsg();
+
+	auto  c = 42;
 
 	return 0;
 }

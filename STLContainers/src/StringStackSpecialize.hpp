@@ -14,14 +14,10 @@ private:
 public:
 	SPStack2() = default;
 	SPStack2(std::string elem) : elems({ std::move(elem) }) {}
-	SPStack2(const std::string& elem) : elems({ elem }) {}
-
-	SPStack2(std::initializer_list<std::string> ls) :elems{ ls } {}
-
+	//SPStack2(std::initializer_list<std::string> ls) :elems{ ls } {}
 
 	/* check if this is considered as universal reference not move reference!!*/
 	void push(std::string&& elem);
-
 	const std::string& top()  const&;
 	std::string pop();
 	bool empty() const { return elems.empty(); }
