@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\poem.txt" />
+    <Text Include="src\StudentAnswers.txt" />
     <Text Include="src\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -48,8 +48,43 @@ void inline VariadicTemplate_Basics()
 	printVar2(35, 45, "jaws", 200);
 	std::cout << "what the ff....";
 	fmt::print("\nfold sum: {}", foldSum(1, 2, 3, 4, 5.5f));
-	fmt::print("\nfold sum: {}", foldSumWithInit(1, 2, 3, 4));
+	fmt::print("\nfold sum: {}\n", foldSumWithInit(1, 2, 3, 4));
+}
 
+struct Node
+{
+	/* prefer to use shared pointers for left */
+	int value;
+	Node* left;
+	Node* right;
+	Node(int i = 0) :value{ i }, left{ nullptr }, right{ nullptr } {}
+};
 
+auto left = &Node::left;
+auto right = &Node::right;
+
+/* traverse tree using fold expressions*/
+template<typename T, typename... TP>
+Node* traverse(T np, TP... paths)
+{
+	return (np ->* ... ->* paths); // np ->*paths1->*paths2 ... ; dereference begining Node's left or right node and it continues to derefence each node left or right 
+};
+
+inline void FoldingBinaryTree()
+{
+	Node* root = new Node(0);
+	root->left = new Node(1);
+	root->left->right = new Node(2);
+	root->left->right->left = new Node(3);
+	root->left->right->right = new Node(4);
+
+	Node* node = traverse(root, left, right, right);
+
+	fmt::print("Node result: {}\n",node->value);
+	delete root->left->right->right;
+	delete root->left->right->left;
+	delete root->left->right;
+	delete root->left;
+	delete root;
 
 }

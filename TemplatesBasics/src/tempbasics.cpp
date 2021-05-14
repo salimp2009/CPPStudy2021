@@ -8,7 +8,8 @@ int main()
 {
 	//FunctionTemplates_Basics();
 	//NonTemplateParams_Basics();
-	VariadicTemplate_Basics();
+	VariadicTemplate_Basics(); 
+	FoldingBinaryTree();
 	
 	return 0;
 }

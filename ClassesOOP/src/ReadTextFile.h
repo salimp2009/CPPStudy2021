@@ -77,3 +77,26 @@ inline void ReadFromFile_Poem()
 	inFile.close();
 }
 
+inline void StudentAnswers_Check()
+{
+	constexpr auto filename = "src/StudentAnswers.txt";
+	std::ifstream inFile;
+	inFile.open(filename);
+
+	if (!inFile)
+	{
+		std::cerr << "File Not Found!!\n";
+		return;
+	}
+
+	std::string answer;
+	inFile >> answer;
+	fmt::print("Correct answer: {}\n\nStudent Answers:", answer);
+
+	std::string line;
+	while (std::getline(inFile, line))
+	{
+		fmt::print("{}\n", line);
+	}
+}
+

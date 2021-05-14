@@ -197,8 +197,9 @@ void Test_CString()
 int main()
 {
 
-	ReadFromFile();
-	ReadFromFile_Poem();
+	//ReadFromFile();
+	//ReadFromFile_Poem();
+	StudentAnswers_Check();
 
 	//TestMyString();
 
