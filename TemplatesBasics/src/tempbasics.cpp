@@ -9,7 +9,9 @@ int main()
 	//FunctionTemplates_Basics();
 	//NonTemplateParams_Basics();
 	VariadicTemplate_Basics(); 
-	FoldingBinaryTree();
+	//FoldingBinaryTree();
 	
+	VariadicIndices();
+
 	return 0;
 }

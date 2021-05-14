@@ -63,11 +63,15 @@ struct Node
 auto left = &Node::left;
 auto right = &Node::right;
 
-/* traverse tree using fold expressions*/
+
+/* traverse tree using fold expressions; 
+   could not make this work with smart pointers
+
+*/
 template<typename T, typename... TP>
 Node* traverse(T np, TP... paths)
 {
-	return (np ->* ... ->* paths); // np ->*paths1->*paths2 ... ; dereference begining Node's left or right node and it continues to derefence each node left or right 
+	return (np ->* ... ->*paths); // np ->*paths1->*paths2 ... ; dereference begining Node's left or right node and it continues to derefence each node left or right 
 };
 
 inline void FoldingBinaryTree()
@@ -86,5 +90,31 @@ inline void FoldingBinaryTree()
 	delete root->left->right;
 	delete root->left;
 	delete root;
+}
 
+template<std::size_t... Idx, typename Coll>
+void printElems(Coll&& coll)
+{
+	int count{ 0 };
+	(fmt::print("{0}{1}", coll[Idx],(++count<sizeof...(Idx) ? ", ":"\n")), ...);
+}
+
+template<std::size_t...>
+struct Indices {};
+
+template<typename Coll, std::size_t... Idx>
+void printByIdx(Coll& coll, Indices<Idx...>)
+{
+	int count{ 0 };
+	(fmt::print("{0}{1}", std::get<Idx>(coll), (++count < sizeof...(Idx) ? ", " : "\n")), ...);
+
+}
+
+inline void VariadicIndices()
+{
+	std::vector<std::string>coll1 = { "good", "times", "will", "come" };
+	printElems<2,0,3,1>(coll1);
+
+	std::array<std::string, 5> arr1= { "good", "times", "will", "come" };
+	printByIdx(arr1, Indices<2, 0, 3, 1>{});
 }
