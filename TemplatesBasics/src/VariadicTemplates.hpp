@@ -118,3 +118,52 @@ inline void VariadicIndices()
 	std::array<std::string, 5> arr1= { "good", "times", "will", "come" };
 	printByIdx(arr1, Indices<2, 0, 3, 1>{});
 }
+
+
+struct Baz
+{
+	decltype(auto) foo() noexcept
+	{
+		return [this]() noexcept { fmt::print("value of member s: {0}\n", s); };
+	}
+
+	decltype(auto) foo2() noexcept
+	{
+		return [s = s]() noexcept { fmt::print("value of member s: {0}\n", s); };
+	}
+
+	std::string s;
+};
+
+template<class... Bases>
+struct Overloader :Bases...
+{
+	using Bases::operator()...;
+};
+
+template<class... Bases>
+Overloader(Bases...)->Overloader<Bases...>;
+
+template<typename Fn, typename... Args>
+decltype(auto) FunctRef(Fn&& fn, Args&&... args)
+{
+	return std::invoke(fn, std::forward<Args>(args)...);
+}
+
+inline void VariadicBases_Overloader()
+{
+	int count = 25;
+	using FuncOverloader = Overloader<void(*)(int)>;
+	auto myfunc = [count](auto&& n)
+	{
+		fmt::print("func ref: {}", n+count);
+		return n+count;
+	};
+
+	FunctRef(myfunc, 5);
+
+	Baz mybaz{ "salim" };
+	FunctRef(mybaz.foo());
+
+	
+}

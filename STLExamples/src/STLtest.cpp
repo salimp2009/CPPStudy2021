@@ -8,6 +8,7 @@
 #include "STLAlgorithmTest.h"
 #include "Allocators/CustomAllocatorTests.hpp"
 #include "Allocators/PmrMemoryResources.h"
+#include "cpp17features/Cpp17AddedComponents.h"
 
 
 
@@ -374,7 +375,8 @@ int main()
 	//PmrMonotonicBuff_NoHeap();
 	//PmrMonotonicSynch_Tracker();
 	//PmrForCustomTypes();
-	PmrString_RegularStrings();
+	//PmrString_RegularStrings();
+	Optional_Basics();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();

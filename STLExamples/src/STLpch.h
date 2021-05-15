@@ -15,6 +15,7 @@
 #include <chrono>
 #include <numeric>
 #include <variant>
+#include <optional>
 #include <memory_resource>
 
 #if __has_include(<ranges>)

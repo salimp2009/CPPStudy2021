@@ -77,5 +77,8 @@
     <ClInclude Include="src\Allocators\PmrUseInCustomTypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\cpp17features\Cpp17AddedComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
