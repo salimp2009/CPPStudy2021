@@ -377,6 +377,7 @@ int main()
 	//PmrForCustomTypes();
 	//PmrString_RegularStrings();
 	Optional_Basics();
+	Variant_Basics();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
