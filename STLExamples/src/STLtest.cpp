@@ -376,8 +376,10 @@ int main()
 	//PmrMonotonicSynch_Tracker();
 	//PmrForCustomTypes();
 	//PmrString_RegularStrings();
-	Optional_Basics();
-	Variant_Basics();
+	//Optional_Basics();
+	//Variant_Basics();
+	// StdAny_Basics();
+	StdByte_Basics();
 	
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
