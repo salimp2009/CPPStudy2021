@@ -80,7 +80,13 @@
     <ClInclude Include="src\cpp17features\Cpp17AddedComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AnyInvocableImpl.hpp">
+    <ClInclude Include="src\Experimental\AnyInvocableImpl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Experimental\FunctionRefImpt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cpp17features\FileSystemExamples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
