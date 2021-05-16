@@ -31,7 +31,7 @@ public:
 	any_invocable() noexcept = default;
 	any_invocable(any_invocable&&) noexcept = default;
 	any_invocable& operator(any_invocable&&) noexcept = default;
-	any_invocable() = default;
+	~any_invocable() = default;
 
 	template<typename T>
 	any_invocable(T&& object) 

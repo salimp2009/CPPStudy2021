@@ -10,8 +10,7 @@
 #include "Allocators/PmrMemoryResources.h"
 #include "cpp17features/Cpp17AddedComponents.h"
 #include "cpp17features/FileSystemExamples.h"
-
-
+#include "Experimental/ExperimentalTests.h"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -346,6 +345,8 @@ void Ratio_Test()
 		",\n nano num:" << std::nano::num <<", nano den: "<<std::nano::den<<'\n';
 }
 
+
+
 int main(int argc, char* argv[])
 {
 	//PairTest();
@@ -383,7 +384,9 @@ int main(int argc, char* argv[])
 	// StdAny_Basics();
 	StdByte_Basics();
 	FileSystem_Basics();
-	
+	functionref_Tests(/*argc, argv[]*/);
+	CheckPath_SwitchFile(/*argc, argv[]*/);
+
 #ifdef  _HAS_CXX20
 	//Lambdas_C20_Test();
 #endif //  _HAS_CXX20

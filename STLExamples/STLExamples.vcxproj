@@ -113,6 +113,7 @@
     <ClInclude Include="src\Experimental\AnyInvocableImpl.hpp" />
     <ClInclude Include="src\ChronoExamples.hpp" />
     <ClInclude Include="src\cpp17features\Cpp17AddedComponents.h" />
+    <ClInclude Include="src\Experimental\ExperimentalTests.h" />
     <ClInclude Include="src\FunctionObjectsLambdas.h" />
     <ClInclude Include="src\Experimental\FunctionRefImpt.hpp" />
     <ClInclude Include="src\FunctObjLambdaUtils.hpp" />
