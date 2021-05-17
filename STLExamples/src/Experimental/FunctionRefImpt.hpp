@@ -20,13 +20,30 @@ public:
 
     template <typename T>
     requires std::is_invocable_r_v<Ret, T&&, Args...> && !std::is_same_v<std::remove_cvref<T>, function_ref>
-        function_ref(T&& x) noexcept : _ptr{ (void*)std::addressof(x) }
+    function_ref(T&& x) noexcept : _ptr{ (void*)std::addressof(x) }
     {
         _erased_fn = [](void* ptr, Args...xs)->Ret {
             return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
                 std::forward<Args>(xs)...);
         };
     }
+
+    /* Move assignment*/
+    template <typename T>
+    requires std::is_invocable_r_v<Ret, T&&, Args...> /* && !std::is_same_v<std::remove_cvref<T>, function_ref> */ // TODO ; check if this work basic tests works OK both way
+    function_ref& operator=(T&& x) noexcept 
+    {
+        _ptr = (void*)std::addressof(x);
+        _erased_fn = [](void* ptr, Args...xs)->Ret {
+            return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
+                std::forward<Args>(xs)...);
+        };
+
+        return *this;
+    }
+
+
+
 
    
    decltype(auto) operator()(Args...xs) const noexcept(noexcept(_erased_fn(_ptr, std::forward<Args>(xs)...)))

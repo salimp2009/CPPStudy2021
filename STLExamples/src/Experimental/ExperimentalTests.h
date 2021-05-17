@@ -13,7 +13,10 @@ inline void functionref_Tests()
 	auto functLamb = [i = 0]()mutable noexcept { return ++i; };
 	std::cout << foo(functLamb) << '\n';
 
-	const function_ref<int()> getNumber{ functLamb };
+	const function_ref<int()> getNumber= functLamb;
 	std::cout << getNumber() << '\n';
 
+	const std::function<int()> getNumberSTDFunc = functLamb;
+	std::cout << sizeof getNumber << '\n';
+	std::cout << sizeof getNumberSTDFunc << '\n';
 }
