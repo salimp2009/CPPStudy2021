@@ -2,6 +2,7 @@
 #include "STLpch.h"
 
 #include <filesystem>
+#include <fstream>
 
 inline void FileSystem_Basics(/*int argc, char* argv[]*/)
 {
@@ -92,4 +93,43 @@ inline void CheckPath_SwitchFile(/*int argc, char* argv[]*/)
 			}
 		}
 		fmt::print("path is a special file {}!\n", argv);
+}
+
+inline void CreateDirectory_Files()
+{
+	std::filesystem::path testDir{ "temp/test"};
+	/* std::filesystem:: not used before the function it uses ADL(argument dependent lookup) to find the function
+	   the type of testDir is a "class path" defined under std::filesystem::path; if it creates problems on other platforms use std::filesystem::
+	*/
+	/* there is al create_directory to create one directory if it is subdirectory the root specified must exist*/
+	create_directories(testDir);
+	
+	/* create file in the created directories */
+	/* the type of testFile is class path*/
+	auto testFile = testDir / "data.txt";
+	std::ofstream dataFile{ testFile };
+	if (!dataFile)
+	{
+		fmt::print("Cannot open {}", testFile.string());
+		return;
+	}
+
+
+	dataFile << "The answer is some great number 4256!\n";
+
+#if !_MSC_VER
+	/* this create runtime error since Windows requires admin access */
+	/* create a symbolic link from tmp/slink to tmp/test*/
+	std::filesystem::create_directory_symlink("test", testDir.parent_path() / "slink");
+	/* Alternative t above but the one is better in general!!*/
+	//create_symlink("test", testDir.parent_path() / "slink");
+#endif
+
+	fmt::print("{0}\n", std::filesystem::current_path().string());
+
+	for (const auto& e : std::filesystem::recursive_directory_iterator("."))
+	{
+		fmt::print("{0}\n", e.path().lexically_normal().string());
+		//fmt::print("{0}\n", e.path().filename().string());
+	}
 }
