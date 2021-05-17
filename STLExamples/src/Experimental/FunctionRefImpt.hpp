@@ -20,23 +20,35 @@ public:
 
     template <typename T>
     requires std::is_invocable_r_v<Ret, T&&, Args...> && !std::is_same_v<std::remove_cvref<T>, function_ref>
-    function_ref(T&& x) noexcept : _ptr{ (void*)std::addressof(x) }
+    constexpr function_ref(T&& x) noexcept : _ptr{ reinterpret_cast<void*>(std::addressof(x)) }
     {
+        /* Previous implementation revised according Sy Brands implementation; https://github.com/TartanLlama/function_ref/blob/master/include/tl/function_ref.hpp */
+        //_erased_fn = [](void* ptr, Args...xs)->Ret {
+        //    return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
+        //        std::forward<Args>(xs)...);
+        //};
+
         _erased_fn = [](void* ptr, Args...xs)->Ret {
-            return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
-                std::forward<Args>(xs)...);
+            return std::invoke(*reinterpret_cast<std::add_pointer_t<T>>(ptr), std::forward<Args>(x)...);
         };
     }
 
     /* Move assignment*/
     template <typename T>
     requires std::is_invocable_r_v<Ret, T&&, Args...> /* && !std::is_same_v<std::remove_cvref<T>, function_ref> */ // TODO ; check if this work basic tests works OK both way
-    function_ref& operator=(T&& x) noexcept 
+    constexpr function_ref& operator=(T&& x) noexcept 
     {
-        _ptr = (void*)std::addressof(x);
+        _ptr = reinterpret_cast<void*>(std::addressof(x));
+
+        /* Previous implementation revised according Sy Brands implementation; https://github.com/TartanLlama/function_ref/blob/master/include/tl/function_ref.hpp */
+        //_erased_fn = [](void* ptr, Args...xs)->Ret {
+        //    return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
+        //        std::forward<Args>(xs)...);
+        //};
+
+
         _erased_fn = [](void* ptr, Args...xs)->Ret {
-            return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
-                std::forward<Args>(xs)...);
+            return std::invoke(*reinterpret_cast<std::add_pointer_t<T>>(ptr), std::forward<Args>(x)...);
         };
 
         return *this;
