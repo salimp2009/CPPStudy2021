@@ -97,6 +97,7 @@ inline void CheckPath_SwitchFile(/*int argc, char* argv[]*/)
 
 inline void CreateDirectory_Files()
 {
+	
 	std::filesystem::path testDir{ "temp/test"};
 	/* std::filesystem:: not used before the function it uses ADL(argument dependent lookup) to find the function
 	   the type of testDir is a "class path" defined under std::filesystem::path; if it creates problems on other platforms use std::filesystem::
@@ -118,11 +119,18 @@ inline void CreateDirectory_Files()
 	dataFile << "The answer is some great number 4256!\n";
 
 #if !_MSC_VER
+	try {
 	/* this create runtime error since Windows requires admin access */
 	/* create a symbolic link from tmp/slink to tmp/test*/
 	std::filesystem::create_directory_symlink("test", testDir.parent_path() / "slink");
 	/* Alternative t above but the one is better in general!!*/
 	//create_symlink("test", testDir.parent_path() / "slink");
+	}
+	catch (const std::filesystem::filesystem_error& e)
+	{
+		fmt::print("error: {0}\n ---- path1: \"{1}\"\n", e.what(), e.path1().string() );
+	}
+
 #endif
 
 	fmt::print("{0}\n", std::filesystem::current_path().string());
@@ -132,4 +140,9 @@ inline void CreateDirectory_Files()
 		fmt::print("{0}\n", e.path().lexically_normal().string());
 		//fmt::print("{0}\n", e.path().filename().string());
 	}
+
+	dataFile.close();
+	//std::filesystem::remove_all(testDir);
+	
+	
 }

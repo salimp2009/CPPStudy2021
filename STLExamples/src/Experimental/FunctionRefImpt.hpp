@@ -20,7 +20,7 @@ public:
 
     template <typename T>
     requires std::is_invocable_r_v<Ret, T&&, Args...> && !std::is_same_v<std::remove_cvref<T>, function_ref>
-    function_ref(T&& x) noexcept : _ptr{ (void*)std::addressof(x) }                                 
+        function_ref(T&& x) noexcept : _ptr{ (void*)std::addressof(x) }
     {
         _erased_fn = [](void* ptr, Args...xs)->Ret {
             return (*reinterpret_cast<std::add_pointer_t<T>>(ptr))(
