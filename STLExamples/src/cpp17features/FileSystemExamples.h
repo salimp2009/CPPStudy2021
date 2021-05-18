@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <regex>
 
 inline void FileSystem_Basics(/*int argc, char* argv[]*/)
 {
@@ -187,3 +188,71 @@ inline void ReadFileContents_FromPath()
 	fmt::print("File size: {0} and the contents are;\n{1}", str.size(), str);
 	std::shared_ptr<int> shrPtr;
 }
+
+
+struct FileEntry
+{
+	std::filesystem::path mPath;
+	uintmax_t mSize{ 0 };
+
+	static FileEntry Create(const std::filesystem::path& filePath)
+	{
+		return FileEntry{ filePath, std::filesystem::file_size(filePath) };
+	}
+
+	friend bool operator <(const FileEntry& a, const FileEntry& b) noexcept
+	{
+		return a.mSize < b.mSize;
+	}
+};
+
+
+
+std::vector<FileEntry> CollectFiles(const std::filesystem::path& inPath)
+{
+	namespace fs = std::filesystem;
+	
+	/* Optimized Version to code below*/
+	std::vector<FileEntry> files;
+	if (fs::exists(inPath) && fs::is_directory(inPath))
+	{
+		for (const auto& entry : fs::recursive_directory_iterator{ inPath })
+		{
+			if (entry.is_regular_file())
+			{
+				files.emplace_back(entry, entry.file_size());
+			}
+		}
+		//std::vector<std::filesystem::path> paths;
+		//std::filesystem::recursive_directory_iterator dirpos{ inPath };
+		//std::copy_if(begin(dirpos), end(dirpos), std::back_inserter(paths),
+		//	[](const fs::directory_entry& entry) { return entry.is_regular_file(); }
+		//);
+	}
+
+	//std::vector<FileEntry> files{ paths.size() };
+	//std::transform(paths.cbegin(), paths.cend(), files.begin(), FileEntry::Create);
+	return files;
+}
+
+inline void FilterFilesUsingRegex()
+{
+	std::printf("\n-----FilterFiles UsingRegex-----\n");
+
+	const std::filesystem::path pathToshow{ "." };
+	const std::regex reg{ ".*txt" };
+	
+	auto files = CollectFiles(pathToshow);
+
+	std::sort(files.begin(), files.end());
+
+	for (auto& entry : files)
+	{
+		const auto strFileName = entry.mPath.filename().string();
+		if (std::regex_match(strFileName, reg))
+		{
+			fmt::print("filename: {0}, size: {1}\n", strFileName, entry.mSize);
+		}
+	}
+}
+

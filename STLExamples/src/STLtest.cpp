@@ -396,7 +396,8 @@ int main(int argc, char* argv[])
 	//FileSystem_Basics();
 	//CheckPath_SwitchFile(/*argc, argv[]*/);
 	//CreateDirectory_Files();
-	ReadFileContents_FromPath();
+	//ReadFileContents_FromPath();
+	FilterFilesUsingRegex();
 
 	//functionref_Tests(/*argc, argv[]*/);
 
