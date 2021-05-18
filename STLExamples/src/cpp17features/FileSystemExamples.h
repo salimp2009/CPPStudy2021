@@ -144,5 +144,46 @@ inline void CreateDirectory_Files()
 	dataFile.close();
 	//std::filesystem::remove_all(testDir);
 	
+}
+
+[[nodiscard]] std::string GetFileContents(const std::filesystem::path& filePath)
+{
+	std::ifstream inFile{ filePath, std::ios::in | std::ios::binary };
+
+	if (!inFile)
+	{
+		//fmt::print("Cannot open: {0}", filePath.string());
+		return { "Cannot open " + filePath.string()};
+	}
 	
+	const auto fSize = std::filesystem::file_size(filePath);
+
+	if (fSize > std::numeric_limits<std::size_t>::max())
+	{
+		//fmt::print("Cannot open: {0}", filePath.string());
+		return { "File too big to fit in size_t" + filePath.string() };
+	}
+
+	std::string str(static_cast<std::size_t>(fSize), 0);
+
+	inFile.read(str.data(), str.size());
+
+	if (!inFile)
+	{
+		return {"Cannot read all the data from: " + filePath.string()};
+	}
+
+	return str;
+}
+
+
+inline void ReadFileContents_FromPath()
+{
+	std::printf("\n-----ReadFileContents_FromPath-----\n");
+
+	
+	const auto str = GetFileContents("temp/test/data.txt");
+
+	fmt::print("File size: {0} and the contents are;\n{1}", str.size(), str);
+	std::shared_ptr<int> shrPtr;
 }

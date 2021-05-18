@@ -11,6 +11,7 @@
 #include "cpp17features/Cpp17AddedComponents.h"
 #include "cpp17features/FileSystemExamples.h"
 #include "Experimental/ExperimentalTests.h"
+#include "Experimental/IntrusiveSharedPtrImpl.hpp"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -359,17 +360,24 @@ int main(int argc, char* argv[])
 	//FunctionPointer_Test();
 	//Ratio_Test();
 	//Chrono_Test();
+	
 	//FunctionObjLamb_Test();
 	//FunctionObjLamb_Test2();
 	//FunctionObjLamb_TestC17();
 	//LambdaIIFE_C17();
 	//LambdasInConcurency();
+#ifdef  _HAS_CXX20
+	//Lambdas_C20_Test();
+#endif //  _HAS_CXX20
+	
 	//STLAlgorithms_Test();
 	//STLAlgorithms_Test2();
 	//STLAlgorithms_Test3();
 	//STLAlgorithms_Test4();
+	
 	//CustomAllocator_Basics();
 	//StackAllocator_MemoryPool();
+	
 	//PmrMemoryResource_Basics();
 	//PmrMonotonicBuffer_Basics();
 	//PmrSynchronizedPool_Reason();
@@ -379,22 +387,18 @@ int main(int argc, char* argv[])
 	//PmrMonotonicSynch_Tracker();
 	//PmrForCustomTypes();
 	//PmrString_RegularStrings();
+	
 	//Optional_Basics();
 	//Variant_Basics();
-	// StdAny_Basics();
+	//StdAny_Basics();
 	//StdByte_Basics();
-	FileSystem_Basics();
-	functionref_Tests(/*argc, argv[]*/);
+	
+	//FileSystem_Basics();
 	//CheckPath_SwitchFile(/*argc, argv[]*/);
 	//CreateDirectory_Files();
+	ReadFileContents_FromPath();
 
-
-#ifdef  _HAS_CXX20
-	//Lambdas_C20_Test();
-#endif //  _HAS_CXX20
-
-
-	
+	//functionref_Tests(/*argc, argv[]*/);
 
 	return 0;
 

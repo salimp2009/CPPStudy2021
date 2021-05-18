@@ -92,5 +92,8 @@
     <ClInclude Include="src\Experimental\ExperimentalTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Experimental\IntrusiveSharedPtrImpl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
