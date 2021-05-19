@@ -2,6 +2,7 @@
 
 #include "TemplateBasicsExamples.hpp"
 #include "VariadicTemplates.hpp"
+#include "TrickyBasicsExamples.hpp"
 
 
 int main()
@@ -12,6 +13,8 @@ int main()
 	//FoldingBinaryTree();
 	VariadicIndices();
 	VariadicBases_Overloader();
+	TrickyBasics01();
+
 
 	return 0;
 }

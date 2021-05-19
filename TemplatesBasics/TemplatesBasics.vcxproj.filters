@@ -41,5 +41,8 @@
     <ClInclude Include="src\VariadicTemplates.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\TrickyBasicsExamples.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -46,29 +46,29 @@ int main()
 	*/
 	std::cout << SafeFloatDivide_pred(10.0f, 3.0f, 2.0f) << '\n';
 
-	std::atomic<int> localState{ 0 };
+	//std::atomic<int> localState{ 0 };
 
 	/* preferabbly do not pass variables/or shared data by ref cause if it changes in another thread
 		you might get unexpected result unless it is inteded to do so
 	*/
 
-	UnnecessaryLock g_Lock;
+	//UnnecessaryLock g_Lock;
 
-	auto myfunc = [&localState, &g_Lock] () noexcept
-	{
-		/* assert macros test if the critical sectioon overlapp or not; this is an example to test
-		   if a lock or any sync function is needed for any given critical operation
-		*/
-		//BEGIN_ASSERT_LOCK_NOT_NECESSARY(g_Lock);
-		ASSERT_LOCK_NOT_NECESSARY(janitor, g_Lock);
-		std::printf("local state = %i\n", ++localState);
-		fmt::print("thread id {}\n", std::this_thread::get_id());
-		//END_ASSERT_LOCK_NOT_NECESSARY(g_Lock);
-	};
+	//auto myfunc = [&localState, &g_Lock] () noexcept
+	//{
+	//	/* assert macros test if the critical sectioon overlapp or not; this is an example to test
+	//	   if a lock or any sync function is needed for any given critical operation
+	//	*/
+	//	//BEGIN_ASSERT_LOCK_NOT_NECESSARY(g_Lock);
+	//	ASSERT_LOCK_NOT_NECESSARY(janitor, g_Lock);
+	//	std::printf("local state = %i\n", ++localState);
+	//	fmt::print("thread id {}\n", std::this_thread::get_id());
+	//	//END_ASSERT_LOCK_NOT_NECESSARY(g_Lock);
+	//};
 
-	std::thread th1{myfunc};
+	//std::thread th1{myfunc};
 	
-	threadguard thguard{ th1 };
+	//threadguard thguard{ th1 };
 		
 	//scopedThread t{ std::thread{myfunc} };
 	//localState.store(15);
