@@ -77,6 +77,24 @@ inline void ReadFromFile_Poem()
 	inFile.close();
 }
 
+int processResponse(std::string_view response, std::string_view key)
+{
+	int score{ 0 };
+
+	/* search will stop if all the elements of the subrange dont match therefore we return true all the time 
+	  from the lambda so it can the rest of elements in the response if it matchs in the same place in key
+	  so every time it is a match we increase the score; a hacky way to search algorithm but it works
+	  Alternative is to use classic for-loop
+	*/
+	auto pos = std::search(response.begin(), response.end(), key.begin(), key.end(), [&score](auto&& resp, auto&& key)
+		{
+			if (resp == key) ++score;
+			return true;
+		});
+
+	return score;
+}
+
 inline void StudentAnswers_Check()
 {
 	constexpr auto filename = "src/StudentAnswers.txt";
@@ -91,12 +109,28 @@ inline void StudentAnswers_Check()
 
 	std::string answer;
 	inFile >> answer;
-	fmt::print("Correct answer: {}\n\nStudent Answers:", answer);
+	fmt::print("Correct answer: {}\n\nStudent Answers:\n", answer);
 
-	std::string line;
-	while (std::getline(inFile, line))
+	std::string name;
+	std::string response;
+	std::size_t totalStudents{ 0 };
+	std::uint32_t totalSum{ 0 };
+	while (inFile>>name>>response)
 	{
-		fmt::print("{}\n", line);
+		++totalStudents;
+		int score = processResponse(response, answer);
+		totalSum += score;
+		fmt::print("name: {0}, score: {1}, response: {2}\n", name, score, response);
+	}	
+
+	double averageScore{ 0.0 };
+	if (totalStudents != 0)
+	{
+		averageScore = static_cast<double>(totalSum) / totalStudents;
 	}
+
+	fmt::print("avverage score: {0}, total students: {1}, totalSum: {2}\n", averageScore, totalStudents, totalSum);
+
 }
+
 

@@ -207,7 +207,6 @@ struct FileEntry
 };
 
 
-
 std::vector<FileEntry> CollectFiles(const std::filesystem::path& inPath)
 {
 	namespace fs = std::filesystem;

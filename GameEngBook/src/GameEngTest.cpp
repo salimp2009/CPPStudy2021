@@ -1,12 +1,13 @@
 #include "GameEnginePCH.h"
+
 #include "Assertions.h"
-#include <iostream>
 #include "EndianSwap.h"
 #include "BranchPrediction.h"
 #include "ThreadGuard.h"
 #include "ScopedThread.h"
 #include "ReentrantLock.h"
 #include "UnnecessaryLock.h"
+#include "SIMDExamples.h"
 
 
 int main()
@@ -74,5 +75,5 @@ int main()
 
 	std::printf("Hello from main thread\n");
 
-	
+	TestAddSSE();
 }

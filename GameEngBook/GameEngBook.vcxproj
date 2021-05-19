@@ -105,6 +105,7 @@
     <ClInclude Include="src\EndianSwap.h" />
     <ClInclude Include="src\GameEnginePCH.h" />
     <ClInclude Include="src\ScopedThread.h" />
+    <ClInclude Include="src\SIMDExamples.h" />
     <ClInclude Include="src\ThreadGuard.h" />
     <ClInclude Include="src\UnnecessaryLock.h" />
   </ItemGroup>
