@@ -76,4 +76,5 @@ int main()
 	std::printf("Hello from main thread\n");
 
 	TestAddSSE();
+	TestDotArraySSE();
 }

@@ -2,7 +2,7 @@
 
 #include "Templpch.h"
 
-template<typename T>
+template<class T>
 void printColl(const T& coll)
 {
 	typename T::const_iterator pos;

@@ -31,6 +31,11 @@ inline void StackExamples()
 
 	SPStack<int>mstack{ 1,2,3,4,5,70,8,9,10 };
 
+	for (auto elem : mstack)
+	{
+		std::cout << elem << '\n';
+	}
+
 	//mstack.push(1);
 	fmt::print("mstack top: {}\n", mstack.top());
 
