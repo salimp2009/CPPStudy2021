@@ -14,6 +14,7 @@ int main()
 	VariadicIndices();
 	VariadicBases_Overloader();
 	TrickyBasics01();
+	TrickyBasics_Arrays();
 
 
 	return 0;

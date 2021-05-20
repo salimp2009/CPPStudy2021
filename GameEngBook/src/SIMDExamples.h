@@ -91,13 +91,58 @@ void DotArrays_sse_horizontal(std::size_t count, float result[], const float a[]
 }
 
 /* Better SIMD DotArray version*/
-void DotArrays_sse(std::size_t count, float result[], const float a[], const float b[])
+void DotArrays_sse(std::size_t count, float finalresult[], const float a[], const float b[])
 {
+	for (auto i = 0; i < count; i += 4)
+	{
+		__m128 vaX = _mm_load_ps(&a[(i+0) * 4]); //a[0,4, 8, 12]
+		__m128 vaY = _mm_load_ps(&a[(i+1) * 4]); //a[1,5, 9, 12]
+		__m128 vaZ = _mm_load_ps(&a[(i+2) * 4]); //a[2,6, 8, 12]
+		__m128 vaW = _mm_load_ps(&a[(i+3) * 4]); //a[3,7, 8, 12]
 
+		__m128 vbX = _mm_load_ps(&b[(i + 0) * 4]); //b[0,4, 8, 12]
+		__m128 vbY = _mm_load_ps(&b[(i + 1) * 4]); //b[1,5, 9, 12]
+		__m128 vbZ = _mm_load_ps(&b[(i + 2) * 4]); //b[2,6, 8, 12]
+		__m128 vbW = _mm_load_ps(&b[(i + 3) * 4]); //b[3,7, 8, 12]
 
+		__m128 result;
+		result = _mm_mul_ps(vaX, vbX);
+		result = _mm_add_ps(result, _mm_mul_ps(vaY, vbY));
+		result = _mm_add_ps(result, _mm_mul_ps(vaZ, vbZ));
+		result = _mm_add_ps(result, _mm_mul_ps(vaW, vbW));
 
-
+		_mm_store_ps(&finalresult[i], result);
+	}
 }
+
+void DotArrays_sse_transpose(std::size_t count, float finalresult[], const float a[], const float b[])
+{
+	for (auto i = 0; i < count; i += 4)
+	{
+		__m128 vaX = _mm_load_ps(&a[(i + 0) * 4]); 
+		__m128 vaY = _mm_load_ps(&a[(i + 1) * 4]); 
+		__m128 vaZ = _mm_load_ps(&a[(i + 2) * 4]); 
+		__m128 vaW = _mm_load_ps(&a[(i + 3) * 4]); 
+
+
+		__m128 vbX = _mm_load_ps(&b[(i + 0) * 4]); 
+		__m128 vbY = _mm_load_ps(&b[(i + 1) * 4]); 
+		__m128 vbZ = _mm_load_ps(&b[(i + 2) * 4]); 
+		__m128 vbW = _mm_load_ps(&b[(i + 3) * 4]); 
+
+		_MM_TRANSPOSE4_PS(vaX, vaY, vaZ, vaW);
+		_MM_TRANSPOSE4_PS(vbX, vbY, vbZ, vbW);
+
+		__m128 result;
+		result = _mm_mul_ps(vaX, vbX);
+		result = _mm_add_ps(result, _mm_mul_ps(vaY, vbY));
+		result = _mm_add_ps(result, _mm_mul_ps(vaZ, vbZ));
+		result = _mm_add_ps(result, _mm_mul_ps(vaW, vbW));
+
+		_mm_store_ps(&finalresult[i], result);
+	}
+}
+
 
 inline void TestDotArraySSE()
 {
@@ -110,5 +155,39 @@ inline void TestDotArraySSE()
 	fmt::print("DotArray for-loop results: {0}\n", fmt::join(results, ", "));
 	DotArrays_sse_horizontal(1, results, A, B);
 	fmt::print("DotArray SIMD slow: {0}\n", fmt::join(results, ", "));
+
+	/* store the values as transposed but no need since there is Sse function to transpose*/
+	alignas(16) float AA[4*4] = { 
+		0.0f, 4.0f, 8.0f, 12.0f,
+		1.0f, 5.0f, 9.0f, 13.0f,
+		2.0f, 6.0f, 10.0f, 14.0f,
+		3.0f, 7.0f, 11.0f, 15.0f };
+
+	alignas(16) float BB[4 * 4] = {
+		0.0f, 4.0f, 8.0f, 12.0f,
+		1.0f, 5.0f, 9.0f, 13.0f,
+		2.0f, 6.0f, 10.0f, 14.0f,
+		3.0f, 7.0f, 11.0f, 15.0f };
+
+	alignas(16) float finalresults[std::extent_v<decltype(AA)> / 4];
+	const std::size_t count = std::size(finalresults) / 4;
+
+	DotArrays_sse(count, finalresults, AA, BB);
+	fmt::print("DotArray SIMD faster (stored transposed): {0}\n", fmt::join(finalresults, ", "));
+
+	alignas(16) float AAA[4 * 4] = {
+		0.0f, 1.0f, 2.0f, 3.0f,
+		4.0f, 5.0f, 6.0f, 7.0f,
+		8.0f, 9.0f, 10.0f, 11.0f,
+		12.0f, 13.0f, 14.0f, 15.0f };
+
+	alignas(16) float BBB[4 * 4] = {
+		0.0f, 1.0f, 2.0f, 3.0f,
+		4.0f, 5.0f, 6.0f, 7.0f,
+		8.0f, 9.0f, 10.0f, 11.0f,
+		12.0f, 13.0f, 14.0f, 15.0f };
+
+	DotArrays_sse_transpose(count, finalresults, AAA, BBB);
+	fmt::print("DotArray SIMD transpose: {0}\n", fmt::join(finalresults, ", "));
 
 }
