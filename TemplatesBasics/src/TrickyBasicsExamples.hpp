@@ -39,8 +39,8 @@ inline void TrickyBasics_Arrays()
 {
 	std::printf("\n------------TrickyBasics Arrays------------\n");
 
-	int x[] = { 1,2,3 };
-	int y[] = { 1,2,3,4,5};
+	int x[] = { 1,2,3,4,5,6 };
+	int y[] = { 1,2,3,4};
 	fmt::print("less array: {0}\n", lessArray(x, y));
 
 	char s1[] = "salim";

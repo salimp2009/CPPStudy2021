@@ -143,8 +143,6 @@ void SmartPointers_Test()
 	std::shared_ptr<int[]> ps4{ new int[10] };
 #endif // __HAS_CXX17
 
-	
-	
 /* Does not work with C++17; works with C++20*/
 #if _HAS_CXX20 
 	std::shared_ptr<int[]> ps555 = std::make_shared<int[10]>();
@@ -392,12 +390,14 @@ int main(int argc, char* argv[])
 	//Variant_Basics();
 	//StdAny_Basics();
 	//StdByte_Basics();
+	fromChars_Example();
+	toChars_Example();
 	
 	//FileSystem_Basics();
 	//CheckPath_SwitchFile(/*argc, argv[]*/);
 	//CreateDirectory_Files();
 	//ReadFileContents_FromPath();
-	FilterFilesUsingRegex();
+	//FilterFilesUsingRegex();
 
 	//functionref_Tests(/*argc, argv[]*/);
 

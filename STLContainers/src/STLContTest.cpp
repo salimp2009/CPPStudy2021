@@ -209,9 +209,6 @@ void ForwardList_Test()
 
 
 
-
-
-
 int main()
 {
 
@@ -223,7 +220,7 @@ int main()
 	//SetMultiSet_Test();
 	//MapMultiMap_Test();
 	//UnorderedCont_Test();
-	 StackExamples();
+	StackExamples();
 	Queues_Examples();
 	PriorityQueue_Examples();
 

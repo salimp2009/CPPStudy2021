@@ -2,6 +2,7 @@
 
 #include "STLpch.h"
 #include <any>
+#include <charconv>
 
 std::optional<int> asInt(const std::string& s)
 {
@@ -125,6 +126,53 @@ inline void StdByte_Basics()
 	std::cout << "b1 revised: " << std::to_integer<int>(b1)<<'\n';
 	std::cout << "sizeof b1: "<<sizeof b1 << '\n';
 
+}
+
+inline void fromChars_Example()
+{
+	std::printf("\n-----fromChars----\n");
+
+	const char* str = "12 monkeys";
+	int value;
+	std::from_chars_result res = std::from_chars(str, str + 10, value, 10); // the last 10 is the base (16 for hex, 2 for binary..)
+	
+	/* no implicit coversion std::errc to bool therefre (!res.ec) will not compiles*/
+	if (res.ec != std::errc{})
+	{
+		std::printf("from chars conversion failed!\n");
+	}
+
+	fmt::print("value: {0}, res.ptr: {1}\n", value, (res.ptr - str));
+
+	const char* str2 = "101001";
+	int value2;
+	res = std::from_chars(str2, str2 + 6, value2, 2); // base is 2 ; binary 
+
+	if (res.ec == std::errc{})
+	{
+		fmt::print("value(101001): {0}, res.ptr: {1}\n", value2, (res.ptr - str2));
+	}
+}
+
+
+inline void toChars_Example()
+{
+	std::printf("\n-----toChars----\n");
+
+	int value = 42;
+	char buffer[std::numeric_limits<int>::digits10+2];
+	
+	std::to_chars_result res = std::to_chars(buffer, buffer + std::size(buffer), value);
+
+	if (res.ec == std::errc{})
+	{
+		/* add a trailing zero for termination of string if using char[] 
+		otherwise garbage characters will be displayed because it does not know where to stop 
+		Better to use std::array<char, ...> then no need to add a trailing zero
+		*/
+		*res.ptr = '\0';
+		fmt::print("value: {0}\n", buffer);
+	}
 }
 
 
