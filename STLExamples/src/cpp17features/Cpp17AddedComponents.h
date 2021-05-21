@@ -176,3 +176,53 @@ inline void toChars_Example()
 }
 
 
+inline void fromChars_Example2()
+{
+	std::printf("\n-----fromChars Example 2----\n");
+
+	/* the type of array is deduced as const char*/
+	const std::array<char, 15> str = { "12345678901234" };
+	/* if int is used we get an out of range error; the error does not throw or allocate memory*/
+	uint64_t value=0;
+	const auto res = std::from_chars(str.data(), str.data() + str.size(), value);
+	if (res.ec == std::errc{})
+	{
+		fmt::print("res using std::array: {0}, distance = {1}\n", value, res.ptr-str.data());
+	}
+	else if (res.ec == std::errc::invalid_argument)
+	{
+		fmt::print("invalid argument!\n");
+	}
+	else if (res.ec == std::errc::result_out_of_range)
+	{
+		fmt::print("result_out_of_range!, res.ptr distance: {0}\n", res.ptr -str.data());
+	}
+}
+
+
+inline void fromChars_floatingPoint()
+{
+	std::printf("\n-----fromChars Floating Point----\n");
+	const std::array<char, std::numeric_limits<float>::digits> str = { "F.F" };
+	double value = 0;
+
+	//const auto format = std::chars_format::general;  
+	//const auto format = std::chars_format::fixed;
+	//const auto format = std::chars_format::scientific;
+	const auto format = std::chars_format::hex;
+	
+	const auto res = std::from_chars(str.data(), str.data() + str.size(), value, format);
+
+	if (res.ec == std::errc{})
+	{
+		fmt::print("res using std::array: {0}, distance = {1}\n", value, res.ptr - str.data());
+	}
+	else if (res.ec == std::errc::invalid_argument)
+	{
+		fmt::print("invalid argument!\n");
+	}
+	else if (res.ec == std::errc::result_out_of_range)
+	{
+		fmt::print("result_out_of_range!, res.ptr distance: {0}\n", res.ptr - str.data());
+	}
+}

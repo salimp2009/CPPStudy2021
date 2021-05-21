@@ -392,6 +392,9 @@ int main(int argc, char* argv[])
 	//StdByte_Basics();
 	fromChars_Example();
 	toChars_Example();
+	fromChars_Example2();
+	fromChars_floatingPoint();
+
 	
 	//FileSystem_Basics();
 	//CheckPath_SwitchFile(/*argc, argv[]*/);
