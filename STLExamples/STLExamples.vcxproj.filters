@@ -95,5 +95,8 @@
     <ClInclude Include="src\Experimental\IntrusiveSharedPtrImpl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\cpp17features\VariantExamples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@
 #include "cpp17features/FileSystemExamples.h"
 #include "Experimental/ExperimentalTests.h"
 #include "Experimental/IntrusiveSharedPtrImpl.hpp"
+#include "cpp17features/VariantExamples.h"
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -395,6 +396,8 @@ int main(int argc, char* argv[])
 	fromChars_Example2();
 	fromChars_floatingPoint();
 	toChars_Integers();
+
+	PrintVisitor_Variants();
 
 	
 	//FileSystem_Basics();
