@@ -203,13 +203,14 @@ inline void fromChars_Example2()
 inline void fromChars_floatingPoint()
 {
 	std::printf("\n-----fromChars Floating Point----\n");
-	const std::array<char, std::numeric_limits<float>::digits> str = { "F.F" };
+	const std::array<char, std::numeric_limits<float>::digits> str = { "-67.1235" };
 	double value = 0;
 
-	//const auto format = std::chars_format::general;  
+	/* Format used to test different setting and types ; general is combinatin of fixed and scientific chose automatically*/
+	const auto format = std::chars_format::general;  
 	//const auto format = std::chars_format::fixed;
 	//const auto format = std::chars_format::scientific;
-	const auto format = std::chars_format::hex;
+	//const auto format = std::chars_format::hex;
 	
 	const auto res = std::from_chars(str.data(), str.data() + str.size(), value, format);
 
@@ -225,4 +226,35 @@ inline void fromChars_floatingPoint()
 	{
 		fmt::print("result_out_of_range!, res.ptr distance: {0}\n", res.ptr - str.data());
 	}
+}
+
+inline void toChars_Integers()
+{
+	std::printf("\n-----toChars_Integers----\n");
+
+	std::array<char, std::numeric_limits<int>::digits10 + 2> str;
+
+	const int value = -198619;
+
+	auto res = std::to_chars(str.data(), str.data() + str.size(), value, 10);
+
+	if (res.ec == std::errc{})
+	{
+		/* if the value is too large then VS Studio will throw exception in Debug mode but not in release check ; VS Studio has array bound check in debug mode!
+		   if the string_view is used there is no need to do this 
+		*/
+		*res.ptr = '\0';
+		fmt::print("res to_chars: {0}, characters = {1}\n", str.data(), res.ptr - str.data());
+
+		/*Alternative to above string_view can be used without adding the null character at the end but to be safe it is better to add
+		  NOTE: the null character can be added by initializing the array with value zero
+		  NOTE: For c++20; string_view(str.data(), res.ptr) is enough
+		*/
+		fmt::print("res to_chars: {0}, characters = {1}\n", std::string_view(str.data(), res.ptr - str.data()), res.ptr - str.data());
+	}
+	else
+	{
+		fmt::print("value too large to fit in!");
+	}
+
 }

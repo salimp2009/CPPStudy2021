@@ -394,6 +394,7 @@ int main(int argc, char* argv[])
 	toChars_Example();
 	fromChars_Example2();
 	fromChars_floatingPoint();
+	toChars_Integers();
 
 	
 	//FileSystem_Basics();
