@@ -110,6 +110,7 @@
     <ClInclude Include="src\Allocators\StackMemoryPool.h" />
     <ClInclude Include="src\Allocators\tracknew.hpp" />
     <ClInclude Include="src\cpp17features\FileSystemExamples.h" />
+    <ClInclude Include="src\cpp17features\StateMachineExample.h" />
     <ClInclude Include="src\cpp17features\VariantExamples.h" />
     <ClInclude Include="src\Experimental\AnyInvocableImpl.hpp" />
     <ClInclude Include="src\ChronoExamples.hpp" />

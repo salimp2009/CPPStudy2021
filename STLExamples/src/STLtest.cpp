@@ -399,8 +399,9 @@ int main(int argc, char* argv[])
 
 	PrintVisitor_Variants();
 	variantMultipleTest();
+	variantExecptionTest();
+	StateMachineTest();
 
-	
 	//FileSystem_Basics();
 	//CheckPath_SwitchFile(/*argc, argv[]*/);
 	//CreateDirectory_Files();

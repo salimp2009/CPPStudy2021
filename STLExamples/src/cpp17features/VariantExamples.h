@@ -1,5 +1,6 @@
 #pragma once
 #include "STLpch.h"
+#include "StateMachineExample.h"
 
 
 template<class... Bases>
@@ -11,6 +12,19 @@ struct Overload : Bases...
 /* this is not needed for C++20*/
 template<class...T> 
 Overload(T...)->Overload<T...>;
+
+template<typename Variant, typename... Handlers>
+auto match(Variant&& v, Handlers&&... handlers)
+{
+	return std::visit(Overload{ std::forward<Handlers>(handlers)...}, std::forward<Variant>(v));
+}
+
+template<typename... Variant, typename... Handlers>
+auto match2(Variant&&... v, Handlers&&... handlers)
+{
+	//(match(v, handlers...), ...);
+	return (std::visit(Overload{ std::forward<Handlers>(handlers)... }, std::forward<Variant>(v)), ...);
+}
 
 struct PrintVisitor
 {
@@ -95,9 +109,79 @@ inline void variantMultipleTest()
 		[](const auto& b) {std::cout << "invalid composition...\n"; },
 		}, linuxRenderer);
 
+	match(linuxRenderer, 
+		[](const mDirectx& dx) { std::cout << "DirectX Renderer API !\n"; },
+		[](const mMetal& met) {  std::cout << "Metal Renderer API !\n"; },
+		[](const mOpengl& ogl) {  std::cout << "OpenGL Renderer API !\n"; },
+		[](const mVulkan& vul) {  std::cout << "Vulkan Renderer API !\n"; },
+		[](const auto& b) {std::cout << "invalid composition...\n"; }
+		);
+
+	/* TODO ; try to implement a match function  that takes */
+	//match2(linuxRenderer,
+	//	[](const mDirectx& dx) { std::cout << "DirectX Renderer API !\n"; },
+	//	[](const mMetal& met) {  std::cout << "Metal Renderer API !\n"; },
+	//	[](const mOpengl& ogl) {  std::cout << "OpenGL Renderer API !\n"; },
+	//	[](const mVulkan& vul) {  std::cout << "Vulkan Renderer API !\n"; },
+	//	[](const auto& b) {std::cout << "invalid composition...\n"; }
+	//	);
+
 }
 
+class ThrowingClass
+{
+public:
+	explicit ThrowingClass(int i) { if (i == 0) throw int(10); }
+	operator int() { throw int(10); }
+};
 
 
+inline void variantExecptionTest()
+{
+	std::printf("\n---variant Execption Test---\n");
 
+	std::variant<int, ThrowingClass> var;
+
+	try
+	{
+		var = ThrowingClass(0);
+	}
+	catch (...)
+	{
+		/* the old state is kept since the exception is thrown after variant created
+		   therefore var.valueless_by_exception() = false, 
+		   we keep the old state which is by default the first type of the variant
+		*/
+		std::printf("exception: catch(...)\n");
+		fmt::print("valueless by exception: {0}, value of variant after exception: {1}\n", var.valueless_by_exception(), std::get<int>(var));
+	}
+
+	try
+	{
+		var.emplace<0>(ThrowingClass(10));
+	}
+	catch (...)
+	{
+		/* the old state is destroyed the variant is in invalid state*/
+		std::printf("exception by emplace: catch(...)\n");
+		fmt::print("valueless by exception: {0}\n", var.valueless_by_exception());
+	}
+
+}
+
+inline void StateMachineTest()
+{
+	DoorState state;
+	assert(std::holds_alternative<DoorOpened>(state.m_state));
+	state.lock();
+	assert(std::holds_alternative<DoorOpened>(state.m_state));
+	state.close();
+	assert(std::holds_alternative<DoorClosed>(state.m_state));
+	state.lock();
+	assert(std::holds_alternative<DoorLocked>(state.m_state));
+	state.unlock();
+	assert(std::holds_alternative<DoorClosed>(state.m_state));
+	state.open();
+	assert(std::holds_alternative<DoorOpened>(state.m_state));
+}
 
