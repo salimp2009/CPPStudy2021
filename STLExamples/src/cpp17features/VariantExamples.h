@@ -2,13 +2,22 @@
 #include "STLpch.h"
 
 
+template<class... Bases>
+struct Overload : Bases...
+{
+	using Bases::operator()...;
+};
+
+/* this is not needed for C++20*/
+template<class...T> 
+Overload(T...)->Overload<T...>;
+
 struct PrintVisitor
 {
 	void operator()(int i) { fmt::print("int: {}\n", i); }
 	void operator()(float f) { fmt::print("float: {}\n", f); }
 	void operator()(const std::string& s) { fmt::print("string: {}\n", s); }
 };
-
 
 
 inline void PrintVisitor_Variants()
@@ -64,7 +73,31 @@ inline void PrintVisitor_Variants()
 
 	/*Ambigious variant; compiler cannot decide the type since it can be any of the given type below!!; GCC has a fix*/
 	//std::variant<long, float, double> narrowingVar = 0;
+}
+
+inline void variantMultipleTest()
+{
+	struct mOpengl { };
+	struct mDirectx { };
+	struct mVulkan { };
+	struct mMetal { };
+
+	std::variant<mOpengl, mDirectx, mVulkan, mMetal> windowsRenderer{ mDirectx{} };
+	std::variant<mOpengl, mDirectx, mVulkan, mMetal> linuxRenderer{ mVulkan{} };
+	std::variant<mOpengl, mDirectx, mVulkan, mMetal> macOSRenderer{ mMetal{} };
+
+	/* if you pass multiple variants then there have to be more overloads and it creates unneccessary code so prefer to use one*/
+	std::visit(Overload{
+		[](const mDirectx& dx) { std::cout<<"DirectX Renderer API !\n"; },
+		[](const mMetal& met) {  std::cout << "Metal Renderer API !\n"; },
+		[](const mOpengl& ogl) {  std::cout << "OpenGL Renderer API !\n"; },
+		[](const mVulkan& vul) {  std::cout << "Vulkan Renderer API !\n"; },
+		[](const auto& b) {std::cout << "invalid composition...\n"; },
+		}, linuxRenderer);
 
 }
+
+
+
 
 

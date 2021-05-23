@@ -398,6 +398,7 @@ int main(int argc, char* argv[])
 	toChars_Integers();
 
 	PrintVisitor_Variants();
+	variantMultipleTest();
 
 	
 	//FileSystem_Basics();
