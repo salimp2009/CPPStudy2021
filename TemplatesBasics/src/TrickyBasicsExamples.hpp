@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Templpch.h"
+#include "ArrayOverloads.hpp"
 
 template<class T>
 void printColl(const T& coll)
@@ -37,7 +38,7 @@ constexpr bool lessArray(T(&a)[N], T(&b)[M])
 
 inline void TrickyBasics_Arrays()
 {
-	std::printf("\n------------TrickyBasics Arrays------------\n");
+	std::printf("\n--TrickyBasics Arrays--\n");
 
 	int x[] = { 1,2,3,4,5,6 };
 	int y[] = { 1,2,3,4};
@@ -49,3 +50,10 @@ inline void TrickyBasics_Arrays()
 	fmt::print("less array: {0}\n", lessArray(s2, s1));
 
 }
+
+inline void ArrayOverloads_Test()
+{
+	std::printf("\n--Array Overloads--\n");
+
+}
+

@@ -95,6 +95,7 @@
     <ClCompile Include="src\tempbasics.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ArrayOverloads.hpp" />
     <ClInclude Include="src\EnableIf_Utils.hpp" />
     <ClInclude Include="src\Max5.hpp" />
     <ClInclude Include="src\NontypeTemplateParams.hpp" />

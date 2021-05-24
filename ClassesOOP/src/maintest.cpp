@@ -13,9 +13,6 @@
 #include "ExceptionSamples.h"
 #include "ReadTextFile.h"
 
-
-
-
 template<typename T>
 void do_withdraw(T&& account, double amount)
 {

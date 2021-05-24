@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <cstdio>
-#include <stdio.h>
 #include <cstring>
 #include <type_traits>
 #include <memory>
