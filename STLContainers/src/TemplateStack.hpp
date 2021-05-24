@@ -30,8 +30,14 @@ public:
 	constexpr void push(T&& elem) noexcept(noexcept(Cont()));
 
 	const T& top()  const&;
-
 	T pop();
+	bool empty() const { return cont.empty(); }
+
+	template<typename T2>
+	SPStack& operator=(const SPStack<T2>& other);
+
+	/* needed to acces private of a stack with different type of elements in the container*/
+	template<typename> friend class Stack;
 
 	Cont::iterator begin() { return cont.begin(); }
 	Cont::iterator end() { return cont.end(); }
@@ -70,4 +76,20 @@ template<typename T, typename Cont>
 constexpr void SPStack<T, Cont>::push(T&& elem) noexcept(noexcept(Cont()))
 {
 	cont.push_back(std::forward<T>(elem));
+}
+
+template<typename T, typename Cont >
+template<typename T2>
+SPStack<T, Cont>& SPStack<T, Cont>::operator=(const SPStack<T2>& other)
+{
+	if (*this == &other) return *this;
+	static_assert(std::is_convertible_v<T2, T>);
+	
+	if (!other.empty())
+	{
+		cont.clear();
+		cont.insert(cont.begin(), other.cont.begin(), other.cont.end());
+	}
+	
+	return *this;
 }

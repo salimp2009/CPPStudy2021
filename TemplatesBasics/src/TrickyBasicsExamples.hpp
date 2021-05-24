@@ -51,9 +51,34 @@ inline void TrickyBasics_Arrays()
 
 }
 
+template<typename T1,  typename T2, typename T3>
+void testArrays(int a1[7], int a2[], /*pointer by language rules*/
+	int(&a3)[42],		 /*reference to array of known bounds*/
+	int(&x0)[],			 /*reference to array of unknow bounds*/
+	T1 x1,				 /*passing by value decays*/
+	T2& x2, T3&& x3)	 /*passing by reference*/
+
+{
+	MyClass<decltype(a1)>::print();		/*goes T* overloaded version*/
+	MyClass<decltype(a2)>::print();		/*goes T* overloaded version*/
+	MyClass<decltype(a3)>::print();		/*goes T(&a)[n]; reference to array with known bounds*/
+	MyClass<decltype(x0)>::print();		/*goes T(&a)[]; reference to array with unknown bounds*/
+	MyClass<decltype(x1)>::print();
+	MyClass<decltype(x2)>::print();
+	MyClass<decltype(x3)>::print();
+}
+
+
 inline void ArrayOverloads_Test()
 {
 	std::printf("\n--Array Overloads--\n");
+	int a[42] = { 0 };
+	MyClass<decltype(a)>::print(); //goes to T[SZ]
 
+	extern int x[];
+	MyClass<decltype(x)>::print(); // goes to T[]
+
+	testArrays(a, a, a, x, x, x, x);
 }
 
+int x[] = { 0,8,15 };

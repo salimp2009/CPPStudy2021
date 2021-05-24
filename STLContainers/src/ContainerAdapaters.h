@@ -49,6 +49,14 @@ inline void StackExamples()
 
 	SPStack<std::string>mstack3{ "Salim", "Didem", "Demir" };
 	fmt::print("mstack top: {}\n", mstack3.top());
+	fmt::print("SPStack empty() function test: {0}\n", mstack3.empty());
+
+	SPStack mstackTest = { "Salitos" };
+	mstackTest = mstack3;
+	for (const auto& elem : mstackTest)
+	{
+		fmt::print("testing spstackTest: {}\n", elem);
+	}
 
 	auto removedval = mstack3.pop();
 	fmt::print("mstack top: {}\n", mstack3.top());

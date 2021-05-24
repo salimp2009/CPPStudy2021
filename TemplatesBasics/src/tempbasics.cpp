@@ -15,7 +15,7 @@ int main()
 	VariadicBases_Overloader();
 	TrickyBasics01();
 	TrickyBasics_Arrays();
-
+	ArrayOverloads_Test();
 
 	return 0;
 }
