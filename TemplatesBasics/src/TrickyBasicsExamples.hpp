@@ -68,7 +68,6 @@ void testArrays(int a1[7], int a2[], /*pointer by language rules*/
 	MyClass<decltype(x3)>::print();
 }
 
-
 inline void ArrayOverloads_Test()
 {
 	std::printf("\n--Array Overloads--\n");
@@ -81,4 +80,69 @@ inline void ArrayOverloads_Test()
 	testArrays(a, a, a, x, x, x, x);
 }
 
+/* used in the above example*/
 int x[] = { 0,8,15 };
+
+class BoolString
+{
+private:
+	std::string value;
+public:
+	BoolString(std::string s) : value{ std::move(s) } {}
+
+	template<typename T= std::string>
+	T get() const { return value; }
+};
+
+/* specialization for the get member function
+	it can only be defined not declare in the class boyd and define 
+	but it can be also declared in the class body as well
+*/
+template<>
+inline bool BoolString::get<bool>()const
+{
+	return value == "true" || value == "1" || value == "on";
+}
+
+template<unsigned long N>
+void printBitSet(const std::bitset<N>& bs)
+{
+	/* if the we want explicitly specify to_string() member functions template parameter 
+	we need use bs.template to_string<....> so that compiler knows < the operator is begining of a template*/
+	//std::cout << bs.template to_string<char, std::char_traits<char>, std::allocator<char>>() << '\n';
+
+	/* if not template paramater needed to specfiy in to_string ; just use regular*/
+	//std::cout << bs.to_string() << '\n';
+
+	/* it works with fmt as well*/
+	fmt::print("bitset : to_string<>: {}\n", bs.template to_string<char, std::char_traits<char>, std::allocator<char>>());
+	fmt::print("bitset : to_string<>: {}\n", bs.to_string());
+
+}
+
+inline void MemberFunctSpecialization_Test()
+{
+	std::printf("\n---Member Funct Specialization---\n");
+
+	BoolString s1{ "salim" };
+	fmt::print("boolstring get(): {}\n", s1.get());
+	fmt::print("boolstring get<bool>(): {}\n", s1.get<bool>());
+	s1 = BoolString{ "on" };
+	fmt::print("boolstring get<bool>(): {}\n", s1.get<bool>());
+
+	std::bitset<8> bs1(14);
+	printBitSet(bs1);
+
+}
+
+template <typename T= long double>
+constexpr T pi= static_cast<T>(3.1415926535897932385 );
+
+inline void VariableTemplates_Test()
+{
+	std::printf("\n---Variable Templates---\n");
+
+	fmt::print("pi<float>: {}\n", pi<float>);
+	fmt::print("pi<double>: {}\n", pi<double>);
+
+}

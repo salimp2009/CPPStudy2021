@@ -11,11 +11,13 @@ int main()
 	//NonTemplateParams_Basics();
 	VariadicTemplate_Basics(); 
 	//FoldingBinaryTree();
-	VariadicIndices();
-	VariadicBases_Overloader();
-	TrickyBasics01();
+	//VariadicIndices();
+	//VariadicBases_Overloader();
+	//TrickyBasics01();
 	TrickyBasics_Arrays();
 	ArrayOverloads_Test();
+	MemberFunctSpecialization_Test();
+	VariableTemplates_Test();
 
 	return 0;
 }

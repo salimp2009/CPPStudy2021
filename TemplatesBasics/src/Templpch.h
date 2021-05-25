@@ -11,6 +11,7 @@
 #include <functional>
 #include <algorithm>
 #include <numeric>
+#include <bitset>
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
