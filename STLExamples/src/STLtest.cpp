@@ -1,5 +1,7 @@
 #include "STLpch.h"
 
+import TestModule;
+
 #include "TupplePairUtilities.hpp"
 #include "Person.h"
 #include "MyTypeTraits.hpp"
@@ -13,6 +15,8 @@
 #include "Experimental/ExperimentalTests.h"
 #include "Experimental/IntrusiveSharedPtrImpl.hpp"
 #include "cpp17features/VariantExamples.h"
+
+
 
 
 /*Use for Chrono examples but Does not work correctly due to Argument lookup problem; does not work in online compilers also */
@@ -409,6 +413,10 @@ int main(int argc, char* argv[])
 	//FilterFilesUsingRegex();
 
 	//functionref_Tests(/*argc, argv[]*/);
+	
+	/* module function works as expected but red squigles dont go away!!!*/
+	MyModuleFunc(255);
+	
 
 	return 0;
 

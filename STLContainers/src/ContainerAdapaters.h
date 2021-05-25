@@ -83,7 +83,7 @@ inline void StackExamples()
 
 	SPStack<std::pair<int, float>>mstack6;
 	mstack6.push({ 4,45.0f });
-	fmt::print("mstack top: {}\n", mstack6.top().second);
+	fmt::print("mstack with pair top: {}\n", mstack6.top().second);
 	mstack6.emplace(std::make_pair(12, 12.5f), std::make_pair(12, 35.5F));
 	mstack6.emplace({ 12, 34.4f });
 

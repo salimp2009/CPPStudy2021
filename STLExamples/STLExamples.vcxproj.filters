@@ -24,6 +24,9 @@
     <ClCompile Include="src\Allocators\StackMemoryPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\TestModule.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TupplePairUtilities.hpp">
