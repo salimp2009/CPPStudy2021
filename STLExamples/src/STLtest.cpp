@@ -370,7 +370,7 @@ int main(int argc, char* argv[])
 	//LambdaIIFE_C17();
 	//LambdasInConcurency();
 #ifdef  _HAS_CXX20
-	//Lambdas_C20_Test();
+	Lambdas_C20_Test();
 #endif //  _HAS_CXX20
 	
 	//STLAlgorithms_Test();

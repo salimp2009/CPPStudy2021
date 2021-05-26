@@ -92,6 +92,13 @@
   <ItemGroup>
     <ClCompile Include="src\mathInterfaceUnit.ixx" />
     <ClCompile Include="src\MathImplementationUnit.cpp" />
+    <ClCompile Include="src\mathModule.ixx" />
+    <ClCompile Include="src\mathModule1.ixx" />
+    <ClCompile Include="src\mathModule2.ixx" />
+    <ClCompile Include="src\mathModuleTemplate.ixx" />
+    <ClCompile Include="src\mathPartition.ixx" />
+    <ClCompile Include="src\mathPartition1.ixx" />
+    <ClCompile Include="src\mathPartition2.ixx" />
     <ClCompile Include="src\ModulesTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

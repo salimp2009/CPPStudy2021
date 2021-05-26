@@ -437,8 +437,7 @@ inline void Lambdas_C20_Test()
 	const int x1{ 10 };
 	/* consteval works only compile time whereas constexpr can work both compile or runtime*/
 	auto lam1 = [](int n) consteval -> int {return n + n; };
-	/* This gives immediate call not a const expression error ; Only in VS Studio; reported to MS Developer*/
-	//lam1(x1);
+	lam1(x1);
 
 	std::unique_ptr<int> uptr{ new int(10) };
 
