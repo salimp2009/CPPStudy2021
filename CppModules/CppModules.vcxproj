@@ -61,6 +61,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
+      <EnableModules>
+      </EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -77,6 +79,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
+      <EnableModules>
+      </EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,7 +90,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\math.ixx" />
+    <ClCompile Include="src\mathInterfaceUnit.ixx" />
+    <ClCompile Include="src\MathImplementationUnit.cpp" />
     <ClCompile Include="src\ModulesTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

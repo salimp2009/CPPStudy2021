@@ -1,22 +1,26 @@
+
 #include <cstdio>
-#include "spdlog/fmt/fmt.h"
 #include <vector>
+
+#include "spdlog/fmt/fmt.h"
+
 
 import math;
 
 
 int main()
 {
-	std::printf("HEllo from main\n");
-	
-	std::printf("test mathh module; add(): %d\n", add(10, 20));
-	fmt::print("test mathh module; add(): {0}\n", add(10, 20));
+	std::printf("test mathh module; add(): %d\n", math::add(10, 20));
+	//fmt::print("test mathh module; add(): {0}\n", add(10, 20));
 
-	auto var =add(15, 20);
+	auto var =math::add(15, 20);
 	fmt::print("test math module; add(): {0}\n", var);
 
-	std::vector<int> myvec{ 1,2,3 };
+	std::vector<int> vec1{ 1,2,3 };
 
-	/* intellisense */
-	fmt::print("getproduct: {}\n", getProductNew(myvec));
+	/* intellisense gives red squigless ; false error but it works???*/
+	fmt::print("getproduct: {}\n", math::getProduct(vec1));
+
+	auto var2 = math::getProduct(vec1);
+	std::printf("test math module; getproduct(): %d\n", math::getProduct(vec1));
 }
