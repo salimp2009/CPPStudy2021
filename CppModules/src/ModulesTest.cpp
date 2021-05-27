@@ -9,7 +9,9 @@
 import mathTemp;
 import math;
 import partmath;
-import mathPart;
+import mathPart;
+
+
 int main()
 {
 	std::printf("test mathh module; add(): %d\n", math::add(10, 20));

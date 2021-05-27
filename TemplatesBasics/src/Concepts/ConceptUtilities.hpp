@@ -1,0 +1,35 @@
+#pragma once
+#include "Templpch.h"
+
+template<typename T>
+requires std::integral<T>
+constexpr auto greaterCommonDivisor(T a, T b)
+{
+	if (b == 0) return a;
+	
+	return greaterCommonDivisor(b, a % b);
+}
+
+template<typename T>
+constexpr auto greaterCommonDivisor1(T a, T b) requires std::integral<T>
+{
+	if (b == 0) return a;
+
+	return greaterCommonDivisor1(b, a % b);
+}
+
+template<std::integral T>
+constexpr auto greaterCommonDivisor2(T a, T b) 
+{
+	if (b == 0) return a;
+
+	return greaterCommonDivisor2(b, a % b);
+}
+
+
+constexpr auto greaterCommonDivisor3(std::integral auto a, std::integral auto b)
+{
+	if (b == 0) return a;
+
+	return greaterCommonDivisor3(b, a % b);
+}

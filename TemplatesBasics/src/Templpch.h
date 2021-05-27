@@ -13,6 +13,10 @@
 #include <numeric>
 #include <bitset>
 
+#if __has_include(<concepts>)
+#include <concepts>
+#endif
+
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
