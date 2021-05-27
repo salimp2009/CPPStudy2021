@@ -33,3 +33,10 @@ constexpr auto greaterCommonDivisor3(std::integral auto a, std::integral auto b)
 
 	return greaterCommonDivisor3(b, a % b);
 }
+
+template<unsigned i>
+requires (i <= 20) // not a preferred method to use prefer more name concepts here 
+int sum(int j)
+{
+	return j + i;
+}
