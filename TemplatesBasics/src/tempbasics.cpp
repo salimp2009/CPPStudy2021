@@ -20,6 +20,7 @@ int main()
 	//MemberFunctSpecialization_Test();
 	//VariableTemplates_Test();
 	greatCommonDiv_Concepts();
+	compileTimePredicate_Concepts();
 
 	return 0;
 }

@@ -3,7 +3,7 @@
 
 template<typename T>
 requires std::integral<T>
-constexpr auto greaterCommonDivisor(T a, T b)
+constexpr std::integral auto greaterCommonDivisor(T a, T b)
 {
 	if (b == 0) return a;
 	
@@ -27,7 +27,7 @@ constexpr auto greaterCommonDivisor2(T a, T b)
 }
 
 
-constexpr auto greaterCommonDivisor3(std::integral auto a, std::integral auto b)
+constexpr std::integral auto greaterCommonDivisor3(std::integral auto a, std::integral auto b)
 {
 	if (b == 0) return a;
 
