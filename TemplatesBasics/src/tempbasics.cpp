@@ -21,6 +21,7 @@ int main()
 	//VariableTemplates_Test();
 	greatCommonDiv_Concepts();
 	compileTimePredicate_Concepts();
+	customConceptExample1_();
 
 	return 0;
 }
