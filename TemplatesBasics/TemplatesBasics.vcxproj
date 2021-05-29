@@ -97,6 +97,8 @@
   <ItemGroup>
     <ClInclude Include="src\ArrayOverloads.hpp" />
     <ClInclude Include="src\Concepts\ConceptExamples.hpp" />
+    <ClInclude Include="src\Concepts\ConceptsAddAllVers02.hpp" />
+    <ClInclude Include="src\Concepts\ConceptTestClass.hpp" />
     <ClInclude Include="src\Concepts\ConceptUtilities.hpp" />
     <ClInclude Include="src\Concepts\ConceptUtils02.hpp" />
     <ClInclude Include="src\Concepts\ConstraintAddAll.hpp" />

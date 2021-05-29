@@ -2,6 +2,7 @@
 #include "ConceptUtilities.hpp"
 #include "ConceptUtils02.hpp"
 #include "Concepts/ConstraintAddAll.hpp"
+#include "Concepts/ConceptsAddAllVers02.hpp"
 
 
 inline void greatCommonDiv_Concepts()
@@ -91,11 +92,20 @@ inline void customConceptExample1_()
 	using RationalInt = Rational<int>;
 	auto rationalSum = addAllValues2(RationalInt{ 3, 4 }, RationalInt{ 5, 8 }, RationalInt{ 5, 8 });
 
-	std::printf("Rational Numerator: %d, Denominator: %d \n", rationalSum.Numerator(), rationalSum.DeNominator());
+	std::printf("\nRational Numerator: %d, Denominator: %d \n", rationalSum.Numerator(), rationalSum.DeNominator());
 
-	std::printf("addValues3 with custom concepts: %d \n", addAllValues3(1, 2, 3, 4, 5, 6, 7));
+	std::printf("\naddValues3 with custom concepts: %d \n", addAllValues3(1, 2, 3, 4, 5, 6, 7));
 	auto rationalSum2 = addAllValues3(RationalInt{ 3, 4 }, RationalInt{ 5, 8 }, RationalInt{ 5, 8 });
 	std::printf("Rational2 with AddAll3; Numerator: %d, Denominator: %d \n", rationalSum2.Numerator(), rationalSum2.DeNominator());
+
+	std::printf("\naddValues4 with custom concepts: %d \n", AddAllValues4(1, 2, 3, 4, 5, 6, 7));
+	auto rationalSum3 = AddAllValues4(RationalInt{ 3, 4 }, RationalInt{ 5, 8 }, RationalInt{ 5, 8 });
+	std::printf("Rational3 with AddAll4; Numerator: %d, Denominator: %d \n", rationalSum3.Numerator(), rationalSum3.DeNominator());
+
+	std::printf("\naddValues5 with custom concepts: %d \n", AddAllValues5(1, 2, 3, 4, 5, 6, 7));
+	auto rationalSum4 = AddAllValues4(RationalInt{ 3, 4 }, RationalInt{ 5, 8 }, RationalInt{ 5, 8 });
+	std::printf("Rational4 with AddAll5; Numerator: %d, Denominator: %d \n", rationalSum4.Numerator(), rationalSum4.DeNominator());
+
 }
 
 inline void ConceptsIn_VariadicTemplates()

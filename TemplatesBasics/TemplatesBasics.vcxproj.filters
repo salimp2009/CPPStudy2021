@@ -59,5 +59,11 @@
     <ClInclude Include="src\Concepts\ConstraintAddAll.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Concepts\ConceptsAddAllVers02.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Concepts\ConceptTestClass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
