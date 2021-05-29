@@ -1,6 +1,7 @@
 #pragma once
 #include "Templpch.h"
 
+
 template<typename T, typename... Ts>
 inline constexpr bool are_same_v = std::conjunction_v<std::is_same<T, Ts>...>;
 
@@ -29,6 +30,8 @@ auto addAllValues3(T&& arg, Args&&... args)
 	return (arg + ... + args);
 }
 
+
+/* Same as above but using requires rather than the concept for the constraint; prefer the above method using Concepts*/
 template<typename T, typename...Args>
 requires  requires(T arg)
 {

@@ -55,9 +55,6 @@ public:
     }
 
 
-
-
-   
    decltype(auto) operator()(Args...xs) const noexcept(noexcept(_erased_fn(_ptr, std::forward<Args>(xs)...)))
     {                                                           // this is function_ref operator()
         return _erased_fn(_ptr, std::forward<Args>(xs)...);     // it will invoke type erased function _erased_fn

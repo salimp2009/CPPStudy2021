@@ -96,9 +96,17 @@ inline void customConceptExample1_()
 	std::printf("addValues3 with custom concepts: %d \n", addAllValues3(1, 2, 3, 4, 5, 6, 7));
 	auto rationalSum2 = addAllValues3(RationalInt{ 3, 4 }, RationalInt{ 5, 8 }, RationalInt{ 5, 8 });
 	std::printf("Rational2 with AddAll3; Numerator: %d, Denominator: %d \n", rationalSum2.Numerator(), rationalSum2.DeNominator());
-
-
 }
+
+inline void ConceptsIn_VariadicTemplates()
+{
+	std::printf("\n---Concepts InVariadic Templates---\n");
+
+	fmt::print("allValid(5, true, false): {}\n", allValid(5, true, false));
+	fmt::print("anyValid(5, true, false): {}\n", anyValid(5, true, false));
+	fmt::print("noneValid(5, true, false): {}\n", noneValid(5, true, false));
+}
+
 
 
 

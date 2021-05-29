@@ -412,7 +412,7 @@ int main(int argc, char* argv[])
 	//ReadFileContents_FromPath();
 	//FilterFilesUsingRegex();
 
-	//functionref_Tests(/*argc, argv[]*/);
+	functionref_Tests(/*argc, argv[]*/);
 	
 	/* module function works as expected but red squigles dont go away!!!*/
 	MyModuleFunc(255);

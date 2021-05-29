@@ -40,3 +40,16 @@ int sum(int j)
 {
 	return j + i;
 }
+
+
+template<std::integral... Args>
+constexpr bool allValid(Args... args) { return (... && args); };
+
+template<std::integral... Args>
+constexpr bool anyValid(Args... args) { return (... || args); };
+
+template<std::integral... Args>
+constexpr bool noneValid(Args... args) { return not(... || args); };
+
+
+

@@ -22,6 +22,7 @@ int main()
 	greatCommonDiv_Concepts();
 	compileTimePredicate_Concepts();
 	customConceptExample1_();
+	ConceptsIn_VariadicTemplates();
 
 	return 0;
 }
