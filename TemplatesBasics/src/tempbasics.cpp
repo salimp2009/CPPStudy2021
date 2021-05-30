@@ -19,10 +19,12 @@ int main()
 	//ArrayOverloads_Test();
 	//MemberFunctSpecialization_Test();
 	//VariableTemplates_Test();
-	greatCommonDiv_Concepts();
-	compileTimePredicate_Concepts();
-	customConceptExample1_();
+	//greatCommonDiv_Concepts();
+	//compileTimePredicate_Concepts();
+	//customConceptExample1_();
 	ConceptsIn_VariadicTemplates();
+	TestingCustomConcept();
+	FunctionOverloadingConcepts();
 
 	return 0;
 }

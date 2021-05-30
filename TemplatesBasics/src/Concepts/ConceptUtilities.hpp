@@ -51,5 +51,21 @@ constexpr bool anyValid(Args... args) { return (... || args); };
 template<std::integral... Args>
 constexpr bool noneValid(Args... args) { return not(... || args); };
 
+template<std::forward_iterator It>
+void advanceIt(It iter, int n)
+{
+	std::printf("forward iterator\n");
+}
 
+template<std::random_access_iterator It>
+void advanceIt(It iter, int n)
+{
+	std::printf("random_access_iterator\n");
+}
+
+template<std::bidirectional_iterator It>
+void advanceIt(It iter, int n)
+{
+	std::printf("bidirectional_iterator\n");
+}
 

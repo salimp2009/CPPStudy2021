@@ -3,6 +3,7 @@
 #include "ConceptUtils02.hpp"
 #include "Concepts/ConstraintAddAll.hpp"
 #include "Concepts/ConceptsAddAllVers02.hpp"
+#include "ConceptTestClass.hpp"
 
 
 inline void greatCommonDiv_Concepts()
@@ -118,5 +119,49 @@ inline void ConceptsIn_VariadicTemplates()
 }
 
 
+inline void TestingCustomConcept()
+{
+	/* Creating test objects with differen conditions to test concept!*/
+	using NoAdd = ObjectStub<true, false, true, true>;
+	using ValidClass = ObjectStub<true, true, true, true>;
+	using NotNoEcept = ObjectStub<false, true, true, true>;
+	using WithoutType = ObjectStub<true, true, false, true>;
+	using DifferentReturnType = ObjectStub<true, true, false, false>;
+
+	std::printf("\n---Testing Custom Concept---\n");
+
+	/* assert + operator*/
+	static_assert(Testclass<int, int>);
+	static_assert(not Testclass<NoAdd, NoAdd>);
+	
+	/* assert no mix types allowed*/
+	static_assert(not Testclass<int, float>);
+	
+	/* assert paramater has one type*/
+	static_assert(not Testclass<int>);
+	
+	/* assert + operator is noexcept*/
+	static_assert(not Testclass<NotNoEcept, NotNoEcept>);
+
+	/* assert + operator return same type*/
+	static_assert(not Testclass<DifferentReturnType, DifferentReturnType>);
+
+	/* assert valid class works*/
+	static_assert(Testclass<ValidClass, ValidClass>);
+
+	/* assert there is a type in the class type*/
+	/* if it is a class then it has to have type to pass the test
+		if it is a built-in type like int it will still pass; tested above lines
+	*/
+	static_assert(not Testclass<WithoutType, WithoutType>);
+
+}
+
+inline void FunctionOverloadingConcepts()
+{
+	std::printf("\n---Function OverloadingConcepts---\n");
+
+
+}
 
 
