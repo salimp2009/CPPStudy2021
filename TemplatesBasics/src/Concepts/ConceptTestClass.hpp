@@ -47,7 +47,7 @@ public:
 
 /* Moved these into ConcecptExamples into function; easier for using */
 ///* Creating test objects with differen conditions to test concept!*/
-//using NoAdd					= ObjectStub<true, false, true, true>;
+//using NoAdd				= ObjectStub<true, false, true, true>;
 //using ValidClass			= ObjectStub<true, true, true, true>;
 //using NotNoEcept			= ObjectStub<false, true, true, true>;
 //using WithoutType			= ObjectStub<true, true, false, true>;

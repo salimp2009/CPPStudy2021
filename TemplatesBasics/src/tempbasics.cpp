@@ -4,6 +4,7 @@
 #include "VariadicTemplates.hpp"
 #include "TrickyBasicsExamples.hpp"
 #include "Concepts/ConceptExamples.hpp"
+#include "Concepts/ConceptExamples2.hpp"
 
 
 int main()
@@ -25,6 +26,8 @@ int main()
 	ConceptsIn_VariadicTemplates();
 	TestingCustomConcept();
 	FunctionOverloadingConcepts();
+	SpecializeTemplates_Concepts();
+	conceptBasedDispatch();
 
 	return 0;
 }

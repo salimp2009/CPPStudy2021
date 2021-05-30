@@ -157,10 +157,30 @@ inline void TestingCustomConcept()
 
 }
 
+
 inline void FunctionOverloadingConcepts()
 {
 	std::printf("\n---Function OverloadingConcepts---\n");
 
+	/* Intellisense show false error !!!1*/
+	std::list Li{ 1,2,3 };
+	auto ItBi{ Li.begin() };
+	advanceIt(ItBi, 1);
+
+	std::forward_list fList = { 0,1,2,3 };
+	auto fwIt = fList.begin();
+	advanceIt(fwIt, 2);
+
+	std::vector vec1{ 1,2,3,4 };
+	auto RandIt = vec1.begin();
+	advanceIt(RandIt, 2);
+}
+
+inline void SpecializeTemplates_Concepts()
+{
+	std::printf("\n---TemplateSpecializeConcepts---\n");
+	DVector<int> dvec1;
+	DVector<int&> dvec2;
 
 }
 

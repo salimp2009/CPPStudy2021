@@ -52,20 +52,32 @@ template<std::integral... Args>
 constexpr bool noneValid(Args... args) { return not(... || args); };
 
 template<std::forward_iterator It>
-void advanceIt(It iter, int n)
+constexpr void advanceIt(It& iter, int n)
 {
 	std::printf("forward iterator\n");
 }
 
+template<std::bidirectional_iterator It>
+constexpr void advanceIt(It& iter, int n)
+{
+	std::printf("bidirectional_iterator\n");
+}
+
 template<std::random_access_iterator It>
-void advanceIt(It iter, int n)
+constexpr void advanceIt(It& iter, int n)
 {
 	std::printf("random_access_iterator\n");
 }
 
-template<std::bidirectional_iterator It>
-void advanceIt(It iter, int n)
+template<typename T>
+struct DVector
 {
-	std::printf("bidirectional_iterator\n");
-}
+	DVector() { std::printf("DVector<T>\n"); }
+};
+
+template<std::regular Reg>
+struct DVector<Reg>
+{
+	DVector() { std::printf("DVector<std::regular>\n"); }
+};
 
