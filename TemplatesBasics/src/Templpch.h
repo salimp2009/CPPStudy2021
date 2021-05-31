@@ -26,3 +26,4 @@
 #include <array>
 #include <list>
 #include <forward_list>
+#include <queue>
