@@ -23,11 +23,12 @@ int main()
 	//greatCommonDiv_Concepts();
 	//compileTimePredicate_Concepts();
 	//customConceptExample1_();
-	ConceptsIn_VariadicTemplates();
-	TestingCustomConcept();
-	FunctionOverloadingConcepts();
-	SpecializeTemplates_Concepts();
+	//ConceptsIn_VariadicTemplates();
+	//TestingCustomConcept();
+	//FunctionOverloadingConcepts();
+	//SpecializeTemplates_Concepts();
 	conceptBasedDispatch();
+	placeHolders_Concepts();
 
 	return 0;
 }
