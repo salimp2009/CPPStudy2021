@@ -15,6 +15,7 @@ inline void greatCommonDiv_Concepts()
 	fmt::print("greaterCommonDivisor2(5, 1): {}\n", greaterCommonDivisor2(5, 1));
 	fmt::print("greaterCommonDivisor3(5, 1): {}\n", greaterCommonDivisor3(5, 1));
 	fmt::print("greaterCommonDivisor3(1, 5): {}\n", greaterCommonDivisor3(1, 5));
+	fmt::print("greaterCommonDivisor4(1, 5): {}\n", greaterCommonDivisor4(1, 5));
 
 	std::printf("addValues after concepts: %d \n", addAllValues(1, 2, 3, 4, 5, 6));
 	std::printf("sum<unsigned i>(): %d \n", sum<5>(10));
@@ -181,7 +182,15 @@ inline void SpecializeTemplates_Concepts()
 	std::printf("\n---TemplateSpecializeConcepts---\n");
 	DVector<int> dvec1;
 	DVector<int&> dvec2;
-
 }
+
+inline void overloadWithConcepts()
+{
+	std::printf("\n---Overload With Concepts---\n");
+	overload(3.14);
+	overload(2021);
+	overload(2023L);
+}
+
 
 

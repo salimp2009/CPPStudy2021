@@ -29,6 +29,8 @@ int main()
 	//SpecializeTemplates_Concepts();
 	conceptBasedDispatch();
 	placeHolders_Concepts();
+	overloadWithConcepts();
+	dataValidateCheck_Concepts();
 
 	return 0;
 }

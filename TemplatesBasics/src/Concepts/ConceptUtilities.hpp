@@ -34,6 +34,14 @@ constexpr std::integral auto greaterCommonDivisor3(std::integral auto a, std::in
 	return greaterCommonDivisor3(b, a % b);
 }
 
+constexpr  auto greaterCommonDivisor4( auto a,  auto b)
+{
+	if (b == 0) return a;
+
+	return greaterCommonDivisor4(b, a % b);
+}
+
+
 template<unsigned i>
 requires (i <= 20) // not a preferred method to use prefer more name concepts here 
 int sum(int j)
@@ -80,4 +88,19 @@ struct DVector<Reg>
 {
 	DVector() { std::printf("DVector<std::regular>\n"); }
 };
+
+void overload(auto t)
+{
+	fmt::print("auto t: {}\n", t);
+}
+void overload(std::integral auto t)
+{
+	fmt::print("std::integral auto t: {}\n", t);
+}
+
+void overload(long t)
+{
+	fmt::print("long t: {}\n", t);
+}
+
 

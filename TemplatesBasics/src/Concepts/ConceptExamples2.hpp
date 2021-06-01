@@ -2,6 +2,7 @@
 #include "Templpch.h"
 
 #include "ConceptsDispatch.hpp"
+#include "Concepts/ConceptsFunctionValidate.hpp"
 
 inline void conceptBasedDispatch()
 {
@@ -35,5 +36,18 @@ inline void placeHolders_Concepts()
 
 	auto integ1 = getIntegral(10);
 	fmt::print("integ1: {}\n", integ1);
+}
 
+inline void dataValidateCheck_Concepts()
+{
+	std::printf("\n---place Holders Concepts--\n");
+
+	ComplexType compt1{};
+	SimpleType simpt2{};
+
+	static_assert(SupportsValidation<ComplexType>);
+	static_assert(not SupportsValidation<SimpleType>);
+
+	ValidatedCheck::Send(compt1);
+	ValidatedCheck::Send(simpt2);
 }

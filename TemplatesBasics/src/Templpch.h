@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <numeric>
 #include <bitset>
+#include <optional>
 
 #if __has_include(<concepts>)
 #include <concepts>

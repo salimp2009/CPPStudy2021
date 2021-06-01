@@ -100,6 +100,8 @@
     <ClInclude Include="src\Concepts\ConceptExamples2.hpp" />
     <ClInclude Include="src\Concepts\ConceptsAddAllVers02.hpp" />
     <ClInclude Include="src\Concepts\ConceptsDispatch.hpp" />
+    <ClInclude Include="src\Concepts\ConceptsFunctionValidate.hpp" />
+    <ClInclude Include="src\Concepts\ConceptsOptionalimpl.hpp" />
     <ClInclude Include="src\Concepts\ConceptTestClass.hpp" />
     <ClInclude Include="src\Concepts\ConceptUtilities.hpp" />
     <ClInclude Include="src\Concepts\ConceptUtils02.hpp" />
