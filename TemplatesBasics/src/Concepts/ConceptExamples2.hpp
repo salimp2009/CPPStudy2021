@@ -3,6 +3,7 @@
 
 #include "ConceptsDispatch.hpp"
 #include "Concepts/ConceptsFunctionValidate.hpp"
+#include "ConceptsOptionalimpl.hpp"
 
 inline void conceptBasedDispatch()
 {
@@ -51,3 +52,11 @@ inline void dataValidateCheck_Concepts()
 	ValidatedCheck::Send(compt1);
 	ValidatedCheck::Send(simpt2);
 }
+
+inline void optionalImplemt_Concepts()
+{
+	static_assert(not std::is_copy_constructible_v<optional<NotCopyable>>);
+	static_assert(std::is_copy_constructible_v<optional<int>>);
+
+}
+
