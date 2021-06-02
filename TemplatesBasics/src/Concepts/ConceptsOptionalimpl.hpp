@@ -95,11 +95,11 @@ private:
 optional<notCopyable>a{};
 //optional<notCopyable>b = a; // Will fail since it is not copy_constructible
 
-static_assert(not std::is_copy_constructible_v<optional<NotCopyable>>);
+static_assert(not std::is_copy_constructible_v<optional<notCopyable>>);
 static_assert(std::is_copy_constructible_v<optional<int>>);
 
 static_assert(not std::is_trivially_destructible_v<optional<Not_TriviallyDestructible>>);
-static_assert(std::is_trivially_destructible_v<optional<NotCopyable>>);
+static_assert(std::is_trivially_destructible_v<optional<notCopyable>>);
 static_assert(std::is_trivially_destructible_v<optional<int>>);
 
 

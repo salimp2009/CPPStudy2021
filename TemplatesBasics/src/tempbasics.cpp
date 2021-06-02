@@ -32,6 +32,8 @@ int main()
 	overloadWithConcepts();
 	dataValidateCheck_Concepts();
 	optionalImplemt_Concepts();
+	SubSumptionRules_Concepts();
+
 
 	return 0;
 }

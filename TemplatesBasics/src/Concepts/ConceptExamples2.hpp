@@ -4,6 +4,7 @@
 #include "ConceptsDispatch.hpp"
 #include "Concepts/ConceptsFunctionValidate.hpp"
 #include "ConceptsOptionalimpl.hpp"
+#include "ConceptsSubsumptionRules.hpp"
 
 inline void conceptBasedDispatch()
 {
@@ -55,12 +56,21 @@ inline void dataValidateCheck_Concepts()
 
 inline void optionalImplemt_Concepts()
 {
-	static_assert(not std::is_copy_constructible_v<optional<NotCopyable>>);
+	static_assert(not std::is_copy_constructible_v<optional<notCopyable>>);
 	static_assert(std::is_copy_constructible_v<optional<int>>);
 
 	optional<Not_TriviallyDestructible> op1{};
 	optional<COMLike> op2{};
+}
 
 
+inline void SubSumptionRules_Concepts()
+{
+	std::printf("\n---SubSumption Rules--\n");
+
+	int a = 1;
+	int b = 2;
+
+	add(a, b);
 }
 
