@@ -22,6 +22,27 @@ struct notCopyable
 	notCopyable& operator=(const notCopyable) = delete;
 };
 
+struct Not_TriviallyDestructible
+{
+	~Not_TriviallyDestructible() {};
+};
+
+
+struct COMLike
+{
+	~COMLike() = delete; // not default destructible
+	void Release() { std::printf("COMLike releasing all data!\n"); }
+};
+
+template<typename T>
+concept HasRelease = requires(T t)
+{
+	t.Release();
+};
+
+template<typename T>
+concept NotTriviallyDestructible = not std::is_trivially_destructible_v<T>;
+
 
 template<typename T>
 class optional
@@ -34,25 +55,51 @@ public:
 	//template<typename U, typename =std::enable_if_t<std::is_same_v<U, optional> && std::is_copy_constructible_v<T>>>
 	//optional(const U&) {};
 
+
 	/* the ordering of concepts is from strong to weak constraint*/
-	~optional() requires (not std::is_trivially_destructible_v<T>) 
+	~optional() requires (NotTriviallyDestructible<T>)
 	{  
 		if (has_value)
 		{
 			value.as()->~T();
 		}
+		std::printf("optional destructor: NotTriviallyDestructible<T>\n");
+	}
+
+	~optional() requires (NotTriviallyDestructible<T>&& HasRelease<T>)
+	{
+		if (has_value)
+		{
+			value.as()->Release();
+			value.as()->~T();
+		}
+		std::printf("optional destructor: NotTriviallyDestructible<T>&& HasRelease<T>\n");
+	}
+
+	~optional() requires  HasRelease<T>
+	{
+		if (has_value)
+		{
+			value.as()->Release();
+		}
+		std::printf("optional: HasRelease<T>\n");
 	}
 
 	~optional() = default;
 
 private:
-	storage_t<T> value;
+	storage_t<T> value{};
 	bool has_value{ true };
 };
 
 optional<notCopyable>a{};
-//optional<notCopyable>b = a;
+//optional<notCopyable>b = a; // Will fail since it is not copy_constructible
 
 static_assert(not std::is_copy_constructible_v<optional<NotCopyable>>);
 static_assert(std::is_copy_constructible_v<optional<int>>);
+
+static_assert(not std::is_trivially_destructible_v<optional<Not_TriviallyDestructible>>);
+static_assert(std::is_trivially_destructible_v<optional<NotCopyable>>);
+static_assert(std::is_trivially_destructible_v<optional<int>>);
+
 

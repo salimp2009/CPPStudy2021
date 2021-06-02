@@ -58,5 +58,9 @@ inline void optionalImplemt_Concepts()
 	static_assert(not std::is_copy_constructible_v<optional<NotCopyable>>);
 	static_assert(std::is_copy_constructible_v<optional<int>>);
 
+	optional<Not_TriviallyDestructible> op1{};
+	optional<COMLike> op2{};
+
+
 }
 
