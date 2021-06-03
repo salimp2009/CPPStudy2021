@@ -83,5 +83,11 @@
     <ClInclude Include="src\Concepts\ConceptsImprovedErrosMsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Concepts\ConceptsCustomDefined.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Concepts\ConceptExamples3.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

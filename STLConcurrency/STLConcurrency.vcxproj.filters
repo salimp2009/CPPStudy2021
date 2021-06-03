@@ -50,5 +50,8 @@
     <ClInclude Include="src\ParalelAlgorithmsBasics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Coroutines\CoroutinesLazyGenerator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

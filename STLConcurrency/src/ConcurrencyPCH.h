@@ -30,6 +30,10 @@
 	#include <concepts>
 #endif
 
+#if __has_include(<coroutine>)
+	#include <coroutine>
+#endif
+
 #include <thread>
 #include <future>
 #include <execution>

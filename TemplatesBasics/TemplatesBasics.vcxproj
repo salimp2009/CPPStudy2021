@@ -141,7 +141,9 @@
     <ClInclude Include="src\ArrayOverloads.hpp" />
     <ClInclude Include="src\Concepts\ConceptExamples.hpp" />
     <ClInclude Include="src\Concepts\ConceptExamples2.hpp" />
+    <ClInclude Include="src\Concepts\ConceptExamples3.hpp" />
     <ClInclude Include="src\Concepts\ConceptsAddAllVers02.hpp" />
+    <ClInclude Include="src\Concepts\ConceptsCustomDefined.hpp" />
     <ClInclude Include="src\Concepts\ConceptsDispatch.hpp" />
     <ClInclude Include="src\Concepts\ConceptsFunctionValidate.hpp" />
     <ClInclude Include="src\Concepts\ConceptsImprovedErrosMsg.hpp" />
