@@ -1,6 +1,6 @@
 #pragma once
 #include "Templpch.h"
-
+#include <span>
 /* Example Usage of Concepts*/
 
 /* e.g; data packet/buffer for small size data packs over TCP/IP*/
@@ -42,6 +42,9 @@ template<typename T>
 concept LargeBuffer = not SmallBuffer<T> && ByteLikeType<value_type_t<T>>;
 
 using AckType = std::array<char, 16>;
+
+/*TODO: Check if this is OK to use and not causing lifetime issues!*/
+//using AckType = std::span<char, 16>;
 
 template<typename T>
 using TimedQueue = std::queue<T>;

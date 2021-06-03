@@ -5,6 +5,7 @@
 #include "Concepts/ConceptsFunctionValidate.hpp"
 #include "ConceptsOptionalimpl.hpp"
 #include "ConceptsSubsumptionRules.hpp"
+#include "Concepts/ConceptsImprovedErrosMsg.hpp"
 
 inline void conceptBasedDispatch()
 {
@@ -73,4 +74,16 @@ inline void SubSumptionRules_Concepts()
 
 	add(a, b);
 }
+
+inline void PrintContainers_Concepts()
+{
+	std::printf("\n--- Print Containers--\n");
+	
+	std::vector<int> vec1 = { 3,2,4,1,8};
+	PrintSort(vec1);
+
+	std::list l1 = { 5,1,7,9};
+	PrintSort(l1);
+}
+
 
