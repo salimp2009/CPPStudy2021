@@ -6,6 +6,7 @@
 #include "ThreadLocksLocalStorage.h"
 #include "TaskPromiseFuturesBase.h"
 #include "ParalelAlgorithmsBasics.h"
+#include "Coroutines/CoroutineExamples.hpp"
 
 int main()
 {
@@ -56,7 +57,9 @@ int main()
 	//ForEachParallel_Basics();
 	/* run this code on Release to see better results !!*/
 	//TransformParallel_Basics();
-	AccumulateReduce_Basics(20'000'000);
+	//AccumulateReduce_Basics(20'000'000);
+	LazyGenerator_Coroutine();
+
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

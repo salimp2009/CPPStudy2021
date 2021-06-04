@@ -22,5 +22,58 @@ inline void funct(UnSignedIntegral auto integ)
 inline void funct(SignedIntegral auto integ)
 {
 	fmt::print(" SignedIntegral: {}\n", integ);
-
 }
+
+
+template<typename T>
+struct Other;
+
+template<>
+struct Other<std::vector<int>> {};
+
+template<typename T>
+concept TypeRequirement = requires
+{
+	/* defines that type T has a typedefinition value_type that refers the type inside the T; 
+	   e.g vector<int>; int is the value_type*/
+	typename T::value_type;	
+	/* defines that Other is a type that can be instantiated with T */
+	typename Other<T>;		
+};
+
+Other<std::vector<int>> oth1;
+
+/* testing that std::vector<int> has a value_type typedef and Other can be instantiated with it*/
+static_assert(TypeRequirement<std::vector<int>> );
+
+TypeRequirement auto myval = std::vector<int>{ 1,2,3,4 };
+
+template<typename T>
+concept Equal = requires(T a, T b)
+{
+	{a == b} -> std::convertible_to<bool>;
+	{a != b}-> std::convertible_to<bool>;
+};
+
+bool areEqual(Equal auto a, Equal auto b)
+{
+	return a == b;
+}
+
+struct WithoutEqual { bool operator==(const WithoutEqual& ) = delete; };
+
+struct WithoutNotEqual { bool operator!=(const WithoutEqual& ) = delete; };
+
+
+struct WithEqual
+{
+	bool operator!=(const WithEqual& b) { return false; }
+	bool operator==(const WithEqual& b) { return true; }
+};
+
+/* both of them does not satisfy both conditions*/
+static_assert(not Equal<WithoutEqual>);
+static_assert(not Equal<WithoutNotEqual>);
+
+/* satisfies both */
+static_assert(Equal<WithEqual>);

@@ -6,6 +6,7 @@
 #include "ConceptTestClass.hpp"
 
 
+
 inline void greatCommonDiv_Concepts()
 {
 	std::printf("\n---great Common Div Concepts---\n");

@@ -84,7 +84,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;$(SolutionDir)OOPClasses/src/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ConcurrencyPCH.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -103,7 +103,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;$(SolutionDir)OOPClasses/src/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ConcurrencyPCH.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -124,7 +124,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;$(SolutionDir)OOPClasses/src/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor;src;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ConcurrencyPCH.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -155,6 +155,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Coroutines\CoroutineExamples.hpp" />
     <ClInclude Include="src\Coroutines\CoroutinesLazyGenerator.hpp" />
     <ClInclude Include="src\JThreadsTokenBasics.h" />
     <ClInclude Include="src\ConcurrencyPCH.h" />
