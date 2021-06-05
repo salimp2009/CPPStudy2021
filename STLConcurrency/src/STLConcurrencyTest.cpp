@@ -59,6 +59,7 @@ int main()
 	//TransformParallel_Basics();
 	//AccumulateReduce_Basics(20'000'000);
 	LazyGenerator_Coroutine();
+	EagerFuture_Coroutine();
 
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */

@@ -32,7 +32,8 @@ struct promise_type_base
 
 namespace coro_iterator
 {
-	template<typename PT>
+	//PT stands for promise type; Iterator is used to get the current and next values
+	template<typename PT>  
 	struct iterator 
 	{
 		std::coroutine_handle<PT> mCoroHd1{ nullptr };
@@ -101,6 +102,7 @@ IntGenerator counter(int start, int end)
 	{
 		co_yield start;
 		++start;
+		
 	}
 }
 

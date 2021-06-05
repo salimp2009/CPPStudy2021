@@ -16,6 +16,12 @@ inline void SignedUnSignedIntegral_Func()
 	static_assert(ArithmeticType<bool>);
 	static_assert(ArithmeticType<char>);
 
+	std::printf("\n--- Equal Concept-\n");
+	const std::unordered_set<int> set1{ 1,2,3,4,5 };
+	const std::unordered_set<int> set2{ 5,2,1,4,3 };
+
+	fmt::print("are equal sets: {}\n", areEqual(set1, set2));
+
 }
 
 

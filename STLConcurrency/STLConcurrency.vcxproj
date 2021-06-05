@@ -155,7 +155,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Coroutines\ByteStreamParserOLDWay.hpp" />
     <ClInclude Include="src\Coroutines\CoroutineExamples.hpp" />
+    <ClInclude Include="src\Coroutines\CoroutineFactoryBasics.hpp" />
+    <ClInclude Include="src\Coroutines\CoroutinesEagerFuture.hpp" />
     <ClInclude Include="src\Coroutines\CoroutinesLazyGenerator.hpp" />
     <ClInclude Include="src\JThreadsTokenBasics.h" />
     <ClInclude Include="src\ConcurrencyPCH.h" />

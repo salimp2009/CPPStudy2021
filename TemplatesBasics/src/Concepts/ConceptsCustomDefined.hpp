@@ -52,7 +52,7 @@ template<typename T>
 concept Equal = requires(T a, T b)
 {
 	{a == b} -> std::convertible_to<bool>;
-	{a != b}-> std::convertible_to<bool>;
+	{a != b} -> std::convertible_to<bool>;
 };
 
 bool areEqual(Equal auto a, Equal auto b)
@@ -77,3 +77,25 @@ static_assert(not Equal<WithoutNotEqual>);
 
 /* satisfies both */
 static_assert(Equal<WithEqual>);
+
+template<typename T>
+concept Ordering = Equal<T> &&
+requires(T a, T b)
+{
+	{a <= b} ->std::convertible_to<bool>;
+	{a <  b} ->std::convertible_to<bool>;
+	{a >  b} ->std::convertible_to<bool>;
+	{a >= b} ->std::convertible_to<bool>;
+};
+
+template<Ordering T>
+constexpr T getSmaller(T a, T b)
+{
+	return (a < b ) ? a : b;
+}
+
+static_assert(getSmaller(true, false) == 0);
+static_assert(getSmaller(1, 5) == 1);
+static_assert(getSmaller('a', 'b') == 'a');
+
+
