@@ -2,6 +2,7 @@
 #include "CoroutinesLazyGenerator.hpp"
 #include "CoroutineFactoryBasics.hpp"
 #include "CoroutinesEagerFuture.hpp"
+#include "ByteStreamParserOLDWay.hpp"
 
 inline void LazyGenerator_Coroutine()
 {
@@ -37,9 +38,15 @@ inline void EagerFuture_Coroutine()
 
 	fmt::print("eager future result : {}\n", fut.get());
 
-	
+}
+
+inline void ByteStreamParser_OLDWAY()
+{
+	std::printf("\n--ByteStreamParser_OLDWAY--\n");
+
 
 }
+
 
 
 
