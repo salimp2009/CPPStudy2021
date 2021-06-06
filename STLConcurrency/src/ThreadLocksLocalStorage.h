@@ -11,7 +11,7 @@ inline void DeadLockSolution()
 		std::mutex mut;
 	};
 
-	auto deadLock = [](CriticalData& a, CriticalData& b)
+	auto deadLock = [](CriticalData& aa, CriticalData& bb)
 	{
 		/* defer lock allows to lock mutex when needed*/
 		//std::unique_lock<std::mutex> guard1(a.mut, std::defer_lock);
@@ -26,7 +26,7 @@ inline void DeadLockSolution()
 		//std::lock(guard1, guard2);
 		
 		/* C++17 addition; it can lock multiple locks*/
-		std::scoped_lock guard(a.mut, b.mut);
+		std::scoped_lock guard(aa.mut,bb.mut);
 		/* critical section!!*/
 		fmt::print("Thread: {}, got both mutex!\n", std::this_thread::get_id());
 

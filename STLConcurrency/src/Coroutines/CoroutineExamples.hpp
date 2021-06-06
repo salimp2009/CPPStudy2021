@@ -3,6 +3,7 @@
 #include "CoroutineFactoryBasics.hpp"
 #include "CoroutinesEagerFuture.hpp"
 #include "ByteStreamParserOLDWay.hpp"
+#include "CortnAsyncByteStreamParser.hpp"
 
 inline void LazyGenerator_Coroutine()
 {
@@ -43,11 +44,24 @@ inline void EagerFuture_Coroutine()
 inline void ByteStreamParser_OLDWAY()
 {
 	std::printf("\n--ByteStreamParser_OLDWAY--\n");
+	const std::vector<std::byte> fakeBytes1{
+		std::byte{0x70}, std::byte{0x24}, ESC, SOF, ESC,
+		std::byte{'H'}, std::byte{'e'}, std::byte{'l'}, std::byte{'l'}, std::byte{'o'}, 
+		ESC, SOF, std::byte{0x7}, ESC, SOF };
+
+	auto frameCompleteHandler = [](std::string_view res) {  fmt::print("CCCB: {}", res); };
+	for (const auto& data : fakeBytes1)
+	{
+		ProcessNextByte(data, frameCompleteHandler);
+	}
+	const std::vector<std::byte> fakeBytes2{ std::byte{'W'}, std::byte{'o'}, std::byte{'r'}, std::byte{'l'}, std::byte{'d'}, ESC, SOF, std::byte{0x99} };
+	for (const auto& data : fakeBytes2)
+	{
+		ProcessNextByte(data, frameCompleteHandler);
+	}
 
 
 }
-
-
 
 
 

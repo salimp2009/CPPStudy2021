@@ -10,7 +10,7 @@ inline void StopToken_Example()
 		std::atomic<int>counter{ 0 };
 
 		auto threadID = std::this_thread::get_id();
-		std::stop_callback callBack(stoken, [&counter, &threadID]()
+		std::stop_callback callBack(stoken, [&counter, threadID]()
 		{
 				fmt::print("thread id: {0}, counter: {1}\n", threadID, counter);
 

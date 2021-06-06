@@ -139,7 +139,7 @@ inline void ThreadPromises_Example()
 		try 
 		{
 			std::printf("enter a char ('x' for exception): ");
-			char c = std::cin.get();
+			char c = static_cast<char>(std::cin.get());
 			if (c == 'x')
 			{
 				throw std::runtime_error(std::string("char ") + c + " read");

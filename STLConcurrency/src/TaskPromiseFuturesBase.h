@@ -194,20 +194,20 @@ inline void PromiseFuture_Basics()
 {
 	std::printf("\n-----Promise Future Basics-----\n");
 
-	auto product = [](std::promise<int>&& intPromise, int a, int b)
+	auto product = [](std::promise<int>&& intPromise, int aa, int bb)
 	{
-		intPromise.set_value(a * b);
+		intPromise.set_value(aa * bb);
 	};
 
 
-	auto div = []<typename T> (std::promise<int>&& intPromise,	T a, T b) 
-	requires requires(T a, T b) { (std::is_same_v<T, int> && b!=0); }
+	auto div = []<typename T> (std::promise<int>&& intPromise,	T aa, T bb) 
+	requires requires(T aa, T bb) { (std::is_same_v<T, int> && bb!=0); }
 	{
-		intPromise.set_value(a /  b);
+		intPromise.set_value(aa /  bb);
 	};
 
-	int a = 20;
-	int b = 10;
+	int xa = 20;
+	int xb = 10;
 
 	std::promise<int> prodPromise;
 	std::promise<int> divPromise;
@@ -215,8 +215,8 @@ inline void PromiseFuture_Basics()
 	auto prodResult = prodPromise.get_future();
 	auto divResult = divPromise.get_future();
 
-	std::thread prodThread(product, std::move(prodPromise), a, b);
-	std::thread divThread(div, std::move(divPromise), a, b);
+	std::thread prodThread(product, std::move(prodPromise), xa, xb);
+	std::thread divThread(div, std::move(divPromise), xa, xb);
 
 	fmt::print("prod : {}\n", prodResult.get());
 	fmt::print("div : {}\n", divResult.get());
