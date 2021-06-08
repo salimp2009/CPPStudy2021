@@ -3,6 +3,18 @@
 
 // TODO: InComplete!!!
 
+
+	// overloading literals
+std::byte operator""_B(char c)
+{
+	return static_cast<std::byte>(c);
+}
+
+std::byte operator""_B(unsigned long long  c)
+{
+	return static_cast<std::byte>(c);
+}
+
 #define INCOMPLETE 1
 
 #if INCOMPLETE
@@ -105,7 +117,7 @@ namespace AsyncParse
 		T operator()()
 		{
 			// move clears the value of promise but leave it undefined state
-			auto tmp{ std::move(mCoroHd1.promise().mValue()) };
+			auto tmp{ std::move(mCoroHd1.promise().mValue)};
 			// set the promise to a defined state
 			mCoroHd1.promise().mValue.clear();
 
@@ -202,6 +214,8 @@ namespace AsyncParse
 		but the call site can use std::move ; in case you are sure the container lives longer than the coroutine than pass by const&
 		; e.g. we are simulation parsing signals on TCP then those might not live longer you pass by copy & move semantics will be applied by compiler
 	*/
+
+	// this simulates a network that sends signal until it is disconnected; coroutine send the value of signal into promise_type_base
 	generator<std::byte> send(std::vector<std::byte> fakeBytes)
 	{
 		for (const auto& signal : fakeBytes)
@@ -210,14 +224,55 @@ namespace AsyncParse
 		}
 	}
 
-	//void ProcessStream(generator<std::byte>& stream, FSM& parse)
-	//{
-	//	//TODO; Incomplete!
+	/*TOTEST: see if string_view to use with printf; probably not since string_view does not have null terminator*/
+	//void HandleFrame(std::string_view result)
+	void HandleFrame(const std::string& result)
+	{
+		std::printf("%s\n", result.c_str());
+		//std::printf("%s\n", result.data());
+	}
 
-	//}
+	void ProcessStream(generator<std::byte>& stream, FSM& parse)
+	{
+		for (const auto& data : stream)
+		{
+			// sending new byte to waiting Parse
+			parse.SendSignal(data);
 
-
+			// check if the frame is complete and send it to print or do other stuff with it
+			if (const auto& res = parse(); res.length())
+			{
+				HandleFrame(res);
+			}
+		}
+		
+	}
 
 } // end of namespace AsyncParse
+
+inline void AsyncByteStreamParser_Cortn()
+{
+	std::printf("\n--AsyncByteStreamParser--\n");
+	std::vector<std::byte> fakeBytes1{
+	0x70_B, 0x24_B, ESC, SOF, ESC,
+	'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,
+	ESC, SOF, 0x7_B, ESC, SOF };
+
+	// simulating first network data stream;
+	auto stream1 = AsyncParse::send(std::move(fakeBytes1));
+	// create a coroutine and store the promise in the coroutine_handle
+	auto p = AsyncParse::Parse();
+	// Process the bytes
+	ProcessStream(stream1, p);
+
+	// simulate another  network connection
+	std::vector<std::byte> fakeBytes2{
+	'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
+
+	auto stream2 = AsyncParse::send(std::move(fakeBytes2));
+	// create a coroutine and store the promise in the coroutine_handle
+	// Process the bytes
+	ProcessStream(stream2, p);
+}
 
 #endif // INCOMPLETE MACRO ; temporary

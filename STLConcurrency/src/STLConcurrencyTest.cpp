@@ -7,6 +7,7 @@
 #include "TaskPromiseFuturesBase.h"
 #include "ParalelAlgorithmsBasics.h"
 #include "Coroutines/CoroutineExamples.hpp"
+#include "Coroutines/CortnAsyncByteStreamParser.hpp"
 
 int main()
 {
@@ -61,6 +62,7 @@ int main()
 	LazyGenerator_Coroutine();
 	EagerFuture_Coroutine();
 	ByteStreamParser_OLDWAY();
+	AsyncByteStreamParser_Cortn();
 
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */

@@ -3,7 +3,7 @@
 #include "CoroutineFactoryBasics.hpp"
 #include "CoroutinesEagerFuture.hpp"
 #include "ByteStreamParserOLDWay.hpp"
-#include "CortnAsyncByteStreamParser.hpp"
+
 
 inline void LazyGenerator_Coroutine()
 {
@@ -59,9 +59,9 @@ inline void ByteStreamParser_OLDWAY()
 	{
 		ProcessNextByte(data, frameCompleteHandler);
 	}
-
-
 }
+
+
 
 
 
