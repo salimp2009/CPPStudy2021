@@ -12,6 +12,7 @@ namespace AsyncParse
 	struct promise_type_base: public Bases...
 	{
 		/* value yielded from a coroutine*/
+		/* mValue is the value that will be returned to the caller by yield_value*/
 		T mValue;
 
 		/* invoked by co_yield or co_return*/
@@ -30,6 +31,44 @@ namespace AsyncParse
 		void				unhandled_exception() { std::terminate(); }
 	};
 
+	namespace coro_iterator
+	{
+		template<typename PT>
+		struct iterator
+		{
+			using coro_handle = std::coroutine_handle<PT>;
+
+			coro_handle mCoroHd1{ nullptr };
+			bool		mDone{ true };
+
+			using RetType = decltype(mCoroHd1.promise().mValue);
+
+			void resume()
+			{
+				mCoroHd1.resume();
+				mDone = mCoroHd1.done();
+			}
+
+			iterator() = default;
+
+			iterator(coro_handle hco) : mCoroHd1{ hco } { resume(); }
+
+			iterator& operator++()
+			{
+				resume();
+				return *this;
+			}
+
+			bool operator==(const iterator& other) const { return mDone == other.mDone; }
+
+			const RetType& operator*()  const& { return mCoroHd1.promise().mValue; }
+			const RetType* operator->() const { return &(operator*()); }
+		};
+
+	} // end of namespace coro_iterator
+
+
+
 	template<typename T>
 	struct awaitable_promise_type_base
 	{
@@ -37,6 +76,8 @@ namespace AsyncParse
 
 		struct awaiter
 		{
+			/* mRecentSignal is the std::byte we are parsing; if it matches certain pattern than 
+			   the value will be stored in mValue in base promise type; Once its finished the mValue will be returned to caller */
 			std::optional<T>& mRecentSignal;
 
 			bool await_ready() { return mRecentSignal.has_value(); }
@@ -89,7 +130,31 @@ namespace AsyncParse
 		PromiseTypeHandle mCoroHd1;
 	};
 
+	template<typename T>
+	struct generator
+	{
+		using promise_type		= promise_type_base<T, generator>;
+		using PromiseTypeHandle = std::coroutine_handle<promise_type>;
+		using iterator			= coro_iterator::iterator<promise_type>;
+
+		iterator begin() { return mCoroHd1; }
+		iterator end()	 { return {}; }
+
+		generator(const generator&) = delete;
+		generator(generator&& rhs) : mCoroHd1{rhs.mCoroHd1} { rhs.mCoroHd1 = nullptr; }
+
+		~generator() { if (mCoroHd1) mCoroHd1.destroy(); }
+
+	private:
+		friend promise_type;
+		explicit generator(promise_type* p) : mCoroHd1{PromiseTypeHandle::from_promise(*p)} {}
+		PromiseTypeHandle mCoroHd1;
+	};
+
 	using FSM = async_generator<std::string, std::byte>;
+
+	static  const std::byte ESC{ 'H' };
+	static const std::byte SOF{ 0x10 };
 
 	FSM Parse()
 	{
@@ -133,9 +198,23 @@ namespace AsyncParse
 		}
 	}
 
+	/* std::vector is by copy on purpose because of lifetime issues; as coroutine may live longer that original data
+		but the call site can use std::move ; in case you are sure the container lives longer than the coroutine than pass by const&
+		; e.g. we are simulation parsing signals on TCP then those might not live longer you pass by copy & move semantics will be applied by compiler
+	*/
+	generator<std::byte> send(std::vector<std::byte> fakeBytes)
+	{
+		for (const auto& signal : fakeBytes)
+		{
+			co_yield signal;
+		}
+	}
 
+	//void ProcessStream(generator<std::byte>& stream, FSM& parse)
+	//{
+	//	//TODO; Incomplete!
 
-
+	//}
 
 
 
