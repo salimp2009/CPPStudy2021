@@ -3,6 +3,7 @@
 #include "CoroutineFactoryBasics.hpp"
 #include "CoroutinesEagerFuture.hpp"
 #include "ByteStreamParserOLDWay.hpp"
+#include "CortnInfiniteDataStream.hpp"
 
 
 inline void LazyGenerator_Coroutine()
@@ -28,7 +29,7 @@ inline void CoroutineFactory_Basics()
 
 EagerFuture<int> createFuture(int val)
 {
-	co_return val++;
+	co_return val;
 }
 
 inline void EagerFuture_Coroutine()
@@ -38,7 +39,7 @@ inline void EagerFuture_Coroutine()
 	auto fut = createFuture(2020);
 
 	fmt::print("eager future result : {}\n", fut.get());
-
+	fmt::print("eager future result : {}\n", fut.get());
 }
 
 inline void ByteStreamParser_OLDWAY()

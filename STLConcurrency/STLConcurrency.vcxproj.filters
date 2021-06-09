@@ -71,5 +71,8 @@
     <ClInclude Include="src\Coroutines\CortnAsyncByteStreamParserV2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Coroutines\CortnInfiniteDataStream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

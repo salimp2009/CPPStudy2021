@@ -162,6 +162,7 @@
     <ClInclude Include="src\Coroutines\CoroutinesLazyGenerator.hpp" />
     <ClInclude Include="src\Coroutines\CortnAsyncByteStreamParser.hpp" />
     <ClInclude Include="src\Coroutines\CortnAsyncByteStreamParserV2.hpp" />
+    <ClInclude Include="src\Coroutines\CortnInfiniteDataStream.hpp" />
     <ClInclude Include="src\JThreadsTokenBasics.h" />
     <ClInclude Include="src\ConcurrencyPCH.h" />
     <ClInclude Include="src\ConcurrencyUtility.hpp" />
