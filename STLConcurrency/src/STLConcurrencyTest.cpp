@@ -8,6 +8,7 @@
 #include "ParalelAlgorithmsBasics.h"
 #include "Coroutines/CoroutineExamples.hpp"
 #include "Coroutines/CortnAsyncByteStreamParser.hpp"
+#include "Coroutines/CortnAsyncByteStreamParserV2.hpp"
 
 int main()
 {
@@ -63,7 +64,7 @@ int main()
 	EagerFuture_Coroutine();
 	ByteStreamParser_OLDWAY();
 	AsyncByteStreamParser_Cortn();
-
+	AsyncByteStreamParserV2_Cortn();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

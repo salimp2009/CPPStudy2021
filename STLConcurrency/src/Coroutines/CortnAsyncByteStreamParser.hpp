@@ -1,10 +1,7 @@
 #pragma once
 #include "ConcurrencyPCH.h"
 
-// TODO: InComplete!!!
-
-
-	// overloading literals
+// overloading literals; user defined literals https://en.cppreference.com/w/cpp/language/user_literal
 std::byte operator""_B(char c)
 {
 	return static_cast<std::byte>(c);
@@ -15,9 +12,7 @@ std::byte operator""_B(unsigned long long  c)
 	return static_cast<std::byte>(c);
 }
 
-#define INCOMPLETE 1
 
-#if INCOMPLETE
 namespace AsyncParse
 {
 	template<typename T, typename G, typename... Bases>
@@ -274,5 +269,3 @@ inline void AsyncByteStreamParser_Cortn()
 	// Process the bytes
 	ProcessStream(stream2, p);
 }
-
-#endif // INCOMPLETE MACRO ; temporary
