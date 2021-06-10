@@ -74,5 +74,8 @@
     <ClInclude Include="src\Coroutines\CortnInfiniteDataStream.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Coroutines\CortnStartJobRequest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

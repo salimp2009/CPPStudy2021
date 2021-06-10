@@ -9,6 +9,7 @@
 #include "Coroutines/CoroutineExamples.hpp"
 #include "Coroutines/CortnAsyncByteStreamParser.hpp"
 #include "Coroutines/CortnAsyncByteStreamParserV2.hpp"
+#include "Coroutines/CortnStartJobRequest.hpp"
 
 int main()
 {
@@ -66,6 +67,7 @@ int main()
 	AsyncByteStreamParser_Cortn();
 	AsyncByteStreamParserV2_Cortn();
 	InfinitiDataStream_Cornt();
+	Cortn_StartJobRequest();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

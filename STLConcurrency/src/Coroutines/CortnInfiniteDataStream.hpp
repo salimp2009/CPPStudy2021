@@ -63,5 +63,3 @@ inline DataGenerator<int> getNextData(int start = 0, int step = 1)
 		value += step;
 	}
 }
-
-
