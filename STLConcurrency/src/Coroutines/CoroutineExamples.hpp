@@ -62,8 +62,23 @@ inline void ByteStreamParser_OLDWAY()
 	}
 }
 
+inline void InfinitiDataStream_Cornt()
+{
+	std::printf("\n--InfinitiDataStream_Cornt--\n");
+	auto datagen = getNextData();
+	std::printf("\ngetNext(0, 1): ");
+	for (int i =0; i<=10; ++i)
+	{
+		datagen.next();
+		std::printf("%d ", datagen.getValue());
+	}
 
-
-
-
+	std::printf("\ngetNext(100, -10): ");
+	auto datagen2 = getNextData(100, -10);
+	for (int i = 0; i <= 10; ++i)
+	{
+		datagen2.next();
+		std::printf("%d ", datagen2.getValue());
+	}
+}
 

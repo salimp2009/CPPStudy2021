@@ -33,8 +33,35 @@ struct DataGenerator
 	struct promise_type
 	{
 		promise_type() = default;
+		~promise_type() = default;
+
+		auto initial_suspend()        { return std::suspend_always{}; }
+		auto final_suspend() noexcept { return std::suspend_always{}; }
+
+		auto get_return_object() { return DataGenerator{ handle_type::from_promise(*this) }; }
+		auto return_void()		 { return std::suspend_never{}; }
+
+		auto yield_value(const T& value)
+		{
+			current_value = value;
+			return std::suspend_always{};
+		}
+
+		void unhandled_exception() { std::exit(1); }
 
 		T current_value;
 	};
-
 };
+
+
+inline DataGenerator<int> getNextData(int start = 0, int step = 1)
+{
+	auto value = start;
+	while (true)
+	{
+		co_yield value;
+		value += step;
+	}
+}
+
+
