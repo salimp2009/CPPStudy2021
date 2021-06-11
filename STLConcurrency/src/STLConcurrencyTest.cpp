@@ -10,6 +10,7 @@
 #include "Coroutines/CortnAsyncByteStreamParser.hpp"
 #include "Coroutines/CortnAsyncByteStreamParserV2.hpp"
 #include "Coroutines/CortnStartJobRequest.hpp"
+#include "Coroutines/CortnThreadSync.hpp"
 
 int main()
 {
@@ -61,13 +62,14 @@ int main()
 	/* run this code on Release to see better results !!*/
 	//TransformParallel_Basics();
 	//AccumulateReduce_Basics(20'000'000);
-	LazyGenerator_Coroutine();
-	EagerFuture_Coroutine();
-	ByteStreamParser_OLDWAY();
-	AsyncByteStreamParser_Cortn();
-	AsyncByteStreamParserV2_Cortn();
+	//LazyGenerator_Coroutine();
+	//EagerFuture_Coroutine();
+	//ByteStreamParser_OLDWAY();
+	//AsyncByteStreamParser_Cortn();
+	//AsyncByteStreamParserV2_Cortn();
 	InfinitiDataStream_Cornt();
 	Cortn_StartJobRequest();
+	CortnThreadSync_Example();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

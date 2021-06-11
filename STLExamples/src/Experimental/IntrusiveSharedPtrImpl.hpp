@@ -1,6 +1,18 @@
+#pragma once
 /*  Implementation from Isabella Muerte for c++ stl
     See the copy right notice attached in the vendor folder
 */
+#include "STLpch.h"
+
+// NOTE:: Minor revisions for naming at retain_traits declared as a friend as class at ; It was compiling but giving warnings!!
+/*template <class T>
+  struct atomic_reference_count {
+  template <class> friend class retain_traits;*/
+
+// CHANGED TO;
+/*template <class T>
+  struct atomic_reference_count {
+  template <class> friend struct retain_traits;*/
 
 namespace sg14 {
 
@@ -15,10 +27,8 @@ namespace sg14 {
 
 } /* namespace sg14 */
 
-namespace sg14 
-{
-    namespace impl
-    {
+namespace sg14 {
+    namespace impl {
 
         template <class T> struct identity { using type = T; };
 
@@ -70,20 +80,19 @@ namespace sg14
         template <class T, class P>
         using has_use_count = decltype(T::use_count(std::declval<P>()));
 
-    } 
-} /* namespace sg14::impl*/
- 
-    
-namespace sg14 
-{
+    }
+} /* namespace sg14::impl */
+
+namespace sg14 {
+
     using impl::detected_or_t;
     using impl::is_detected;
 
-    template <typename> struct retain_traits;
+    template <class> struct retain_traits;
 
     template <class T>
     struct atomic_reference_count {
-    template <typename> friend struct retain_traits;
+        template <class> friend struct retain_traits;
     protected:
         atomic_reference_count() = default;
     private:
@@ -92,7 +101,7 @@ namespace sg14
 
     template <class T>
     struct reference_count {
-       template <typename> friend struct retain_traits;
+        template <class> friend struct retain_traits;
     protected:
         reference_count() = default;
     private:
@@ -350,11 +359,8 @@ namespace sg14
         return not (nullptr < rhs);
     }
 
-    // TODO: the body of this was missing check if the logic is correct; test this because it used a different logic to compare less with nullptr !!!
     template <class T, class R>
-    bool operator <= (nullptr_t, retain_ptr<T, R> const& rhs) noexcept {
-        //return nullptr > rhs;
-    }
+    bool operator <= (nullptr_t, retain_ptr<T, R> const& rhs) noexcept;
 
     template <class T, class R>
     bool operator > (nullptr_t, retain_ptr<T, R> const& rhs) noexcept {
