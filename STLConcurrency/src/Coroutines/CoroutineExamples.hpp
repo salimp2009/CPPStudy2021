@@ -4,6 +4,7 @@
 #include "CoroutinesEagerFuture.hpp"
 #include "ByteStreamParserOLDWay.hpp"
 #include "CortnInfiniteDataStream.hpp"
+#include "Coroutines/CortnThreadSync.hpp"
 
 
 inline void LazyGenerator_Coroutine()
@@ -12,20 +13,6 @@ inline void LazyGenerator_Coroutine()
 	UseCounter();
 }
 
-/* not complete DONT Call it*/
-#define COMPILE_USE 0
-
-#if  COMPILE_USE
-inline void CoroutineFactory_Basics()
-{
-	/* function declaration that returns a coroutine object*/
-	Generator<int> coroutineFactory();
-	
-	auto gen = coroutineFactory();
-	gen.next();
-	auto result = gen.getvalue();
-}
-#endif //  COMPILE_USE
 
 EagerFuture<int> createFuture(int val)
 {

@@ -1,3 +1,7 @@
+/*  Implementation from Isabella Muerte for c++ stl
+    See the copy right notice attached in the vendor folder
+*/
+
 namespace sg14 {
 
     using std::is_convertible;
@@ -11,8 +15,10 @@ namespace sg14 {
 
 } /* namespace sg14 */
 
-namespace sg14 {
-    namespace impl {
+namespace sg14 
+{
+    namespace impl
+    {
 
         template <class T> struct identity { using type = T; };
 
@@ -64,11 +70,12 @@ namespace sg14 {
         template <class T, class P>
         using has_use_count = decltype(T::use_count(std::declval<P>()));
 
-    }
-} /* namespace sg14::impl */
-
-namespace sg14 {
-
+    } 
+} /* namespace sg14::impl*/
+ 
+    
+namespace sg14 
+{
     using impl::detected_or_t;
     using impl::is_detected;
 
