@@ -11,6 +11,7 @@
 #include "Coroutines/CortnAsyncByteStreamParserV2.hpp"
 #include "Coroutines/CortnStartJobRequest.hpp"
 #include "Coroutines/CortnThreadSync.hpp"
+#include "Coroutines/CortnWithCustomAllocators.hpp"
 
 int main()
 {
@@ -67,9 +68,10 @@ int main()
 	//ByteStreamParser_OLDWAY();
 	//AsyncByteStreamParser_Cortn();
 	//AsyncByteStreamParserV2_Cortn();
-	InfinitiDataStream_Cornt();
-	Cortn_StartJobRequest();
-	CortnThreadSync_Example();
+	//InfinitiDataStream_Cornt();
+	//Cortn_StartJobRequest();
+	//CortnThreadSync_Example();
+	StreamParser_CustomNewDelete();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

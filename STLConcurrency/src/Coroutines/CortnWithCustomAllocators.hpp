@@ -2,24 +2,36 @@
 #include "ConcurrencyPCH.h"
 
 // THE GLOBAL VARIABLES ARE ALREADY DEFINED IN ANOTHER FILE!
-static  const std::byte ESC{ 'H' };
-static const std::byte SOF{ 0x10 };
+//static  const std::byte ESC{ 'H' };
+//static const std::byte SOF{ 0x10 };
 
 // overloading literals; user defined literals https://en.cppreference.com/w/cpp/language/user_literal
-std::byte operator""_B(char c)
+	//std::byte operator""_B(char c)
+	//{
+	//	return static_cast<std::byte>(c);
+	//}
+
+	//std::byte operator""_B(unsigned long long  c)
+	//{
+	//	return static_cast<std::byte>(c);
+	//}
+
+void* Allocate(std::size_t size)
 {
-	return static_cast<std::byte>(c);
+	std::printf("custom alloc:%zu\n", size);
+	return new char[size];
 }
 
-std::byte operator""_B(unsigned long long  c)
+void DeAllocate(void* p, std::size_t size)
 {
-	return static_cast<std::byte>(c);
+	std::printf("custom dealloc:%zu\n", size);
+	return delete[] static_cast<char*>(p);
 }
+
 
 
 namespace Parse2CustAlloc
 {
-
 	// Initial susoend control whther the coroutine suspends directly after first creation or
 	// runs until a co_yield or co_return or co_await statement
 	/* the reason for this in this example the Parse needs to run*/
@@ -40,6 +52,7 @@ namespace Parse2CustAlloc
 		{
 			if constexpr (InitialSuspend)
 			{
+				//std::printf("promise:initial_suspend!\n");
 				return std::suspend_always{};
 			}
 			else
@@ -49,11 +62,33 @@ namespace Parse2CustAlloc
 		}
 		std::suspend_always final_suspend() noexcept { return {}; }
 		/*return the generator*/
-		G get_return_object() { return G{ this }; }
+		G get_return_object() 
+		{ 
+			//std::printf("promise:return Object!\n");
+			return G{ this }; 
+		}
 		void				return_void() {}
 		void				unhandled_exception() { std::terminate(); }
 
 		// TODO : Custom new and delete overloads!!!
+
+		void* operator new(std::size_t size) noexcept 
+		{ 
+			std::printf("promise:call Allocate!\n");
+			return Allocate(size); 
+		}
+		void operator delete(void* ptr, std::size_t size) noexcept 
+		{ 
+			std::printf("promise:call DeAllocate!\n");
+			return DeAllocate(ptr, size); 
+		}
+
+		/* this will allow if operator new to be noexcept ; if new fails then an object type G with nullptr will returned so it no throwing !*/
+		static auto get_return_object_on_allocation_failure() 
+		{ 
+			
+			return G{nullptr}; 
+		}
 	};
 
 	namespace coro_iterator
@@ -139,15 +174,21 @@ namespace Parse2CustAlloc
 				mEvent.mAwaiter = this;
 			}
 
-			bool await_ready() const noexcept { return mEvent.mData.has_value(); }
+			bool await_ready() const noexcept 
+			{ 
+				//std::printf("Awaiter:await readY!\n");
+				return mEvent.mData.has_value(); 
+			}
 
 			void await_suspend(std::coroutine_handle<> coroHd1) noexcept
 			{
+				//std::printf("Awaiter:await suspend!\n");
 				mCoroHd1 = coroHd1;
 			}
 
 			std::byte await_resume() noexcept
 			{
+				//std::printf("Awaiter:await resume!\n");
 				assert(mEvent.mData.has_value());
 				return *std::exchange(mEvent.mData, std::nullopt);
 			}
@@ -166,6 +207,7 @@ namespace Parse2CustAlloc
 			mData.emplace(data);
 			if (mAwaiter)
 			{
+				//std::printf("Generator; mAwaiter->resume()!\n");
 				mAwaiter->resume();
 			}
 		}
@@ -197,7 +239,7 @@ namespace Parse2CustAlloc
 				bb = co_await stream;
 				if (SOF != bb)
 				{
-					continue; // not a start sequence 
+					continue; // not a start sequence ; this will skip the while loop goback  to outer while loop
 				}
 
 				// try to capture the full frame
@@ -251,7 +293,7 @@ namespace Parse2CustAlloc
 
 } // end of namespace AsyncParse2
 
-inline void AsyncByteStreamParserV2_Cortn()
+inline void StreamParser_CustomNewDelete()
 {
 	std::printf("\n--AsyncByteStreamParserV2--\n");
 	std::vector<std::byte> fakeBytes1{
