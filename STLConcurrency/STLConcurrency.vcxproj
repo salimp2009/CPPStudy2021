@@ -165,6 +165,7 @@
     <ClInclude Include="src\Coroutines\CortnInfiniteDataStream.hpp" />
     <ClInclude Include="src\Coroutines\CortnStartJobRequest.hpp" />
     <ClInclude Include="src\Coroutines\CortnThreadSync.hpp" />
+    <ClInclude Include="src\Coroutines\CortnWithCustomAllocators.hpp" />
     <ClInclude Include="src\JThreadsTokenBasics.h" />
     <ClInclude Include="src\ConcurrencyPCH.h" />
     <ClInclude Include="src\ConcurrencyUtility.hpp" />

@@ -2,29 +2,29 @@
 #include "ConcurrencyPCH.h"
 
 // THE GLOBAL VARIABLES ARE ALREADY DEFINED IN ANOTHER FILE!
-//static  const std::byte ESC{ 'H' };
-//static const std::byte SOF{ 0x10 };
+static  const std::byte ESC{ 'H' };
+static const std::byte SOF{ 0x10 };
 
 // overloading literals; user defined literals https://en.cppreference.com/w/cpp/language/user_literal
-//std::byte operator""_B(char c)
-//{
-//	return static_cast<std::byte>(c);
-//}
-//
-//std::byte operator""_B(unsigned long long  c)
-//{
-//	return static_cast<std::byte>(c);
-//}
+std::byte operator""_B(char c)
+{
+	return static_cast<std::byte>(c);
+}
+
+std::byte operator""_B(unsigned long long  c)
+{
+	return static_cast<std::byte>(c);
+}
 
 
-namespace AsyncParse2
+namespace Parse2CustAlloc
 {
 
 	// Initial susoend control whther the coroutine suspends directly after first creation or
 	// runs until a co_yield or co_return or co_await statement
 	/* the reason for this in this example the Parse needs to run*/
 	template<typename T, typename G, bool InitialSuspend>
-	struct promise_type_base 
+	struct promise_type_base
 	{
 		// mValue is the value that will be returned to the caller by yield_value
 		T mValue;
@@ -36,10 +36,10 @@ namespace AsyncParse2
 			return {};
 		}
 
-		auto initial_suspend() 
-		{ 
-			if constexpr(InitialSuspend)
-			{ 
+		auto initial_suspend()
+		{
+			if constexpr (InitialSuspend)
+			{
 				return std::suspend_always{};
 			}
 			else
@@ -52,6 +52,8 @@ namespace AsyncParse2
 		G get_return_object() { return G{ this }; }
 		void				return_void() {}
 		void				unhandled_exception() { std::terminate(); }
+
+		// TODO : Custom new and delete overloads!!!
 	};
 
 	namespace coro_iterator
@@ -90,18 +92,18 @@ namespace AsyncParse2
 
 	} // end of namespace coro_iterator
 
-	template<typename T, bool InitialSuspend=true>
+	template<typename T, bool InitialSuspend = true>
 	struct generator
 	{
-		using promise_type		 = promise_type_base<T, generator, InitialSuspend>;
-		using PromiseTypeHandle	 = std::coroutine_handle<promise_type>;
-		using iterator			 = coro_iterator::iterator<promise_type>;
+		using promise_type = promise_type_base<T, generator, InitialSuspend>;
+		using PromiseTypeHandle = std::coroutine_handle<promise_type>;
+		using iterator = coro_iterator::iterator<promise_type>;
 
 		iterator begin() { return mCoroHd1; }
-		iterator end()   { return {}; }
+		iterator end() { return {}; }
 
 		generator(const generator&) = delete;
-		generator(generator&& rhs) : mCoroHd1{std::exchange(rhs.mCoroHd1, nullptr)} {}
+		generator(generator&& rhs) : mCoroHd1{ std::exchange(rhs.mCoroHd1, nullptr) } {}
 
 		~generator() { if (mCoroHd1) mCoroHd1.destroy(); }
 
@@ -132,13 +134,13 @@ namespace AsyncParse2
 		struct Awaiter
 		{
 			Awaiter& operator=(Awaiter&&)    noexcept = delete;
-			Awaiter(DataStreamReader& event) noexcept : mEvent{event} 
+			Awaiter(DataStreamReader& event) noexcept : mEvent{ event }
 			{
 				mEvent.mAwaiter = this;
 			}
 
 			bool await_ready() const noexcept { return mEvent.mData.has_value(); }
-			
+
 			void await_suspend(std::coroutine_handle<> coroHd1) noexcept
 			{
 				mCoroHd1 = coroHd1;
@@ -162,19 +164,19 @@ namespace AsyncParse2
 		void set(std::byte data)
 		{
 			mData.emplace(data);
-			if (mAwaiter) 
-			{ 
-				mAwaiter->resume(); 
+			if (mAwaiter)
+			{
+				mAwaiter->resume();
 			}
 		}
 
 	private:
 		friend struct Awaiter;
-		Awaiter*				 mAwaiter{};
+		Awaiter* mAwaiter{};
 		std::optional<std::byte> mData{};
 	};
 
-	using FSM = generator<std::string,false>;
+	using FSM = generator<std::string, false>;
 
 	static const std::byte ESC{ 'H' };
 	static const std::byte SOF{ 0x10 };
@@ -197,9 +199,9 @@ namespace AsyncParse2
 				{
 					continue; // not a start sequence 
 				}
-				
+
 				// try to capture the full frame
-				while (true)  
+				while (true)
 				{
 					bb = co_await stream;
 					if (ESC == bb)
@@ -258,10 +260,10 @@ inline void AsyncByteStreamParserV2_Cortn()
 	ESC, SOF, 0x7_B, ESC, SOF };
 
 	// simulating first network data stream;
-	auto stream1 = AsyncParse2::send(std::move(fakeBytes1));
+	auto stream1 = Parse2CustAlloc::send(std::move(fakeBytes1));
 	// create a coroutine and store the promise in the coroutine_handle
-	AsyncParse2::DataStreamReader dr{};
-	auto p = AsyncParse2::Parse(dr);
+	Parse2CustAlloc::DataStreamReader dr{};
+	auto p = Parse2CustAlloc::Parse(dr);
 
 	for (const auto& data : stream1)
 	{
@@ -269,7 +271,7 @@ inline void AsyncByteStreamParserV2_Cortn()
 
 		if (const auto& res = p(); res.length())
 		{
-			AsyncParse2::HandleFrame(res);
+			Parse2CustAlloc::HandleFrame(res);
 		}
 	}
 
@@ -277,14 +279,14 @@ inline void AsyncByteStreamParserV2_Cortn()
 	std::vector<std::byte> fakeBytes2{
 	'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
 
-	auto stream2 = AsyncParse2::send(std::move(fakeBytes2));
+	auto stream2 = Parse2CustAlloc::send(std::move(fakeBytes2));
 	for (const auto& data : stream2)
 	{
 		dr.set(data);
 
 		if (const auto& res = p(); res.length())
 		{
-			AsyncParse2::HandleFrame(res);
+			Parse2CustAlloc::HandleFrame(res);
 		}
 	}
 
