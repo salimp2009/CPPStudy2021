@@ -12,6 +12,7 @@
 #include "Coroutines/CortnStartJobRequest.hpp"
 #include "Coroutines/CortnThreadSync.hpp"
 #include "Coroutines/CortnWithCustomAllocators.hpp"
+#include "Coroutines/CortnWithMemoryPool.hpp"
 
 int main()
 {
@@ -71,7 +72,8 @@ int main()
 	//InfinitiDataStream_Cornt();
 	//Cortn_StartJobRequest();
 	//CortnThreadSync_Example();
-	StreamParser_CustomNewDelete();
+	//StreamParser_CustomNewDelete();
+	StreamParser_MemoryPool();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

@@ -1,6 +1,10 @@
 #include "STLpch.h"
 
 import TestModule;
+import llvmmodule;			// this is a regular cpp file but it is compiled as c++ module interface from the properties c++ advanced
+import LLVMTestModule;      // this .cppm file and vs studio sees this as a regular module like .ixx but when first imported the header under the llvmmodule 
+							// it gave errors saying expecting ; then changed the order recompiled error is gone then put it back where it was No errors !
+							// See MSVC blog on module https://devblogs.microsoft.com/cppblog/standard-c20-modules-support-with-msvc-in-visual-studio-2019-version-16-8/
 
 #include "TupplePairUtilities.hpp"
 #include "Person.h"
@@ -416,7 +420,12 @@ int main(int argc, char* argv[])
 	
 	/* module function works as expected but red squigles dont go away!!!*/
 	MyModuleFunc(255);
-	
+
+	/* Module function using a cpp file not .ixx file!*/
+	llvmPrint();
+
+	/* Module function using a cppn file not .ixx file!*/
+	llvmPrint2();
 
 	return 0;
 

@@ -27,6 +27,12 @@
     <ClCompile Include="src\modules\TestModule.ixx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\LLVMModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\LLVMModule2.cppm">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TupplePairUtilities.hpp">

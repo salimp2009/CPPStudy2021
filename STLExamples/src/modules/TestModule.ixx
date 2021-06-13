@@ -7,5 +7,6 @@ int mymoduleVariable = 500;
 
 export int MyModuleFunc(int n)
 {
-	return n+mymoduleVariable;
+	std::printf("\n----modules test----\n");
+	return n + mymoduleVariable;
 }

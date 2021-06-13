@@ -41,7 +41,7 @@ concept HasRelease = requires(T t)
 };
 
 template<typename T>
-concept NotTriviallyDestructible = not std::is_trivially_destructible_v<T>;
+concept NotTriviallyDestructible = ! std::is_trivially_destructible_v<T>;
 
 
 template<typename T>

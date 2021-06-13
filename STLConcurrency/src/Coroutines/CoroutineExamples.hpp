@@ -6,6 +6,7 @@
 #include "CortnInfiniteDataStream.hpp"
 
 
+
 inline void LazyGenerator_Coroutine()
 {
 	std::printf("\n--LazyGenerator_Coroutine--\n");

@@ -1,5 +1,7 @@
 #pragma once
 #include "ConcurrencyPCH.h"
+#include <memory_resource>
+
 
 // THE GLOBAL VARIABLES ARE ALREADY DEFINED IN ANOTHER FILE!
 //static  const std::byte ESC{ 'H' };
@@ -16,22 +18,62 @@
 	//	return static_cast<std::byte>(c);
 	//}
 
-void* Allocate(std::size_t size)
+
+namespace ParseMemoryPool
 {
-	std::printf("custom alloc:%zu\n", size);
-	return new char[size];
-}
+	void* Allocate(std::size_t size)
+	{
+		std::printf("custom alloc:%zu\n", size);
+		return new char[size];
+	}
 
-void DeAllocate(void* p, std::size_t size)
-{
-	std::printf("custom dealloc:%zu\n", size);
-	return delete[] static_cast<char*>(p);
-}
+	void DeAllocate(void* p, std::size_t size)
+	{
+		std::printf("custom dealloc:%zu\n", size);
+		return delete[] static_cast<char*>(p);
+	}
 
 
+	struct arena
+	{
+		void* Allocate(std::size_t size);
+		void DeAllocate(void* p, std::size_t size);
 
-namespace Parse2CustAlloc
-{
+		static arena* GetFromPtr(void* ptr, std::size_t size);
+	};
+
+	void* arena::Allocate(std::size_t size)
+	{
+		auto objectsize = size;
+		/* add the size of arena pointer so we can get the address of ptr
+		 original size will be for data and added size for arena* ptr to be able to pass arnd */
+		size += sizeof(arena*);
+		// allocate memory
+		char* ptr = new char[size];
+		/* return the address of pointer ; Check if std::bit_cast can be used  https://en.cppreference.com/w/cpp/numeric/bit_cast */
+		[[maybe_unused]] arena* aa = reinterpret_cast<arena*>(ptr + objectsize);
+		/* every invocation will get a seperate arena/memory location*/
+		aa = this;
+		/* Not sure why this is needed ; for comparision of a & bthis is original location of pointer ; not the */
+		arena* bb = reinterpret_cast<arena*>(ptr + objectsize);
+
+		std::printf("custom allocate: object size: %zu, ptr: %p, address of instance: %p, address of the pointer(ptr+objectsize): %p\n", objectsize, ptr, this, bb);
+
+		return ptr;
+	}
+
+	arena* arena::GetFromPtr(void* ptr, std::size_t size)
+	{
+		// this is to access the objects memory ptr and then call the right memory location to delete; used with Delete
+		return reinterpret_cast<arena*>(static_cast<char*>(ptr) + size);
+	}
+
+	void arena::DeAllocate(void* ptr, std::size_t size)
+	{
+		std::printf("custom deallocation: size: %zu, from ptr: %p, this: %p\n", size, ptr, this);
+		return delete[] static_cast<char*>(ptr);
+	}
+
 	// Initial susoend control whther the coroutine suspends directly after first creation or
 	// runs until a co_yield or co_return or co_await statement
 	/* the reason for this in this example the Parse needs to run*/
@@ -62,31 +104,29 @@ namespace Parse2CustAlloc
 		}
 		std::suspend_always final_suspend() noexcept { return {}; }
 		/*return the generator*/
-		G get_return_object() 
-		{ 
+		G get_return_object()
+		{
 			//std::printf("promise:return Object!\n");
-			return G{ this }; 
+			return G{ this };
 		}
 		void				return_void() {}
 		void				unhandled_exception() { std::terminate(); }
 
-		void* operator new(std::size_t size) noexcept 
-		{ 
-			std::printf("promise:call Allocate!\n");
-			return Allocate(size); 
+		
+		template<typename... TheRest>
+		void* operator new(std::size_t size, arena& a, TheRest&&...) noexcept
+		{
+			std::printf("promise:call Arena Allocate!\n");
+			return a.Allocate(size);
 		}
-		void operator delete(void* ptr, std::size_t size) noexcept 
-		{ 
+		void operator delete(void* ptr, std::size_t size) noexcept
+		{
 			std::printf("promise:call DeAllocate!\n");
-			return DeAllocate(ptr, size); 
+			arena::GetFromPtr(ptr, size)->DeAllocate(ptr, size);
 		}
 
 		/* this will allow if operator new to be noexcept ; if new fails then an object type G with nullptr will returned so it no throwing !*/
-		static auto get_return_object_on_allocation_failure() 
-		{ 
-			
-			return G{nullptr}; 
-		}
+		static auto get_return_object_on_allocation_failure() { return G{ nullptr }; }
 	};
 
 	namespace coro_iterator
@@ -96,31 +136,26 @@ namespace Parse2CustAlloc
 		{
 			using coro_handle = std::coroutine_handle<PT>;
 
-			coro_handle mCoroHd1{ nullptr };
-			bool		mDone{ true };
+			coro_handle mCoroHd1{};
 
 			using RetType = decltype(mCoroHd1.promise().mValue);
 
 			void resume()
 			{
 				mCoroHd1.resume();
-				mDone = mCoroHd1.done();
 			}
 
 			iterator() = default;
 
 			iterator(coro_handle hco) : mCoroHd1{ hco } { resume(); }
 
-			iterator& operator++()
+			void operator++()
 			{
 				resume();
-				return *this;
 			}
 
-			bool operator==(const iterator& other) const { return mDone == other.mDone; }
-
+			bool operator==(const iterator& ) const { return mCoroHd1.done(); }
 			const RetType& operator*()  const& { return mCoroHd1.promise().mValue; }
-			const RetType* operator->() const { return &(operator*()); }
 		};
 
 	} // end of namespace coro_iterator
@@ -172,15 +207,13 @@ namespace Parse2CustAlloc
 				mEvent.mAwaiter = this;
 			}
 
-			bool await_ready() const noexcept 
-			{ 
-				//std::printf("Awaiter:await readY!\n");
-				return mEvent.mData.has_value(); 
+			bool await_ready() const noexcept
+			{
+				return mEvent.mData.has_value();
 			}
 
 			void await_suspend(std::coroutine_handle<> coroHd1) noexcept
 			{
-				//std::printf("Awaiter:await suspend!\n");
 				mCoroHd1 = coroHd1;
 			}
 
@@ -205,7 +238,6 @@ namespace Parse2CustAlloc
 			mData.emplace(data);
 			if (mAwaiter)
 			{
-				//std::printf("Generator; mAwaiter->resume()!\n");
 				mAwaiter->resume();
 			}
 		}
@@ -224,7 +256,7 @@ namespace Parse2CustAlloc
 
 	// the stream is passed by reference into the parse; 
 	// need to make sure lifetime of stream is longer than Parse
-	FSM Parse(DataStreamReader& stream)
+	FSM Parse(arena& ar, DataStreamReader& stream)
 	{
 		while (true)
 		{
@@ -272,8 +304,9 @@ namespace Parse2CustAlloc
 		; e.g. we are simulation parsing signals on TCP then those might not live longer you pass by copy & move semantics will be applied by compiler
 	*/
 
+
 	// this simulates a network that sends signal until it is disconnected; coroutine send the value of signal into promise_type_base
-	generator<std::byte> send(std::vector<std::byte> fakeBytes)
+	generator<std::byte> send(arena ar, std::vector<std::byte> fakeBytes)
 	{
 		for (const auto& signal : fakeBytes)
 		{
@@ -281,29 +314,33 @@ namespace Parse2CustAlloc
 		}
 	}
 
-	/*TOTEST: see if string_view to use with printf; probably not since string_view does not have null terminator*/
-	//void HandleFrame(std::string_view result)
-	void HandleFrame(const std::string& result)
-	{
-		std::printf("%s\n", result.c_str());
-		//std::printf("%s\n", result.data());
-	}
+		/*TOTEST: see if string_view to use with printf; probably not since string_view does not have null terminator*/
+		//void HandleFrame(std::string_view result)
+		void HandleFrame(const std::string& result)
+		{
+			std::printf("%s\n", result.c_str());
+		}
+	
 
 } // end of namespace AsyncParse2
 
-inline void StreamParser_CustomNewDelete()
-{
-	std::printf("\n--AsyncByteStreamParserV2--\n");
-	std::vector<std::byte> fakeBytes1{
-	0x70_B, 0x24_B, ESC, SOF, ESC,
-	'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,
-	ESC, SOF, 0x7_B, ESC, SOF };
 
+
+inline void StreamParser_MemoryPool()
+{
+	std::printf("\n--StreamParser_MemoryPool--\n");
+	std::vector<std::byte> fakeBytes1{ 0x70_B, 0x24_B, ESC, SOF, ESC,'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,ESC, SOF, 0x7_B, ESC, SOF };
+
+	// simulate another  network connection
+	std::vector<std::byte> fakeBytes2{ 'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
+
+	ParseMemoryPool::arena a1{};
+	ParseMemoryPool::arena a2{};
 	// simulating first network data stream;
-	auto stream1 = Parse2CustAlloc::send(std::move(fakeBytes1));
+	auto stream1 = ParseMemoryPool::send(a1, std::move(fakeBytes1));
 	// create a coroutine and store the promise in the coroutine_handle
-	Parse2CustAlloc::DataStreamReader dr{};
-	auto p = Parse2CustAlloc::Parse(dr);
+	ParseMemoryPool::DataStreamReader dr{};
+	auto p = ParseMemoryPool::Parse(a2, dr);
 
 	for (const auto& data : stream1)
 	{
@@ -311,23 +348,20 @@ inline void StreamParser_CustomNewDelete()
 
 		if (const auto& res = p(); res.length())
 		{
-			Parse2CustAlloc::HandleFrame(res);
+			ParseMemoryPool::HandleFrame(res);
 		}
 	}
 
-	// simulate another  network connection
-	std::vector<std::byte> fakeBytes2{
-	'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
 
-	auto stream2 = Parse2CustAlloc::send(std::move(fakeBytes2));
+
+	auto stream2 = ParseMemoryPool::send(a1, std::move(fakeBytes2));
 	for (const auto& data : stream2)
 	{
 		dr.set(data);
 
 		if (const auto& res = p(); res.length())
 		{
-			Parse2CustAlloc::HandleFrame(res);
+			ParseMemoryPool::HandleFrame(res);
 		}
 	}
-
 }

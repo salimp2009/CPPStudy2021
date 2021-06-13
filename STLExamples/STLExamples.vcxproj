@@ -82,6 +82,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>;../vendor/spdlog/include;../vendor;;src\</AdditionalIncludeDirectories>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -100,6 +101,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectName)\src;../vendor/spdlog/include;../vendor;;src\</AdditionalIncludeDirectories>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,6 +122,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>STLpch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectName)\src;../vendor/spdlog/include;../vendor;;src\</AdditionalIncludeDirectories>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +133,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Allocators\StackMemoryPool.cpp" />
+    <ClCompile Include="src\modules\LLVMModule.cpp">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCppModule</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">CompileAsCppModule</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCppModule</CompileAs>
+    </ClCompile>
+    <ClCompile Include="src\modules\LLVMModule2.cppm">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">Default</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</CompileAs>
+    </ClCompile>
     <ClCompile Include="src\STLpch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">STLpch.h</PrecompiledHeaderFile>
