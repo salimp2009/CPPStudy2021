@@ -19,51 +19,8 @@
 	//}
 
 
-namespace ParseMemoryPool
+namespace PMRMemoryPool
 {
-	struct arena
-	{
-		void* Allocate(std::size_t size) noexcept;
-		void DeAllocate(void* p, std::size_t size) noexcept;
-
-		static arena* GetFromPtr(void* ptr, std::size_t size);
-	};
-
-	void* arena::Allocate(std::size_t size) noexcept
-	{
-		auto objectsize = size;
-		/* add the size of arena pointer so we can get the address of ptr
-		   original size will be for data and added size for arena* ptr to be able to pass arnd */
-		size += sizeof(arena*);
-		
-		// allocate memory
-		char* ptr = new char[size];
-
-		/* return the address of pointer ; Check if std::bit_cast can be used  https://en.cppreference.com/w/cpp/numeric/bit_cast */
-		[[maybe_unused]] arena* aa = reinterpret_cast<arena*>(ptr + objectsize);
-		
-		/* every invocation will get a seperate arena/memory location*/
-		aa = this;
-		
-		/* Not sure why this is needed ; for comparision of a & bthis is original location of pointer ; not the */
-		arena* bb = reinterpret_cast<arena*>(ptr + objectsize);
-
-		std::printf("custom allocate: object size: %zu, ptr: %p, address of instance: %p, address of the pointer(ptr+objectsize): %p\n", objectsize, ptr, this, bb);
-
-		return ptr;
-	}
-
-	arena* arena::GetFromPtr(void* ptr, std::size_t size)
-	{
-		// this is to access the objects memory ptr and then call the right memory location to delete; used with Delete
-		return reinterpret_cast<arena*>(static_cast<char*>(ptr) + size);
-	}
-
-	void arena::DeAllocate(void* ptr, std::size_t size) noexcept
-	{
-		std::printf("custom deallocation: size: %zu, from ptr: %p, this: %p\n", size, ptr, this);
-		return delete[] static_cast<char*>(ptr);
-	}
 
 	// Initial susoend control whther the coroutine suspends directly after first creation or
 	// runs until a co_yield or co_return or co_await statement
@@ -93,7 +50,6 @@ namespace ParseMemoryPool
 				return std::suspend_never{};
 			}
 		}
-
 		std::suspend_always final_suspend() noexcept { return {}; }
 		/*return the generator*/
 		G get_return_object()
@@ -103,19 +59,6 @@ namespace ParseMemoryPool
 		}
 		void				return_void() {}
 		void				unhandled_exception() { std::terminate(); }
-
-		
-		template<typename... TheRest>
-		void* operator new(std::size_t size, arena& a, TheRest&&...) noexcept
-		{
-			std::printf("promise:call Arena Allocate!\n");
-			return a.Allocate(size);
-		}
-		void operator delete(void* ptr, std::size_t size) noexcept
-		{
-			std::printf("promise:call DeAllocate!\n");
-			arena::GetFromPtr(ptr, size)->DeAllocate(ptr, size);
-		}
 
 		/* this will allow if operator new to be noexcept ; if new fails then an object type G with nullptr will returned so it no throwing !*/
 		static auto get_return_object_on_allocation_failure() { return G{ nullptr }; }
@@ -132,15 +75,21 @@ namespace ParseMemoryPool
 
 			using RetType = decltype(mCoroHd1.promise().mValue);
 
-			void resume(){mCoroHd1.resume();}
+			void resume()
+			{
+				mCoroHd1.resume();
+			}
 
 			iterator() = default;
 
 			iterator(coro_handle hco) : mCoroHd1{ hco } { resume(); }
 
-			void operator++() { resume(); }
+			void operator++()
+			{
+				resume();
+			}
 
-			bool operator==(const iterator& ) const { return mCoroHd1.done(); }
+			bool operator==(const iterator&) const { return mCoroHd1.done(); }
 			const RetType& operator*()  const& { return mCoroHd1.promise().mValue; }
 		};
 
@@ -242,7 +191,7 @@ namespace ParseMemoryPool
 
 	// the stream is passed by reference into the parse; 
 	// need to make sure lifetime of stream is longer than Parse
-	FSM Parse(arena& ar, DataStreamReader& stream)
+	FSM Parse(std::pmr::synchronized_pool_resource& ar, DataStreamReader& stream)
 	{
 		while (true)
 		{
@@ -292,7 +241,7 @@ namespace ParseMemoryPool
 
 
 	// this simulates a network that sends signal until it is disconnected; coroutine send the value of signal into promise_type_base
-	generator<std::byte> send(arena& ar, std::vector<std::byte> fakeBytes)
+	generator<std::byte> send(std::pmr::synchronized_pool_resource& ar, std::vector<std::byte> fakeBytes)
 	{
 		for (const auto& signal : fakeBytes)
 		{
@@ -300,19 +249,19 @@ namespace ParseMemoryPool
 		}
 	}
 
-		/*TOTEST: see if string_view to use with printf; probably not since string_view does not have null terminator*/
-		//void HandleFrame(std::string_view result)
-		void HandleFrame(const std::string& result)
-		{
-			std::printf("%s\n", result.c_str());
-		}
-	
-
-} // end of namespace AsyncParse2
+	/*TOTEST: see if string_view to use with printf; probably not since string_view does not have null terminator*/
+	//void HandleFrame(std::string_view result)
+	void HandleFrame(const std::string& result)
+	{
+		std::printf("%s\n", result.c_str());
+	}
 
 
+} // end of namespace  PMRMemoryPool
 
-inline void StreamParser_MemoryPool()
+
+
+inline void StreamParser_PMRMemoryPool()
 {
 	std::printf("\n--StreamParser_MemoryPool--\n");
 	std::vector<std::byte> fakeBytes1{ 0x70_B, 0x24_B, ESC, SOF, ESC,'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,ESC, SOF, 0x7_B, ESC, SOF };
@@ -320,13 +269,14 @@ inline void StreamParser_MemoryPool()
 	// simulate another  network connection
 	std::vector<std::byte> fakeBytes2{ 'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
 
-	ParseMemoryPool::arena a1{};
-	ParseMemoryPool::arena a2{};
+	std::pmr::monotonic_buffer_resource buffer{ 6000 };
+	std::pmr::synchronized_pool_resource pool{&buffer };
+
 	// simulating first network data stream;
-	auto stream1 = ParseMemoryPool::send(a1, std::move(fakeBytes1));
+	auto stream1 = PMRMemoryPool::send(pool, std::move(fakeBytes1));
 	// create a coroutine and store the promise in the coroutine_handle
-	ParseMemoryPool::DataStreamReader dr{};
-	auto p = ParseMemoryPool::Parse(a2, dr);
+	PMRMemoryPool::DataStreamReader dr{};
+	auto p = PMRMemoryPool::Parse(pool, dr);
 
 	for (const auto& data : stream1)
 	{
@@ -334,20 +284,19 @@ inline void StreamParser_MemoryPool()
 
 		if (const auto& res = p(); res.length())
 		{
-			ParseMemoryPool::HandleFrame(res);
+			PMRMemoryPool::HandleFrame(res);
 		}
 	}
 
-
-
-	auto stream2 = ParseMemoryPool::send(a1, std::move(fakeBytes2));
+	auto stream2 = PMRMemoryPool::send(pool, std::move(fakeBytes2));
 	for (const auto& data : stream2)
 	{
 		dr.set(data);
 
 		if (const auto& res = p(); res.length())
 		{
-			ParseMemoryPool::HandleFrame(res);
+			PMRMemoryPool::HandleFrame(res);
 		}
 	}
 }
+

@@ -163,6 +163,7 @@
     <ClInclude Include="src\Coroutines\CortnAsyncByteStreamParser.hpp" />
     <ClInclude Include="src\Coroutines\CortnAsyncByteStreamParserV2.hpp" />
     <ClInclude Include="src\Coroutines\CortnInfiniteDataStream.hpp" />
+    <ClInclude Include="src\Coroutines\CortnPMRmemoryPool.hpp" />
     <ClInclude Include="src\Coroutines\CortnStartJobRequest.hpp" />
     <ClInclude Include="src\Coroutines\CortnThreadSync.hpp" />
     <ClInclude Include="src\Coroutines\CortnWithCustomAllocators.hpp" />

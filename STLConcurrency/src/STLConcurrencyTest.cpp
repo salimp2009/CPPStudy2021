@@ -13,6 +13,7 @@
 #include "Coroutines/CortnThreadSync.hpp"
 #include "Coroutines/CortnWithCustomAllocators.hpp"
 #include "Coroutines/CortnWithMemoryPool.hpp"
+#include "Coroutines/CortnPMRmemoryPool.hpp"
 
 int main()
 {
@@ -73,7 +74,8 @@ int main()
 	//Cortn_StartJobRequest();
 	//CortnThreadSync_Example();
 	//StreamParser_CustomNewDelete();
-	StreamParser_MemoryPool();
+	//StreamParser_MemoryPool();
+	StreamParser_PMRMemoryPool();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
