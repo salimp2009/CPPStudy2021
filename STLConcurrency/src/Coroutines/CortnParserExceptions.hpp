@@ -18,8 +18,20 @@
 	//}
 
 
-namespace PMRMemoryPool
+namespace CortnExcept
 {
+	enum class Ex
+	{
+		None, ParseBegin, ParseWhileRunning, InitialSuspend, YieldValue, GetReturnObject
+	};
+
+	static Ex defExcept{ Ex::None };
+	static int rethrow = 1;
+
+	void ThrowIf(const Ex exceptValue, std::string name)
+	{
+		if (exceptValue==defExcept) throw std::runtime_error(name);
+	}
 
 	// Initial susoend control whther the coroutine suspends directly after first creation or
 	// runs until a co_yield or co_return or co_await statement
@@ -56,11 +68,36 @@ namespace PMRMemoryPool
 			//std::printf("promise:return Object!\n");
 			return G{ this };
 		}
-		void				return_void() {}
-		void				unhandled_exception() { std::terminate(); }
 
-		/* this will allow if operator new to be noexcept ; if new fails then an object type G with nullptr will returned so it no throwing !*/
-		static auto get_return_object_on_allocation_failure() { return G{ nullptr }; }
+		void return_void() {}
+		void unhandled_exception() 
+		{ 
+			puts("unhandled_exception\n");
+			if (rethrow)
+			{
+				if (rethrow == 2)
+				{
+					auto exceptionPtr = std::current_exception();
+					try 
+					{
+						if (exceptionPtr)  std::rethrow_exception(exceptionPtr);
+					}
+					catch (const std::exception& e)
+					{
+						std::printf("promise: Exception caught %s", e.what());
+					}
+				}
+				else
+				{
+					throw;
+				}
+			}
+			else
+			{
+				puts("do nothing\n");
+			}
+		}
+
 	};
 
 	namespace coro_iterator
@@ -69,24 +106,16 @@ namespace PMRMemoryPool
 		struct iterator
 		{
 			using coro_handle = std::coroutine_handle<PT>;
-
 			coro_handle mCoroHd1{};
 
 			using RetType = decltype(mCoroHd1.promise().mValue);
-
-			void resume()
-			{
-				mCoroHd1.resume();
-			}
+			
+			void resume(){ mCoroHd1.resume();}
 
 			iterator() = default;
-
 			iterator(coro_handle hco) : mCoroHd1{ hco } { resume(); }
 
-			void operator++()
-			{
-				resume();
-			}
+			void operator++(){ resume(); }
 
 			bool operator==(const iterator&) const { return mCoroHd1.done(); }
 			const RetType& operator*()  const& { return mCoroHd1.promise().mValue; }
@@ -102,7 +131,7 @@ namespace PMRMemoryPool
 		using iterator = coro_iterator::iterator<promise_type>;
 
 		iterator begin() { return mCoroHd1; }
-		iterator end() { return {}; }
+		iterator end()   { return {}; }
 
 		generator(const generator&) = delete;
 		generator(generator&& rhs) : mCoroHd1{ std::exchange(rhs.mCoroHd1, nullptr) } {}
@@ -184,13 +213,13 @@ namespace PMRMemoryPool
 
 	using FSM = generator<std::string, false>;
 
-	static const std::byte ESC{ 'H' };
-	static const std::byte SOF{ 0x10 };
+	//static const std::byte ESC{ 'H' };
+	//static const std::byte SOF{ 0x10 };
 
 
 	// the stream is passed by reference into the parse; 
 	// need to make sure lifetime of stream is longer than Parse
-	FSM Parse(std::pmr::synchronized_pool_resource& ar, DataStreamReader& stream)
+	FSM Parse(DataStreamReader& stream)
 	{
 		while (true)
 		{
@@ -240,7 +269,7 @@ namespace PMRMemoryPool
 
 
 	// this simulates a network that sends signal until it is disconnected; coroutine send the value of signal into promise_type_base
-	generator<std::byte> send(std::pmr::synchronized_pool_resource& ar, std::vector<std::byte> fakeBytes)
+	generator<std::byte> send(std::vector<std::byte> fakeBytes)
 	{
 		for (const auto& signal : fakeBytes)
 		{
@@ -260,24 +289,23 @@ namespace PMRMemoryPool
 
 
 
-inline void StreamParser_PMRMemoryPool()
+inline void StreamParser_CortnExceptions()
 {
-	std::printf("\n--StreamParser_MemoryPool--\n");
+	std::printf("\n--StreamParser_CortnExceptions--\n");
 	/* Color printing with fmt*/
-	//fmt::print(fg(fmt::color::crimson) | fmt::emphasis::bold, "[{}]\n", "PMR Memory pool");
 	std::vector<std::byte> fakeBytes1{ 0x70_B, 0x24_B, ESC, SOF, ESC,'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,ESC, SOF, 0x7_B, ESC, SOF };
 
 	// simulate another  network connection
 	std::vector<std::byte> fakeBytes2{ 'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
 
 	std::pmr::monotonic_buffer_resource buffer{ 6000 };
-	std::pmr::synchronized_pool_resource pool{&buffer };
+	std::pmr::synchronized_pool_resource pool{ &buffer };
 
 	// simulating first network data stream;
-	auto stream1 = PMRMemoryPool::send(pool, std::move(fakeBytes1));
+	auto stream1 = CortnExcept::send(std::move(fakeBytes1));
 	// create a coroutine and store the promise in the coroutine_handle
-	PMRMemoryPool::DataStreamReader dr{};
-	auto p = PMRMemoryPool::Parse(pool, dr);
+	CortnExcept::DataStreamReader dr{};
+	auto p = CortnExcept::Parse(dr);
 
 	for (const auto& data : stream1)
 	{
@@ -285,19 +313,21 @@ inline void StreamParser_PMRMemoryPool()
 
 		if (const auto& res = p(); res.length())
 		{
-			PMRMemoryPool::HandleFrame(res);
+			CortnExcept::HandleFrame(res);
 		}
 	}
 
-	auto stream2 = PMRMemoryPool::send(pool, std::move(fakeBytes2));
+	auto stream2 = CortnExcept::send(std::move(fakeBytes2));
 	for (const auto& data : stream2)
 	{
 		dr.set(data);
 
 		if (const auto& res = p(); res.length())
 		{
-			PMRMemoryPool::HandleFrame(res);
+			CortnExcept::HandleFrame(res);
 		}
 	}
 }
+
+
 
