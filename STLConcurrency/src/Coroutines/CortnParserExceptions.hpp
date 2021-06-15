@@ -25,8 +25,8 @@ namespace CortnExcept
 		None, ParseBegin, ParseWhileRunning, InitialSuspend, YieldValue, GetReturnObject
 	};
 
-	static Ex defExcept{ Ex::None };
-	static int rethrow = 1;
+	Ex defExcept{ Ex::None };
+	int rethrow = 1;
 
 	void ThrowIf(const Ex exceptValue, std::string name)
 	{
@@ -45,12 +45,14 @@ namespace CortnExcept
 		/* invoked by co_yield or co_return*/
 		std::suspend_always yield_value(T value)
 		{
+			ThrowIf(Ex::YieldValue, "promise: yield_value");
 			mValue = value;
 			return {};
 		}
 
 		auto initial_suspend()
 		{
+			ThrowIf(Ex::InitialSuspend, "promise: initial_suspend");
 			if constexpr (InitialSuspend)
 			{
 				//std::printf("promise:initial_suspend!\n");
@@ -65,7 +67,8 @@ namespace CortnExcept
 		/*return the generator*/
 		G get_return_object()
 		{
-			//std::printf("promise:return Object!\n");
+			std::printf("promise:return Object!\n");
+			ThrowIf(Ex::GetReturnObject, "promise: get_return_object");
 			return G{ this };
 		}
 
@@ -159,7 +162,7 @@ namespace CortnExcept
 	public:
 		DataStreamReader() = default;
 
-		// disabling the move assignment operator ; this also disables the default copy operations
+		// disabling the move assignment operator ; this also disables the default copy/move operations
 		DataStreamReader& operator=(DataStreamReader&&) noexcept = delete;
 
 		struct Awaiter
@@ -194,6 +197,7 @@ namespace CortnExcept
 			std::coroutine_handle<> mCoroHd1{};
 		};
 
+		// makes the DataStreamReader awaitable
 		auto operator co_await() noexcept { return Awaiter{ *this }; }
 
 		void set(std::byte data)
@@ -223,6 +227,9 @@ namespace CortnExcept
 	{
 		while (true)
 		{
+			// used to simulate throwing points
+			ThrowIf(Ex::ParseBegin, "ParseBegin");
+
 			// wait for the stream
 			std::byte bb = co_await stream;
 			std::string frame{};
@@ -234,6 +241,8 @@ namespace CortnExcept
 				{
 					continue; // not a start sequence ; this will skip the while loop goback  to outer while loop
 				}
+
+				ThrowIf(Ex::ParseWhileRunning, "ParseWhileRunning!");
 
 				// try to capture the full frame
 				while (true)
@@ -284,6 +293,11 @@ namespace CortnExcept
 		std::printf("%s\n", result.c_str());
 	}
 
+	void PrintException(std::runtime_error& runtimeError)
+	{
+		std::printf("Exception caught: %s\n", runtimeError.what());
+	}
+
 
 } // end of namespace  PMRMemoryPool
 
@@ -292,42 +306,73 @@ namespace CortnExcept
 inline void StreamParser_CortnExceptions()
 {
 	std::printf("\n--StreamParser_CortnExceptions--\n");
-	/* Color printing with fmt*/
+	using namespace CortnExcept;
+	using namespace std::literals;
+	int argc = 3;
+	std::array argv = {"ParseBegin"s, "ParseWhileRunning"s,"InitialSuspend"s, "YieldValue"s, "GetReturnObject"s };
+
+	if (argc > 2)
+	{
+		rethrow = argc;
+
+		if ("ParseBegin"s == argv[2])
+		{
+			defExcept = Ex::ParseBegin;
+		}
+		else if ("ParseWhileRunning"s == argv[2])
+		{
+			defExcept = Ex::ParseWhileRunning;
+		}
+		else if ("InitialSuspend"s == argv[2])
+		{
+			defExcept = Ex::InitialSuspend;
+		}
+		else if ("YieldValue"s == argv[2])
+		{
+			defExcept = Ex::YieldValue;
+		}
+		else if ("GetReturnObject"s == argv[2])
+		{
+			defExcept = Ex::GetReturnObject;
+		}
+	}
+
 	std::vector<std::byte> fakeBytes1{ 0x70_B, 0x24_B, ESC, SOF, ESC,'H'_B, 'e'_B, 'l'_B, 'l'_B, 'o'_B,ESC, SOF, 0x7_B, ESC, SOF };
 
 	// simulate another  network connection
 	std::vector<std::byte> fakeBytes2{ 'W'_B, 'o'_B, 'r'_B, 'l'_B, 'd'_B, ESC, SOF, 0x99_B };
 
-	std::pmr::monotonic_buffer_resource buffer{ 6000 };
-	std::pmr::synchronized_pool_resource pool{ &buffer };
-
-	// simulating first network data stream;
-	auto stream1 = CortnExcept::send(std::move(fakeBytes1));
-	// create a coroutine and store the promise in the coroutine_handle
-	CortnExcept::DataStreamReader dr{};
-	auto p = CortnExcept::Parse(dr);
-
-	for (const auto& data : stream1)
+	try
 	{
-		dr.set(data);
+		// simulating first network data stream;
+		auto stream1 = CortnExcept::send(std::move(fakeBytes1));
+		// create a coroutine and store the promise in the coroutine_handle
+		DataStreamReader dr{};
+		auto p = CortnExcept::Parse(dr);
 
-		if (const auto& res = p(); res.length())
+		for (const auto& data : stream1)
 		{
-			CortnExcept::HandleFrame(res);
+			dr.set(data);
+
+			if (const auto& res = p(); res.length())
+			{
+				HandleFrame(res);
+			}
+		}
+
+		auto stream2 = send(std::move(fakeBytes2));
+		for (const auto& data : stream2)
+		{
+			dr.set(data);
+
+			if (const auto& res = p(); res.length())
+			{
+				HandleFrame(res);
+			}
 		}
 	}
-
-	auto stream2 = CortnExcept::send(std::move(fakeBytes2));
-	for (const auto& data : stream2)
+	catch(std::runtime_error& rt)
 	{
-		dr.set(data);
-
-		if (const auto& res = p(); res.length())
-		{
-			CortnExcept::HandleFrame(res);
-		}
+		PrintException(rt);
 	}
 }
-
-
-
