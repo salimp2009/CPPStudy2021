@@ -25,8 +25,8 @@ namespace CortnExcept
 		None, ParseBegin, ParseWhileRunning, InitialSuspend, YieldValue, GetReturnObject
 	};
 
-	Ex defExcept{ Ex::None };
-	int rethrow = 1;
+	static Ex defExcept{ Ex::None };
+	static int rethrow = 1;
 
 	void ThrowIf(const Ex exceptValue, std::string name)
 	{
@@ -45,6 +45,7 @@ namespace CortnExcept
 		/* invoked by co_yield or co_return*/
 		std::suspend_always yield_value(T value)
 		{
+			std::printf("promise:yield_value!\n");
 			ThrowIf(Ex::YieldValue, "promise: yield_value");
 			mValue = value;
 			return {};
@@ -52,10 +53,10 @@ namespace CortnExcept
 
 		auto initial_suspend()
 		{
+			std::printf("promise:initial_suspend!\n");
 			ThrowIf(Ex::InitialSuspend, "promise: initial_suspend");
 			if constexpr (InitialSuspend)
 			{
-				//std::printf("promise:initial_suspend!\n");
 				return std::suspend_always{};
 			}
 			else
@@ -64,10 +65,10 @@ namespace CortnExcept
 			}
 		}
 		std::suspend_always final_suspend() noexcept { return {}; }
-		/*return the generator*/
+
 		G get_return_object()
 		{
-			std::printf("promise:return Object!\n");
+			std::printf("promise:get_return_object!\n");
 			ThrowIf(Ex::GetReturnObject, "promise: get_return_object");
 			return G{ this };
 		}
@@ -75,7 +76,7 @@ namespace CortnExcept
 		void return_void() {}
 		void unhandled_exception() 
 		{ 
-			puts("unhandled_exception\n");
+			std::printf("unhandled_exception\n");
 			if (rethrow)
 			{
 				if (rethrow == 2)
@@ -87,7 +88,7 @@ namespace CortnExcept
 					}
 					catch (const std::exception& e)
 					{
-						std::printf("promise: Exception caught %s", e.what());
+						std::printf("promise UnHandled_exception: Exception caught %s", e.what());
 					}
 				}
 				else
@@ -97,10 +98,9 @@ namespace CortnExcept
 			}
 			else
 			{
-				puts("do nothing\n");
+				std::printf("do nothing\n");
 			}
 		}
-
 	};
 
 	namespace coro_iterator
@@ -118,7 +118,11 @@ namespace CortnExcept
 			iterator() = default;
 			iterator(coro_handle hco) : mCoroHd1{ hco } { resume(); }
 
-			void operator++(){ resume(); }
+			void operator++()
+			{ 
+				std::printf("operator++()\n");
+				resume(); 
+			}
 
 			bool operator==(const iterator&) const { return mCoroHd1.done(); }
 			const RetType& operator*()  const& { return mCoroHd1.promise().mValue; }
@@ -197,7 +201,7 @@ namespace CortnExcept
 			std::coroutine_handle<> mCoroHd1{};
 		};
 
-		// makes the DataStreamReader awaitable
+		// make the DataStreamReader awaitable
 		auto operator co_await() noexcept { return Awaiter{ *this }; }
 
 		void set(std::byte data)
@@ -308,13 +312,13 @@ inline void StreamParser_CortnExceptions()
 	std::printf("\n--StreamParser_CortnExceptions--\n");
 	using namespace CortnExcept;
 	using namespace std::literals;
-	int argc = 3;
+	int argc =2;
 	std::array argv = {"ParseBegin"s, "ParseWhileRunning"s,"InitialSuspend"s, "YieldValue"s, "GetReturnObject"s };
 
 	if (argc > 2)
 	{
-		rethrow = argc;
-
+		rethrow = std::atoi(argv[1].data());
+		
 		if ("ParseBegin"s == argv[2])
 		{
 			defExcept = Ex::ParseBegin;
@@ -360,7 +364,7 @@ inline void StreamParser_CortnExceptions()
 			}
 		}
 
-		auto stream2 = send(std::move(fakeBytes2));
+	/*	auto stream2 = send(std::move(fakeBytes2));
 		for (const auto& data : stream2)
 		{
 			dr.set(data);
@@ -369,7 +373,7 @@ inline void StreamParser_CortnExceptions()
 			{
 				HandleFrame(res);
 			}
-		}
+		}*/
 	}
 	catch(std::runtime_error& rt)
 	{
