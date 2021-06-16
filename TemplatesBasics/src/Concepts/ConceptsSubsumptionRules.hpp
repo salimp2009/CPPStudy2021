@@ -2,7 +2,6 @@
 
 #include "Templpch.h"
 
-
 template<typename V, typename W>
 concept IsSameHelper = std::is_same_v<V, W>;
 

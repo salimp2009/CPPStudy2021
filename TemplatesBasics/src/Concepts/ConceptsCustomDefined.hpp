@@ -98,4 +98,16 @@ static_assert(getSmaller(true, false) == 0);
 static_assert(getSmaller(1, 5) == 1);
 static_assert(getSmaller('a', 'b') == 'a');
 
+// Type trait for SemiRegular
+template<typename T>
+struct isSemiRegular : std::integral_constant<bool,
+											  std::is_default_constructible_v<T> && std::is_copy_constructible_v<T> && std::is_copy_assignable_v<T> &&
+											  std::is_move_constructible_v<T> && std::is_move_assignable_v<T> &&
+											  std::is_destructible_v<T> && std::is_swappable<T>> {};
+
+template<typename T>
+concept SemiRegular = isSemiRegular<T>::value;
+
+template<typename T>
+concept Regular = Equal<T> && SemiRegular<T>;
 

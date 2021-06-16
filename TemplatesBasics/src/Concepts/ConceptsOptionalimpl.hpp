@@ -1,7 +1,7 @@
 #pragma once
 #include "Templpch.h"
 
-/*TODO: this is InComplete*/
+
 template<typename T>
 union storage_t
 {
@@ -9,8 +9,11 @@ union storage_t
 	aligned_storage_t data;
 	
 	storage_t() = default;
-	T* as() { return reinterpret_cast<T*>(&data); }
+	
+	//T* as() { return reinterpret_cast<T*>(&data); }
 	// use placement new to create an instance of T inside this union ??
+	/*TODO: CHECK if this works OK */
+	T* as() { return reinterpret_cast<T*>(new(&data)T()); }
 };
 
 struct  copyable {};
@@ -85,6 +88,7 @@ public:
 		std::printf("optional: HasRelease<T>\n");
 	}
 
+	// this does not compile in Clang 12; OK with GCC 11; it is a cLang bug
 	~optional() = default;
 
 private:

@@ -86,5 +86,3 @@ inline void PrintContainers_Concepts()
 	PrintSort(l1);
 }
 
-
-
