@@ -1,10 +1,12 @@
 #include "RangesPCH.hpp"
 
+#include "RangesExamples01.hpp"
+
 
 auto main()->int
 {
 
-	puts("Hello Ranges\n");
+	RangeExample01();
 
 
 

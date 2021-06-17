@@ -99,6 +99,7 @@
     <ClCompile Include="src\RangesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesPCH.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

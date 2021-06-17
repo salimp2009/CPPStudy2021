@@ -13,6 +13,7 @@
 #include <chrono>
 #include <random>
 #include <exception>
+#include <ranges>
 
 
 #include <numeric>
@@ -59,8 +60,6 @@
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/formatter.h"
 #include "spdlog/fmt/bundled/ranges.h"
 #include "spdlog/fmt/bundled/color.h"
 

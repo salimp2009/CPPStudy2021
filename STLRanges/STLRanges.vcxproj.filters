@@ -26,5 +26,8 @@
     <ClInclude Include="src\RangesPCH.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RangesExamples01.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
