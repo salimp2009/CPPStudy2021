@@ -30,11 +30,12 @@ int main()
 	//conceptBasedDispatch();
 	//placeHolders_Concepts();
 	//overloadWithConcepts();
-	dataValidateCheck_Concepts();
-	optionalImplemt_Concepts();
-	SubSumptionRules_Concepts();
-	PrintContainers_Concepts();
+	//dataValidateCheck_Concepts();
+	//optionalImplemt_Concepts();
+	//SubSumptionRules_Concepts();
+	//PrintContainers_Concepts();
 	SignedUnSignedIntegral_Func();
+	RegularSemiRegular_Concepts();
 
 	return 0;
 }

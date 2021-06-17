@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Templpch.h"
+#include <source_location>
 
 template<typename T>
 concept Integral = std::is_integral_v<T>;
@@ -103,7 +104,7 @@ template<typename T>
 struct isSemiRegular : std::integral_constant<bool,
 											  std::is_default_constructible_v<T> && std::is_copy_constructible_v<T> && std::is_copy_assignable_v<T> &&
 											  std::is_move_constructible_v<T> && std::is_move_assignable_v<T> &&
-											  std::is_destructible_v<T> && std::is_swappable<T>> {};
+											  std::is_destructible_v<T> && std::is_swappable_v<T> > {};
 
 template<typename T>
 concept SemiRegular = isSemiRegular<T>::value;
@@ -111,3 +112,40 @@ concept SemiRegular = isSemiRegular<T>::value;
 template<typename T>
 concept Regular = Equal<T> && SemiRegular<T>;
 
+template<typename T>
+concept movable = std::is_object_v<T> && std::is_move_constructible_v<T> && std::assignable_from<T&, T> && std::swappable<T>;
+
+template<typename T>
+concept CopyAble = std::is_copy_constructible_v<T> && movable<T> &&
+			       std::assignable_from<T&, T&> &&
+				   std::assignable_from<T&, const T&> && std::assignable_from<T&, const T>;
+
+template<typename T>
+concept asSemiRegular = CopyAble<T> && std::default_initializable<T>;
+
+template<typename T>
+concept asRegular = asSemiRegular<T> && std::equality_comparable<T>;
+
+// Used in ConceptExamples3.hpp
+template<Regular T>
+void behavesLikeAnInt(T)
+{
+	std::printf("behavesLikeAnInt\n");
+	
+	// Just quickly test for how std::source_location works; better to have the call location as an input!
+	//std::source_location location = std::source_location::current();
+	//fmt::print("function:{}, file:{}, line: {}\n", location.function_name(), location.file_name(), location.line());
+}
+
+template<std::regular T>
+void behavesLikeAnInt2(T)
+{
+	std::printf("behavesLikeAnInt2\n");
+}
+
+struct EqualityComparable {};
+
+bool operator==(const EqualityComparable&, const EqualityComparable&) { return true; }
+//bool operator!=(const EqualityComparable&, const EqualityComparable&) { return false; }
+
+struct NotEqualityComparable {};

@@ -24,6 +24,29 @@ inline void SignedUnSignedIntegral_Func()
 
 }
 
+inline void RegularSemiRegular_Concepts()
+{
+	std::printf("\n---RegularSemiRegular_Concepts--\n");
+	int MyInt{};
 
+	behavesLikeAnInt(MyInt);
+	behavesLikeAnInt2(MyInt);
+
+	std::vector<int> myVec{};
+	behavesLikeAnInt(myVec);
+	behavesLikeAnInt2(myVec);
+
+	EqualityComparable eqComp{};
+	behavesLikeAnInt(eqComp);
+	behavesLikeAnInt2(eqComp);
+
+	NotEqualityComparable NotEqComp{};
+	//behavesLikeAnInt(NotEqComp);						// Will not compile since it does not match the constraints as expected
+	//behavesLikeAnInt2(NotEqComp);
+	static_assert(not Regular<NotEqualityComparable>);
+	static_assert(Regular<EqualityComparable>);
+
+
+}
 
 
