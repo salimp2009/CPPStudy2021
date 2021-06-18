@@ -7,7 +7,7 @@ auto main()->int
 {
 
 	RangeExample01();
-
+	RangeProjection();
 
 
 }

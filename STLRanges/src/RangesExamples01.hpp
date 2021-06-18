@@ -27,3 +27,39 @@ inline void RangeExample01()
 	}
 	puts("\n");
 }
+
+
+struct PhoneBookEntry
+{
+	std::string name;
+	int number = 0;
+};
+
+void PrintPhonebook(std::span<PhoneBookEntry> phoneBook)
+{
+	for(auto elem : phoneBook)
+	fmt::print("name: {}, number: {}\n", elem.name, elem.number);
+
+}
+
+
+inline void RangeProjection()
+{
+	std::printf("\n--- RangeProjection---\n");
+
+	std::vector<PhoneBookEntry> phonebook = { {"Salim", 222}, {"Didem", 568}, {"Taylor", 145}, {"Frank", 558} };
+
+	puts("\nranges with default sort: less(); projection; name to sort");
+	std::ranges::sort(phonebook, {}, &PhoneBookEntry::name);
+	PrintPhonebook(phonebook);
+
+	puts("\nranges with default sort: less(); projection; number to sort");
+	std::ranges::sort(phonebook, {}, &PhoneBookEntry::number);
+	PrintPhonebook(phonebook);
+
+	puts("\nranges with default ranges::greater(); projection; number to sort");
+	std::ranges::sort(phonebook, std::ranges::greater(), &PhoneBookEntry::number);
+	PrintPhonebook(phonebook);
+
+}
+
