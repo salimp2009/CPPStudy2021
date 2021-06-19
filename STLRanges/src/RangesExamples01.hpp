@@ -37,9 +37,11 @@ struct PhoneBookEntry
 
 void PrintPhonebook(std::span<PhoneBookEntry> phoneBook)
 {
-	for(auto elem : phoneBook)
-	fmt::print("name: {}, number: {}\n", elem.name, elem.number);
-
+	for (auto elem : phoneBook)
+	{
+		fmt::print("name: {}, number: {}\n", elem.name, elem.number);
+	}
+		
 }
 
 
@@ -62,4 +64,27 @@ inline void RangeProjection()
 	PrintPhonebook(phonebook);
 
 }
+
+inline void ViewsKeysValue_Test()
+{
+	std::printf("\n--- Views:KeysValue---\n");
+
+	std::unordered_map<std::string, int>freqWord = { {"witch", 25}, {"wizard", 33}, {"tale", 45}, {"dog", 4}, {"cat", 34}, {"fish", 23}};
+	puts("Keys:");
+	auto names = std::views::keys(freqWord);
+
+	for (const auto& name : names)
+	{
+		fmt::print("{} ", name);
+	}
+	puts("\nValues: ");
+
+	for (auto value : std::views::values(freqWord))
+	{
+		fmt::print("{} ", value);
+	}
+
+
+}
+
 
