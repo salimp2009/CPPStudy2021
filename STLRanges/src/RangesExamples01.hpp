@@ -89,20 +89,38 @@ inline void ViewsKeys_FunctCompose()
 {
 	std::printf("\n--- Views:KeysValue---\n");
 
-	std::unordered_map<std::string, int>freqWord = { {"witch", 25}, {"wizard", 33}, {"tale", 45}, {"dog", 4}, {"cat", 34}, {"fish", 23} };
+	std::map<std::string,int>freqWord2 = { {"witch", 25}, {"wizard", 33}, {"tale", 45}, {"dog", 4}, {"cat", 34}, {"fish", 23} };
 	puts("\nWords:");
-	for (const auto& name : std::views::keys(freqWord))
+	for (const auto& name : std::views::keys(freqWord2))
 	{
 		fmt::print("{} ", name);
 	}
 	puts("\n\nAll Words Reverse Order: ");
-	for (const auto& name : std::views::reverse(freqWord) | std::views::keys)
+	for (const auto& name : std::views::keys(freqWord2) | std::views::reverse)
 	{
 		fmt::print("{} ", name);
 	}
-	puts("\n\nAll Words Reverse Order: ");
+	puts("\n\nThe First 4 Words: ");
 
+	//TODO: MSVC Bug does not compile; give a narrowing error !!!; propose solution is on github/VS Developer site; 
+	// https://developercommunity.visualstudio.com/t/Compile-error-with-std::ranges::views::k/1397309?from=email&viewtype=all&space=62&q=ranges+
+	// https://github.com/microsoft/STL/pull/1844
+	//for (const auto& name : std::views::keys(freqWord2) | std::views::take(4))
+	//{
+	//	fmt::print("{} ", name);
+	//}
 
+	puts("\n\nName Starts with 'w': ");
+
+	auto firstLetterW = [](const std::string& name) { return name[0] == 'w'; };
+
+	for (const auto& name : std::views::keys(freqWord2) | std::views::filter(firstLetterW))
+	{
+		fmt::print("{} ", name);
+	}
+
+	puts("\nend ofName Starts with 'w': ");
+	
 }
 
 
