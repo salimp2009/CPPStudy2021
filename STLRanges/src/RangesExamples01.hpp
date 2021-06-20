@@ -83,6 +83,24 @@ inline void ViewsKeysValue_Test()
 	{
 		fmt::print("{} ", value);
 	}
+}
+
+inline void ViewsKeys_FunctCompose()
+{
+	std::printf("\n--- Views:KeysValue---\n");
+
+	std::unordered_map<std::string, int>freqWord = { {"witch", 25}, {"wizard", 33}, {"tale", 45}, {"dog", 4}, {"cat", 34}, {"fish", 23} };
+	puts("\nWords:");
+	for (const auto& name : std::views::keys(freqWord))
+	{
+		fmt::print("{} ", name);
+	}
+	puts("\n\nAll Words Reverse Order: ");
+	for (const auto& name : std::views::reverse(freqWord) | std::views::keys)
+	{
+		fmt::print("{} ", name);
+	}
+	puts("\n\nAll Words Reverse Order: ");
 
 
 }

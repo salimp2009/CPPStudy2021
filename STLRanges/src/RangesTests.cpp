@@ -9,6 +9,6 @@ auto main()->int
 	RangeExample01();
 	RangeProjection();
 	ViewsKeysValue_Test();
-
+	ViewsKeys_FunctCompose();
 
 }
