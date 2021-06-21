@@ -1,6 +1,8 @@
 #pragma once
 #include "RangesPCH.hpp"
 
+#include "RangesContainerView.hpp"
+
 
 inline void RangeExample01()
 {
@@ -123,4 +125,82 @@ inline void ViewsKeys_FunctCompose()
 	
 }
 
+inline void ViewsIota_FunctCompose()
+{
+	std::printf("\n--- ViewsIota_FunctCompose---\n");
 
+	std::vector<int> vec1;
+	std::vector<int> vec2;
+
+	for (auto i : std::views::iota(0, 10))
+	{
+		vec1.push_back(i);
+	}
+	
+	// when pass only one arg to iota it creates only one argumentand will generate more when we ask/apply views::take we get only 10 of it
+	// This is an example of lazy evaluation ; iota will generate only one at the beginning and will do more when asked for more!
+	for (auto i : std::views::iota(0) | std::views::take(10))
+	{
+		vec2.push_back(i);
+	}
+
+	fmt::print("vec1: {}\n", fmt::join(vec1, ", "));
+	fmt::print("vec2: {}\n", fmt::join(vec2, ", "));
+}
+
+
+inline void ViewsIota_PrimeNumbers()
+{
+	std::printf("\n--- ViewsIota_PrimeNumbers---\n");
+
+
+	puts("Number from 1'000'000 to 1'001'000 displayed each 100th");
+
+	for (std::size_t i : std::views::iota(1'000'000u, 1'001'000u))
+	{
+		if(i%100==0)
+		{ 
+			std::printf("%zu ", i);
+		}
+	}
+
+	puts("\n");
+
+	auto odd = [](int j) { return j % 2 == 1; };
+	puts("Odss Number from 1'000'000 to 1'001'000 displayed each 100th");
+
+	for (int i : std::views::iota(1'000'000, 1'001'000) | std::views::filter(odd))
+	{
+		if (i % 100 == 1)
+		{
+			std::printf("%d ", i);
+		}
+	}
+
+	puts("\n\nPrime Numbers from 1'000'000 to 1'001'000 displayed each 100th");
+	constexpr auto isPrime = [](int i) constexpr
+	{
+		for (std::size_t j = 2; j * j <= i; ++j)
+		{
+			if (i % j == 0)
+			{
+				return false;
+			}
+		}
+		return true;
+	};
+
+	for (auto i : std::views::iota(1'000'000, 1'001'000) | std::views::filter(isPrime))
+	{
+		std::printf("%d ", i);
+	}
+
+
+	puts("\n\n20 Prime Numbers starting from 1'000'000");
+
+	for (auto i : std::views::iota(1'000'000, 1'001'000) | std::views::filter(isPrime) |std::views::take(20))
+	{
+		std::printf("%d ", i);
+	}
+
+}

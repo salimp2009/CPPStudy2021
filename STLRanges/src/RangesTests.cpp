@@ -10,5 +10,6 @@ auto main()->int
 	RangeProjection();
 	ViewsKeysValue_Test();
 	ViewsKeys_FunctCompose();
-
+	ViewsIota_FunctCompose();
+	ViewsIota_PrimeNumbers();
 }
