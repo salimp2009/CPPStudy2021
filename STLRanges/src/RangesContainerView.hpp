@@ -10,7 +10,6 @@ private:
 	std::ranges::iterator_t<Range> mbegin{ std::begin(mRange) };
 	std::ranges::iterator_t<Range> mend{std::end(mRange)};
 
-
 public:
 	// this is needed to satisfy the view concept; https://en.cppreference.com/w/cpp/ranges/view_interface
 	ContainerView() = default;
@@ -24,6 +23,10 @@ public:
 // Deduction Guide to make it easier for user
 template<typename Range>
 ContainerView(Range&& range)->ContainerView<std::ranges::views::all_t<Range>>;
+
+
+
+
 
 inline void ContainerView_CustomView()
 {
@@ -51,4 +54,37 @@ inline void ContainerView_CustomView()
 		std::printf("%d ", elem);
 	}
 	puts("\n");
+
+	std::string myStr = "Only for test purposes";
+
+	auto myContainer2 = ContainerView(myStr);
+
+	for (auto c : myContainer2)
+	{
+		fmt::print("{} ", c);
+	}
+	puts("\n");
+
+	for(auto c: std::views::reverse(ContainerView(myStr)))
+	{
+		fmt::print("{} ", c);
+	}
+	puts("\n");
+
+	for (auto c : ContainerView(myStr) |std::views::split(' '))
+	{
+		fmt::print("{} ", c);
+	}
+	puts("\n");
+
+	auto print = [](auto const& view) {
+		for (std::cout << "{ "; const auto element : view)
+			std::cout << element << ' ';
+		std::cout << "} ";
+	};
+
+	// example for cppreference ; print function print each splitted around {}; whereas the previos character prints each character in each splitted case 
+	constexpr std::string_view hello{ "Hello C++ 20 !" };
+	std::cout << "\n" "substrings: ";
+	std::ranges::for_each(hello | std::ranges::views::split(' '), print);
 }
