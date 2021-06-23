@@ -32,5 +32,8 @@
     <ClInclude Include="src\RangesContainerView.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RangesFilterPythonStyle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

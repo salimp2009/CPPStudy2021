@@ -25,9 +25,6 @@ template<typename Range>
 ContainerView(Range&& range)->ContainerView<std::ranges::views::all_t<Range>>;
 
 
-
-
-
 inline void ContainerView_CustomView()
 {
 	std::printf("\n---ContainerView_CustomView---\n");

@@ -2,6 +2,7 @@
 
 #include "RangesExamples01.hpp"
 #include "RangesContainerView.hpp"
+#include "RangesFilterPythonStyle.hpp"
 
 
 auto main()->int
@@ -14,4 +15,5 @@ auto main()->int
 	ViewsIota_FunctCompose();
 	ViewsIota_PrimeNumbers();
 	ContainerView_CustomView();
+	FilterRanges_PythonStyle();
 }

@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="src\RangesContainerView.hpp" />
     <ClInclude Include="src\RangesExamples01.hpp" />
+    <ClInclude Include="src\RangesFilterPythonStyle.hpp" />
     <ClInclude Include="src\RangesPCH.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
