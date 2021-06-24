@@ -16,4 +16,5 @@ auto main()->int
 	ViewsIota_PrimeNumbers();
 	ContainerView_CustomView();
 	FilterRanges_PythonStyle();
+	TransforMapRanges_PythonStyle();
 }

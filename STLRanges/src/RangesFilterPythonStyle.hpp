@@ -2,7 +2,7 @@
 #include "RangesPCH.hpp"
 
 template<typename Func, std::ranges::input_range Seq>
-auto filter(Func func, Seq seq)
+inline constexpr auto filter(Func func, const Seq& seq)
 {
 	using value_type = typename Seq::value_type;
 
@@ -17,25 +17,21 @@ auto filter(Func func, Seq seq)
 	return result;
 }
 
-inline void FilterRanges_PythonStyle()
+void FilterRanges_PythonStyle();
+
+template<typename Func, typename Seq>
+inline constexpr auto map(Func func, const Seq& seq)
 {
-	std::printf("\n---FilterRanges_PythonStyle---\n");
+	using value_type = typename Seq::value_type;
+	using return_type = decltype(func(std::declval<value_type>()));
 
-	std::vector<int> myInts(50);
-	std::iota(myInts.begin(), myInts.end(), 1);
+	std::vector<return_type> result{};
 
-	auto result = filter([](auto elem) { return elem % 3 == 0; }, myInts);
-	for (auto elem : result)
+	for (auto i : seq | std::views::transform(func))
 	{
-		fmt::print("{} ", elem);
+		result.push_back(i);
 	}
-	puts("\n");
-
-	std::vector<std::string> myStrings = { "Only", "for", "testing", "stuff" };
-
-	auto result2 = filter([](std::string_view elem) {return std::isupper(elem[0]); }, myStrings);
-
-	fmt::print("{}",fmt::join(result2, " "));
-	puts("\n");
-
+	return result;
 }
+
+void TransforMapRanges_PythonStyle();
