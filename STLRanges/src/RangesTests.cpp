@@ -17,4 +17,5 @@ auto main()->int
 	ContainerView_CustomView();
 	FilterRanges_PythonStyle();
 	TransforMapRanges_PythonStyle();
+	MapFilterRanges_PythonStyle();
 }

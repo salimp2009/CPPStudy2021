@@ -2,7 +2,6 @@
 
 export module TestModule;
 
-
 int mymoduleVariable = 500;
 
 export int MyModuleFunc(int n)
