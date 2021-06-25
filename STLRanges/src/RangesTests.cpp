@@ -19,5 +19,6 @@ auto main()->int
 	FilterRanges_PythonStyle();
 	TransforMapRanges_PythonStyle();
 	MapFilterRanges_PythonStyle();
+	DynamicExtent_Span();
 	StaticDynamicExtent_Span();
 }
