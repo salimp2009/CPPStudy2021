@@ -60,32 +60,24 @@ void MapFilterRanges_PythonStyle()
 	std::printf("\n---MapFilterRanges_PythonStyle---\n");
 
 	std::vector myInts{ 1,2,3,4,5,6,7,8,9,10 };
-
 	auto res = MapFilter([](auto elem) {return elem * elem; }, myInts, [](auto elem) { return elem % 2 == 1; });
-
 	for (auto i : res)
 	{
 		fmt::print("{} ", i);
 	}
 	puts("\n");
 
-
 	std::vector<std::string> myStrings = { "Only", "For", "testing", "purposes" };
-
 	auto res2 = MapFilter([](const std::string& s) {return std::make_pair(s.size(), s); }, myStrings);
-
 	for (auto i : res2)
 	{
 		fmt::print("size: {}, text: {}\n", i.first, i.second);
 	}
-	puts("\n");
-	
+	puts(" ");
+
 	res2 = MapFilter([](const std::string& s) {return std::make_pair(s.size(), s); }, myStrings, [](auto&& elem) {return std::isupper(elem[0]); });
-
 	for (auto i : res2)
 	{
 		fmt::print("size: {}, text: {}\n", i.first, i.second);
 	}
-	puts("\n");
-
 }

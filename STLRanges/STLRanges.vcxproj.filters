@@ -38,5 +38,8 @@
     <ClInclude Include="src\RangesFilterPythonStyle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\STLSpan\SpanStaticDynamic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "RangesExamples01.hpp"
 #include "RangesContainerView.hpp"
 #include "RangesFilterPythonStyle.hpp"
+#include "STLSpan/SpanStaticDynamic.hpp"
 
 
 auto main()->int
@@ -18,4 +19,5 @@ auto main()->int
 	FilterRanges_PythonStyle();
 	TransforMapRanges_PythonStyle();
 	MapFilterRanges_PythonStyle();
+	StaticDynamicExtent_Span();
 }

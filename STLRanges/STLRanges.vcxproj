@@ -104,6 +104,7 @@
     <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesFilterPythonStyle.hpp" />
     <ClInclude Include="src\RangesPCH.hpp" />
+    <ClInclude Include="src\STLSpan\SpanStaticDynamic.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
