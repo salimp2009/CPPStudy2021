@@ -58,7 +58,7 @@ inline void StaticDynamicExtent_Span()
 inline void spanTransform_ModifyElem()
 {
 	std::printf("\n---spanTransform_ModifyElem---\n");
-	auto printCont = [](std::span<int> container)
+	auto printCont = [](std::span<int> container) 
 	{
 		fmt::print("container size : {}\n", container.size());
 		fmt::print("{}\n", fmt::join(container, ", "));
@@ -69,6 +69,7 @@ inline void spanTransform_ModifyElem()
 	std::span span1{ myVec1 };
 	std::span span2{ span1.subspan(2 ,span1.size()-4) };
 	printCont(span2);
+
 
 	// changes the original vectors element thru subspan span2; only the elements subspan refers are changed in the original container
 	std::ranges::transform(span2, span2.begin(), [](auto&& elem) { return elem * elem; });
@@ -84,4 +85,32 @@ inline void spanTransform_ModifyElem()
 		fmt::print("{} ", elem);
 	}
 	puts(" ");
+}
+
+inline void SpanMemberFunctions()
+{
+	std::printf("\n---SpanMemberFunctions--\n");
+	auto printCont = [](std::span<int> container)
+	{
+		fmt::print("container size : {}\n", container.size());
+		fmt::print("{}\n", fmt::join(container, ", "));
+	};
+	std::vector<int>myVec(20);
+	std::iota(myVec.begin(), myVec.end(), 0);
+	printCont(myVec);
+
+	std::span mySpan{ myVec };
+	auto length = mySpan.size();
+
+	std::size_t increment = 5;
+
+	for (std::size_t first = 0; first < length-increment ; first += increment)
+	{
+		for (auto elem : mySpan.subspan(first, increment))
+		{
+			fmt::print("{} ", elem);
+		}
+		std::putchar('\n');
+	}
+	
 }

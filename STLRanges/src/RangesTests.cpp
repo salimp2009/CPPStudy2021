@@ -18,8 +18,9 @@ auto main()->int
 	//ContainerView_CustomView();
 	//FilterRanges_PythonStyle();
 	//TransforMapRanges_PythonStyle();
-	MapFilterRanges_PythonStyle();
-	DynamicExtent_Span();
-	StaticDynamicExtent_Span();
-	spanTransform_ModifyElem();
+	//MapFilterRanges_PythonStyle();
+	//DynamicExtent_Span();
+	//StaticDynamicExtent_Span();
+	//spanTransform_ModifyElem();
+	SpanMemberFunctions();
 }
