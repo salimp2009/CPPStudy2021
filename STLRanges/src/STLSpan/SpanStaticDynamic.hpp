@@ -47,4 +47,41 @@ inline void StaticDynamicExtent_Span()
 	fmt::print("size of static span : {}\n", sizeof(staticSpan));
 	fmt::print("size of pointer span : {}\n", sizeof(pointerSpan));
 
+	auto spansEqual = std::equal(staticSpan.begin(), staticSpan.end(), pointerSpan.begin(), pointerSpan.end());
+	fmt::print("spansEqual: {}\n", spansEqual);
+
+	std::string myString1 = { "heeeeeee\n" };
+	std::span stringSpan{ myString1.data(),  myString1.data()+1 };
+}
+
+
+inline void spanTransform_ModifyElem()
+{
+	std::printf("\n---spanTransform_ModifyElem---\n");
+	auto printCont = [](std::span<int> container)
+	{
+		fmt::print("container size : {}\n", container.size());
+		fmt::print("{}\n", fmt::join(container, ", "));
+	};
+
+	std::vector myVec1 = { 1,2,3,4,5,6,7,8,9,10 };
+
+	std::span span1{ myVec1 };
+	std::span span2{ span1.subspan(2 ,span1.size()-4) };
+	printCont(span2);
+
+	// changes the original vectors element thru subspan span2; only the elements subspan refers are changed in the original container
+	std::ranges::transform(span2, span2.begin(), [](auto&& elem) { return elem * elem; });
+	
+	// ranges::transform applied to func to all elements but return a range, view ; does not change the original container
+	auto res = span2 | std::views::transform([](auto&& elem) { return elem * elem; });
+	
+	printCont(myVec1);
+	printCont(span1);
+	printCont(span2);
+	for (auto elem : res)
+	{
+		fmt::print("{} ", elem);
+	}
+	puts(" ");
 }
