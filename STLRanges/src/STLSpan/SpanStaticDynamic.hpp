@@ -112,5 +112,61 @@ inline void SpanMemberFunctions()
 		}
 		std::putchar('\n');
 	}
+}
+
+inline void ConstRange_ModifiableObjects()
+{
+	std::printf("\n---ConstRange_ModifiableObjects--\n");
+
+	auto printCont = [](std::span<int> container)
+	{
+		fmt::print("container size : {}\n", container.size());
+		fmt::print("{}\n", fmt::join(container, ", "));
+	};
+
+	auto printConstCont = [](std::span<const int> container)
+	{
+		fmt::print("container size : {}\n", container.size());
+		fmt::print("{}\n", fmt::join(container, ", "));
+	};
+
+	std::vector<int> origVec1{ 1,2,3,4,5,6 };
+
+	// variable range
+	std::vector dynamicRange = origVec1;
+	// although the the vector is changed original source is still same 
+	// but if you std::span then any change changes the original as well
+	dynamicRange[2] = 55;
+	printCont(dynamicRange);
+
+	//constant range of constant elements;
+	const std::vector constRange = origVec1;
+	//constRange[2] = 3;    // will not compile
+
+	// const range of constant elements
+	std::span<const int> constSpan{ origVec1 };
+	//constSpan[2] = 33;   // will not compile!!
+	printConstCont(constSpan);
+
+	// span can be assigned to another constant range
+	constSpan = dynamicRange;
+	printConstCont(constSpan);
+
+	// constant range with modifyable elements
+	std::span<int> dynamicSpan{ origVec1 };
+	dynamicSpan[2] = 55;
+	printConstCont(origVec1);
+	printCont(origVec1);
+	printConstCont(dynamicSpan);
+
+	// if the original vector adds an element the iterators will be changed therefore
+	// previously defined std::span will refer to previous iterator therefore it will be undefined behaviour
+	origVec1.push_back(255);
+	printCont(origVec1);
+
+	// iterators are changed but dynamicSpan refers to old iterator so Undefined Behaviour !!!
+	//printCont(dynamicSpan);
 	
+	dynamicSpan = origVec1;
+	printCont(dynamicSpan);
 }

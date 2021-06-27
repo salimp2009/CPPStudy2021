@@ -23,4 +23,5 @@ auto main()->int
 	//StaticDynamicExtent_Span();
 	//spanTransform_ModifyElem();
 	SpanMemberFunctions();
+	ConstRange_ModifiableObjects();
 }

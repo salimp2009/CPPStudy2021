@@ -43,7 +43,7 @@ concept LargeBuffer = not SmallBuffer<T> && ByteLikeType<value_type_t<T>>;
 
 using AckType = std::array<char, 16>;
 
-/*TODO: Check if this is OK to use and not causing lifetime issues!*/
+/*TODO: Check if this is OK to use!*/
 //using AckType = std::span<char, 16>;
 
 template<typename T>
