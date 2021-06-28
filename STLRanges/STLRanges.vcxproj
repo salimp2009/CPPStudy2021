@@ -100,6 +100,7 @@
     <ClCompile Include="src\RangesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp" />
     <ClInclude Include="src\RangesContainerView.hpp" />
     <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesFilterPythonStyle.hpp" />

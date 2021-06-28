@@ -4,11 +4,11 @@
 #include "RangesContainerView.hpp"
 #include "RangesFilterPythonStyle.hpp"
 #include "STLSpan/SpanStaticDynamic.hpp"
+#include "ContainerImprovements/ContImprovements.hpp"
 
 
 auto main()->int
 {
-
 	//RangeExample01();
 	//RangeProjection();
 	//ViewsKeysValue_Test();
@@ -24,4 +24,7 @@ auto main()->int
 	//spanTransform_ModifyElem();
 	SpanMemberFunctions();
 	ConstRange_ModifiableObjects();
+	ConstExpr_Vector();
+	makeArray();
+
 }

@@ -80,8 +80,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
-      <EnableModules>
-      </EnableModules>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -98,8 +97,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
-      <EnableModules>
-      </EnableModules>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,8 +116,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>../vendor/spdlog/include;../vendor; src;</AdditionalIncludeDirectories>
-      <EnableModules>
-      </EnableModules>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
