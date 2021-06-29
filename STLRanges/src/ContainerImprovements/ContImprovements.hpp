@@ -44,5 +44,35 @@ inline void makeArray()
 	
 	fmt::print("to_array<pair>: {}, typeid: {}, size: {}\n\n", arr4, typeid(arr4[0]).name(), arr4.size());
 
+}
 
+inline void makeShared()
+{
+	std::printf("\n---makeShared---\n");
+
+	// before c++20 ; this would be ; std::shared_ptr<double[]> dblPtr(new double[1024])
+	// std::make_shared do not allow custom deleters and 
+	// if the user defined class uses class specific ::new overload then make_shared does not use it; prefer the old way in that case
+	// make_shared will prevent leaks in case there is an exepception thrown while it is not fully constructed
+	std::shared_ptr<double[]> dblPtr = std::make_shared<double[]>(1024);
+	std::shared_ptr<double[]> dblPtr2 = std::make_shared<double[]>(100, 20.0); // 100 elements with value zero
+
+	fmt::print("dblPtr[0]: {}\n", dblPtr[0]);
+	fmt::print("dblPtr2[0]: {}\n", dblPtr2[0]);
+
+}
+
+inline void eraseif()
+{
+	std::printf("\n--- eraseif---\n");
+	//works for STL containers and all container types
+	std::vector<int> vec1{ 1,2,3,4,5,6,7,8,9,10 };
+	auto noOfDeletedElems = std::erase_if(vec1, [](auto&& elem) { return elem % 2 == 0; });
+	fmt::print("revised vec1: {}, number of deleted elems: {}\n", vec1, noOfDeletedElems);
+
+	std::string testStrng = "this has a big E";
+	noOfDeletedElems = std::erase(testStrng, 'E');
+	fmt::print("revised string: {}, number of deleted elems: {}\n", testStrng, noOfDeletedElems);
+
+	
 }

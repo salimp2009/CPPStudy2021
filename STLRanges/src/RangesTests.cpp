@@ -26,5 +26,7 @@ auto main()->int
 	ConstRange_ModifiableObjects();
 	ConstExpr_Vector();
 	makeArray();
+	makeShared();
+	eraseif();
 
 }
