@@ -28,5 +28,6 @@ auto main()->int
 	makeArray();
 	makeShared();
 	eraseif();
+	checkwithContains();
 
 }

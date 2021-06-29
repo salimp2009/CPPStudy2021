@@ -65,7 +65,7 @@ inline void makeShared()
 inline void eraseif()
 {
 	std::printf("\n--- eraseif---\n");
-	//works for STL containers and all container types
+	//works for STL containers and all STL like container types(not checked!)
 	std::vector<int> vec1{ 1,2,3,4,5,6,7,8,9,10 };
 	auto noOfDeletedElems = std::erase_if(vec1, [](auto&& elem) { return elem % 2 == 0; });
 	fmt::print("revised vec1: {}, number of deleted elems: {}\n", vec1, noOfDeletedElems);
@@ -74,5 +74,22 @@ inline void eraseif()
 	noOfDeletedElems = std::erase(testStrng, 'E');
 	fmt::print("revised string: {}, number of deleted elems: {}\n", testStrng, noOfDeletedElems);
 
-	
+	std::deque deq{ 1,2,3,4,5,6,7,8,9 };
+	noOfDeletedElems = std::erase_if(deq, [](auto elem) {return elem % 2 == 1; });
+	fmt::print("revised deque: {}, number of deleted elems: {}\n", deq, noOfDeletedElems);
+
+	std::list lst1{ 11,22,33,44,55,77,65 };
+	noOfDeletedElems = std::erase(lst1, 22);
+	fmt::print("revised list: {}, number of deleted elems: {}\n", lst1, noOfDeletedElems);
+
 }
+
+inline void checkwithContains()
+{
+	std::printf("\n--- checkwithContains---\n");
+
+
+
+
+}
+

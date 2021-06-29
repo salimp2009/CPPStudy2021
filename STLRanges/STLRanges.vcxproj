@@ -100,7 +100,10 @@
     <ClCompile Include="src\RangesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp" />
+    <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsHeaderUnit</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>
+    </ClInclude>
     <ClInclude Include="src\RangesContainerView.hpp" />
     <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesFilterPythonStyle.hpp" />
