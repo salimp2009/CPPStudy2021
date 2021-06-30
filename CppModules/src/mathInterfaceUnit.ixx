@@ -5,9 +5,11 @@ module;   // global module fragment; optional
   */
 #include <vector>
 
+
 export module math;
 
 /* import modules can be inserted here*/
+
 
 export namespace math  // anything in the namespace will be exported!
 {

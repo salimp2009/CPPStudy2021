@@ -100,6 +100,7 @@
     <ClCompile Include="src\RangesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CompilerModule.hpp" />
     <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsHeaderUnit</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>

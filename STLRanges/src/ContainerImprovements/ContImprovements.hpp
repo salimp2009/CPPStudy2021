@@ -88,8 +88,26 @@ inline void checkwithContains()
 {
 	std::printf("\n--- checkwithContains---\n");
 
+	auto checkElements = []<class Container, typename... T>(const Container& container, T&&... values)
+	{
+		return (container.contains(values) && ...);
+	};
 
+	std::set<int> mySet{ 1,2,3,4,5,6,7,8,9,10 };
 
+	auto result = checkElements(mySet, 1);
+	fmt::print("contains result: {}\n", result);
+	
+	// contains check if the key exits ; does not look for the value for the unordered / ordered maps, sets...
+	std::unordered_map<int, std::string> myMap = { {49, "Salim"}, {48, "Didem"}, {16, "Demir"} };
+	result = checkElements(myMap, 49);
+	fmt::print("contains result: {}\n", result);
+
+	result = checkElements(myMap, 57);
+	fmt::print("contains result: {}\n", result);
+
+	result = checkElements(myMap, 49, 48);
+	fmt::print("contains result: {}\n", result);
 
 }
 
