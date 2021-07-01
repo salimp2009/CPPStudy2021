@@ -135,5 +135,23 @@ inline void stringPrefixSuffixCheck()
 	endsWith(str1, 'd');
 }
 
+inline void safeIntegerComparision()
+{
+	std::printf("\n--stringPrefixSuffixCheck--\n");
+
+	int x = -3;
+	unsigned int y = 7;
+
+	// give result as false since x is converted unsigned int and it is way bigger than 7 
+	// since there is 1 at the left most of the binary to express negative number when converted to unsigned the number becomes 2^32
+	//fmt::print("-3<7: {} ", x,y);  
+	fmt::print("-3<7: {}\n", std::cmp_less(x,y));
+	fmt::print("-3<=7: {}\n", std::cmp_less_equal(x,y));
+	fmt::print("-3!=7: {}\n", std::cmp_not_equal(x,y));
+	fmt::print("-3==7: {}\n", std::cmp_equal(x,y));
+	fmt::print("-3>7: {}\n", std::cmp_greater(x,y));
+	fmt::print("-3>=7: {}\n", std::cmp_greater_equal(x,y));
+	
+}
 
 

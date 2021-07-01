@@ -22,13 +22,14 @@ auto main()->int
 	//DynamicExtent_Span();
 	//StaticDynamicExtent_Span();
 	//spanTransform_ModifyElem();
-	SpanMemberFunctions();
-	ConstRange_ModifiableObjects();
-	ConstExpr_Vector();
-	makeArray();
-	makeShared();
+	//SpanMemberFunctions();
+	//ConstRange_ModifiableObjects();
+	//ConstExpr_Vector();
+	//makeArray();
+	//makeShared();
 	eraseif();
 	checkwithContains();
 	stringPrefixSuffixCheck();
+	safeIntegerComparision();
 
 }
