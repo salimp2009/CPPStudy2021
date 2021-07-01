@@ -2,7 +2,7 @@
 
 export module llvmmodule;
 
-
+import std.core;
 
 export void llvmPrint()
 {

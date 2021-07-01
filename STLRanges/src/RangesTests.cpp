@@ -29,5 +29,6 @@ auto main()->int
 	makeShared();
 	eraseif();
 	checkwithContains();
+	stringPrefixSuffixCheck();
 
 }

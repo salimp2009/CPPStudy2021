@@ -108,6 +108,32 @@ inline void checkwithContains()
 
 	result = checkElements(myMap, 49, 48);
 	fmt::print("contains result: {}\n", result);
-
 }
+
+inline void stringPrefixSuffixCheck()
+{
+	std::printf("\n--stringPrefixSuffixCheck--\n");
+
+	auto startsWith = [](std::string_view str, auto prefix)
+	{
+		fmt::print("{} starts_with [{}]: {}\n",str, prefix, str.starts_with(prefix));
+	};
+
+	auto endsWith = [](std::string_view str, auto prefix)
+	{
+		fmt::print("{} ends_with [{}]: {}\n", str, prefix, str.ends_with(prefix));
+	};
+
+	std::string str1 = "HelloWorld";
+	startsWith(str1, std::basic_string_view("Hello"));
+	startsWith(str1, std::basic_string_view("World"));
+	startsWith(str1, 'H');
+	
+	endsWith(str1, std::basic_string_view("Hello"));
+	endsWith(str1, std::basic_string_view("World"));
+	endsWith(str1, 'H');
+	endsWith(str1, 'd');
+}
+
+
 
