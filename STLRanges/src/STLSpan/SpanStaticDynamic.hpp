@@ -87,6 +87,7 @@ inline void spanTransform_ModifyElem()
 	puts(" ");
 }
 
+
 inline void SpanMemberFunctions()
 {
 	std::printf("\n---SpanMemberFunctions--\n");
@@ -112,6 +113,7 @@ inline void SpanMemberFunctions()
 		}
 		std::putchar('\n');
 	}
+	
 }
 
 inline void ConstRange_ModifiableObjects()

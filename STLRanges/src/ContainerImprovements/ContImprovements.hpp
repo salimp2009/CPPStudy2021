@@ -152,6 +152,26 @@ inline void safeIntegerComparision()
 	fmt::print("-3>7: {}\n", std::cmp_greater(x,y));
 	fmt::print("-3>=7: {}\n", std::cmp_greater_equal(x,y));
 	
+
+	double xd = -3.5;
+	unsigned int y2 = 7;
+	// y2 is converted to floating point / double to compare and then converted to int to be represented as "bool"
+	auto result = xd < y2;
+	fmt::print("-3.5<7 : {}\n", result);
+
+	// this will not work since std::cmp_less expectes integer
+	//result = std::cmp_less(xd, y2);
 }
+
+
+
+inline void mathConstants()
+{
+	std::printf("\n--mathConstants--\n");
+	
+
+}
+
+
 
 

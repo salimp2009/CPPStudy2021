@@ -22,7 +22,7 @@ auto main()->int
 	//DynamicExtent_Span();
 	//StaticDynamicExtent_Span();
 	//spanTransform_ModifyElem();
-	//SpanMemberFunctions();
+	SpanMemberFunctions();
 	//ConstRange_ModifiableObjects();
 	//ConstExpr_Vector();
 	//makeArray();
@@ -31,5 +31,6 @@ auto main()->int
 	checkwithContains();
 	stringPrefixSuffixCheck();
 	safeIntegerComparision();
+	mathConstants();
 
 }
