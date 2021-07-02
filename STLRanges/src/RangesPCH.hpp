@@ -18,6 +18,7 @@
 
 #include <numeric>
 #include <variant>
+#include <numbers>
 
 #if __has_include(<span>)
 #include <span>

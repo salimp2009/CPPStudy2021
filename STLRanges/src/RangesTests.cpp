@@ -32,5 +32,5 @@ auto main()->int
 	stringPrefixSuffixCheck();
 	safeIntegerComparision();
 	mathConstants();
-
+	midPointLerp();
 }

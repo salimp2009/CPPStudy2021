@@ -164,13 +164,44 @@ inline void safeIntegerComparision()
 }
 
 
-
 inline void mathConstants()
 {
 	std::printf("\n--mathConstants--\n");
 	
+	// the math constant are constexpr constant values; see https://en.cppreference.com/w/cpp/numeric/constants
+	// "STL specializes mathematical constant variable templates for all floating-point types (i.e. float, double and long double)"
+
+	fmt::print("math const  e_v<double>  : {}\n", std::numbers::e_v<double>);
+	fmt::print("math const e_v<float> : {}\n", std::numbers::e_v<float>);
+	// e=e_v<double>
+	fmt::print("math const e : {}\n", std::numbers::e);
+	
+	fmt::print("math const log2e_v<double> : {}\n", std::numbers::log2e_v<double>);
+	fmt::print("math const log2e_v<float> : {}\n", std::numbers::log2e_v<float>);
+	fmt::print("math const log2e : {}\n", std::numbers::log2e);
 
 }
+
+inline void midPointLerp()
+{
+	std::printf("\n--midPointLerp--\n");
+
+	fmt::print("std::midpoint(10,20): {}\n", std::midpoint(10, 20));
+	fmt::print("std::midpoint(15.23, 200.25): {}\n", std::midpoint(15.23, 200.25));
+
+	std::uint32_t a = std::numeric_limits<std::uint32_t>::max();
+	std::uint32_t b = std::numeric_limits<std::uint32_t>::max() - 2;
+
+	fmt::print("a: {0}, b: {1}\n", a, b);
+	fmt::print("(a + b)/2 (expected overflow): {}\n", (a + b) / 2);
+	fmt::print("std::midpoint(a,b) (Not expected overflow): {}\n", std::midpoint(a, b));
+
+	for (auto v : { 0.0, 0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0 })
+	{
+		fmt::print("lerp(10, 20, {0}) : {1}\n", v, std::lerp(10, 20, v));
+	}
+}
+
 
 
 
