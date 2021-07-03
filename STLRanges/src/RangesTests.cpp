@@ -33,4 +33,6 @@ auto main()->int
 	safeIntegerComparision();
 	mathConstants();
 	midPointLerp();
+	getEndian();
+	bitOperations();
 }

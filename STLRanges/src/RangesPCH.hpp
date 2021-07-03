@@ -15,10 +15,10 @@
 #include <exception>
 #include <ranges>
 
-
 #include <numeric>
 #include <variant>
 #include <numbers>
+#include <bitset>
 
 #if __has_include(<span>)
 #include <span>
@@ -58,12 +58,10 @@
 #include <barrier>
 #endif
 
-
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/fmt/bundled/ranges.h"
 #include "spdlog/fmt/bundled/color.h"
-
 
 #include <string>
 #include <vector>
@@ -72,6 +70,3 @@
 #include <map>
 #include <set>
 #include <deque>
-
-
-

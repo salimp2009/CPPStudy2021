@@ -152,7 +152,6 @@ inline void safeIntegerComparision()
 	fmt::print("-3>7: {}\n", std::cmp_greater(x,y));
 	fmt::print("-3>=7: {}\n", std::cmp_greater_equal(x,y));
 	
-
 	double xd = -3.5;
 	unsigned int y2 = 7;
 	// y2 is converted to floating point / double to compare and then converted to int to be represented as "bool"
@@ -179,7 +178,6 @@ inline void mathConstants()
 	fmt::print("math const log2e_v<double> : {}\n", std::numbers::log2e_v<double>);
 	fmt::print("math const log2e_v<float> : {}\n", std::numbers::log2e_v<float>);
 	fmt::print("math const log2e : {}\n", std::numbers::log2e);
-
 }
 
 inline void midPointLerp()
@@ -201,6 +199,36 @@ inline void midPointLerp()
 		fmt::print("lerp(10, 20, {0}) : {1}\n", v, std::lerp(10, 20, v));
 	}
 }
+
+inline void getEndian()
+{
+	std::printf("\n--getEndian-\n");
+
+	if constexpr (std::endian::native == std::endian::big)
+	{
+		puts("std::endian::native == big endian");
+	}
+	else if constexpr (std::endian::native == std::endian::little)
+	{
+		puts("std::endian::native == litte endian");
+	}
+}
+
+inline void bitOperations()
+{
+	std::printf("\n--bitOperations-\n");
+
+	auto result = std::has_single_bit(5u);
+	fmt::print("std::has_single_bit(5u): {}\n", result);
+
+	const std::uint8_t testValue = 0b0011'0010;
+	fmt::print("test value: {}\n", std::bitset<8>(testValue));
+	fmt::print("std::has_single_bit: {}\n", std::has_single_bit(testValue));
+	fmt::print("std::std::bit_ceil: {}\n", std::bitset<8>(std::bit_ceil(testValue)));
+	fmt::print("std::bit_floor: {}\n", std::bitset<8>(std::bit_floor(testValue)));
+
+}
+
 
 
 
