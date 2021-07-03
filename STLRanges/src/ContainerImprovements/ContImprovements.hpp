@@ -222,10 +222,29 @@ inline void bitOperations()
 	fmt::print("std::has_single_bit(5u): {}\n", result);
 
 	const std::uint8_t testValue = 0b0011'0010;
-	fmt::print("test value: {}\n", std::bitset<8>(testValue));
+	fmt::print("test value: binary:{}, dec: {}\n", std::bitset<8>(testValue), testValue);
 	fmt::print("std::has_single_bit: {}\n", std::has_single_bit(testValue));
 	fmt::print("std::std::bit_ceil: {}\n", std::bitset<8>(std::bit_ceil(testValue)));
 	fmt::print("std::bit_floor: {}\n", std::bitset<8>(std::bit_floor(testValue)));
+
+	//the smallest number of bits needed to represent the given value
+	fmt::print("bit_width(testValue): {}\n", std::bit_width(testValue));
+	fmt::print("bit_width(5u): {}\n", std::bit_width(5u));
+	fmt::print("bit_width(testValue): {}\n", std::rotl(testValue,0));
+	fmt::print("std::rotl(testValue,1): binary: {}, dec: {}\n", std::bitset<8>(std::rotl(testValue, 1)), std::rotl(testValue, 1));
+	fmt::print("std::rotl(testValue,4): binary: {}, dec: {}\n", std::bitset<8>(std::rotl(testValue,4)), std::rotl(testValue, 4));
+	fmt::print("std::rotl(testValue,3): binary: {}, dec: {}\n", std::bitset<8>(std::rotl(testValue,3)), std::rotl(testValue, 3));
+	fmt::print("std::rotl(testValue,5): binary: {}, dec: {}\n", std::bitset<8>(std::rotl(testValue,5)), std::rotl(testValue, 5));
+
+	//the number of consecutive 1 bits, starting from the most significant bit
+	fmt::print("std::countl_one(testValue): {}\n", std::countl_one(testValue));
+	//the number of consecutive 0 bits, starting from the most significant bit
+	fmt::print("std::countl_zero(testValue: {}\n", std::countl_zero(testValue));
+	
+	fmt::print("std::countr_one(testValue): {}\n", std::countr_one(testValue));
+	fmt::print("std::countr_one(testValue): {}\n", std::countr_one(testValue));
+
+
 
 }
 
