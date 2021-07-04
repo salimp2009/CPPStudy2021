@@ -19,5 +19,13 @@ inline void timeofDay()
 
 	fmt::print("std::chrono::hh_mm_ss(45700.5s) {}\n", std::chrono::hh_mm_ss(45700.5s));
 
+	fmt::print("std::chrono::is_am(5h): {}\n", std::chrono::is_am(5h));
+	fmt::print("std::chrono::is_pm(15h): {}\n", std::chrono::is_pm(15h));
+
+	fmt::print("std::chrono::make12(5h): {}\n", std::chrono::make12(5h));
+	fmt::print("std::chrono::make12(0h): {}\n", std::chrono::make12(0h));
+	fmt::print("std::chrono::make24(5h, true): {}\n", std::chrono::make24(5h, true));
+	fmt::print("std::chrono::make24(5h, true): {}, pm?: {}\n", std::chrono::make24(5h, true), std::chrono::is_pm(std::chrono::make24(5h, true)));
+
 }
 
