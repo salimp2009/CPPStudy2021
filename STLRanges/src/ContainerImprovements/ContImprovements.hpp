@@ -241,10 +241,8 @@ inline void bitOperations()
 	//the number of consecutive 0 bits, starting from the most significant bit
 	fmt::print("std::countl_zero(testValue: {}\n", std::countl_zero(testValue));
 	
+		fmt::print("std::countr_one(testValue): {}\n", std::countr_one(testValue));
 	fmt::print("std::countr_one(testValue): {}\n", std::countr_one(testValue));
-	fmt::print("std::countr_one(testValue): {}\n", std::countr_one(testValue));
-
-
 
 }
 

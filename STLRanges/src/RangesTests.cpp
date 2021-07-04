@@ -5,6 +5,7 @@
 #include "RangesFilterPythonStyle.hpp"
 #include "STLSpan/SpanStaticDynamic.hpp"
 #include "ContainerImprovements/ContImprovements.hpp"
+#include "ChronoCalendarTimeZones/DatesTimeZoneExamples.hpp"
 
 
 auto main()->int
@@ -35,4 +36,5 @@ auto main()->int
 	midPointLerp();
 	getEndian();
 	bitOperations();
+	timeofDay();
 }

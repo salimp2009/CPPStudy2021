@@ -47,5 +47,8 @@
     <ClInclude Include="src\CompilerModule.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChronoCalendarTimeZones\DatesTimeZoneExamples.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
