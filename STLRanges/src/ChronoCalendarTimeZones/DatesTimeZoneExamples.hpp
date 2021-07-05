@@ -54,6 +54,25 @@ inline void calendarDates()
 	constexpr auto yearMonthDayLast = std::chrono::year{ 2010 } / std::chrono::March / std::chrono::last;
 	fmt::print("2010/March/LastDay: {}\n", yearMonthDayLast);
 
+	
+	auto yearMonthWeekday{ std::chrono::year{2021} / std::chrono::January / std::chrono::Wednesday[1]};
+	fmt::print("2021/January/Wednesday[1]: {}\n", std::chrono::year_month_day(yearMonthWeekday));
+
+	constexpr auto ym{ std::chrono::year(2021) / std::chrono::January };
+	constexpr auto wdi{ std::chrono::Wednesday[1] };
+	auto ymwdi{ ym / wdi };
+	auto index = ymwdi.index() + 1;
+	auto weekday = ymwdi.weekday() + std::chrono::days(1);
+	ymwdi = { ymwdi.year() / ymwdi.month() /weekday[index] };
+	fmt::print("2021/January/2ndThursday (14th): {}\n", std::chrono::year_month_day(ymwdi));
+
+	constexpr auto yearMonthWeekdayLast = std::chrono::year(2010) / std::chrono::March / std::chrono::Monday[std::chrono::last];
+	fmt::print("yearMonthWeekdayLast: {0}: {1}\n", yearMonthWeekdayLast, std::chrono::year_month_day(yearMonthDayLast));
+
+	// better to use namespace std::chrono!!
+	fmt::print("yearMonthWeekdayLast: {0}\n", std::chrono::year_month_weekday_last(2010y, std::chrono::month(std::chrono::March), std::chrono::weekday_last(std::chrono::Monday)));
+
+
 }
 
 
