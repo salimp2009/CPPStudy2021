@@ -26,6 +26,34 @@ inline void timeofDay()
 	fmt::print("std::chrono::make12(0h): {}\n", std::chrono::make12(0h));
 	fmt::print("std::chrono::make24(5h, true): {}\n", std::chrono::make24(5h, true));
 	fmt::print("std::chrono::make24(5h, true): {}, pm?: {}\n", std::chrono::make24(5h, true), std::chrono::is_pm(std::chrono::make24(5h, true)));
+}
+
+inline void calendarDates()
+{
+	std::printf("\n--- calendarDates---\n");
+	using namespace std::chrono_literals;
+
+	constexpr auto yearMonthDay = std::chrono::year_month_day(std::chrono::year{ 1920 }, std::chrono::month{ 12 }, std::chrono::day{ 15 });
+	fmt::print("std::chrono::year_month_day(1920, 12, 15): {}\n", yearMonthDay);
+
+	constexpr auto yearMonthDay2 = std::chrono::year_month_day(std::chrono::year{ 1920 }/std::chrono::month{ 12 }/std::chrono::day{ 15 });
+	fmt::print("std::chrono::year_month_day(1920/12/15): {}\n", yearMonthDay2);
+
+	constexpr auto yearMonthDay3 = std::chrono::year_month_day( 1920y/12/15);
+	fmt::print("std::chrono::year_month_day(1920/12/15): {}\n", yearMonthDay3);
+
+	constexpr auto yearMonthDay4 = std::chrono::year{1920} / 12 / 15;
+	fmt::print("std::chrono::year(1920)/12/15: {}\n", yearMonthDay4);
+
+	constexpr auto yearMonthDay5 = 1920y/12/15;
+	fmt::print("1920y/12/15: {}\n", yearMonthDay5);
+
+	constexpr auto yearMonthDay6 = 1920y / std::chrono::December / 15;
+	fmt::print("1920y/December/15: {}\n", yearMonthDay6);
+
+	constexpr auto yearMonthDayLast = std::chrono::year{ 2010 } / std::chrono::March / std::chrono::last;
+	fmt::print("2010/March/LastDay: {}\n", yearMonthDayLast);
 
 }
+
 
