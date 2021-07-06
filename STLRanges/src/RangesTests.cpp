@@ -38,4 +38,6 @@ auto main()->int
 	bitOperations();
 	timeofDay();
 	calendarDates();
+	calendarDates2();
+	systemDays();
 }

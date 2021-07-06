@@ -54,7 +54,6 @@ inline void calendarDates()
 	constexpr auto yearMonthDayLast = std::chrono::year{ 2010 } / std::chrono::March / std::chrono::last;
 	fmt::print("2010/March/LastDay: {}\n", yearMonthDayLast);
 
-	
 	auto yearMonthWeekday{ std::chrono::year{2021} / std::chrono::January / std::chrono::Wednesday[1]};
 	fmt::print("2021/January/Wednesday[1]: {}\n", std::chrono::year_month_day(yearMonthWeekday));
 
@@ -72,7 +71,37 @@ inline void calendarDates()
 	// better to use namespace std::chrono!!
 	fmt::print("yearMonthWeekdayLast: {0}\n", std::chrono::year_month_weekday_last(2010y, std::chrono::month(std::chrono::March), std::chrono::weekday_last(std::chrono::Monday)));
 
+}
+
+inline void calendarDates2()
+{
+	std::printf("\n--- calendarDates2---\n");
+	using namespace std::chrono_literals;
+
+	constexpr auto day1 = std::chrono::day(19);	
+	constexpr auto day2{ 12d };
+	fmt::print("day1: {0}, day2: {1}\n", day1, day2);
+
+	constexpr auto year1 = std::chrono::year{ 2021 };
+	fmt::print("year1: {0}\n", year1);
+	
+	constexpr auto month1 = std::chrono::March;
+	constexpr auto month2 = std::chrono::month{ 3 };
+	fmt::print("month1: {0}; month2: {1}\n", month1, month2);
+
+	constexpr auto weekday1 = std::chrono::weekday{ 2 };
+	constexpr auto weekday2 = std::chrono::Tuesday;
+	constexpr auto weekday_indexed3 = std::chrono::Tuesday[2];
+	fmt::print("weekday1: {0}; weekday2: {1}, weekday-indexed3: {2}\n", weekday1, weekday2, weekday_indexed3);
+	fmt::print("weekday_indexed3.weekday(): {0}, weekday_indexed3.index(): {1}\n", weekday_indexed3.weekday(), weekday_indexed3.index());
 
 }
+
+inline void systemDays()
+{
+	std::printf("\n--systemDays--\n");
+
+}
+
 
 
