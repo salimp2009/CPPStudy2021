@@ -39,5 +39,5 @@ auto main()->int
 	timeofDay();
 	calendarDates();
 	calendarDates2();
-	systemDays();
+	systemDaysExample();
 }

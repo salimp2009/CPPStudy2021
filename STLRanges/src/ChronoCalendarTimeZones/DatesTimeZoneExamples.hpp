@@ -97,9 +97,19 @@ inline void calendarDates2()
 
 }
 
-inline void systemDays()
+inline void systemDaysExample()
 {
 	std::printf("\n--systemDays--\n");
+	using namespace std::chrono_literals;
+	using namespace std::chrono;
+
+	constexpr auto yearMonthDayLast{ 2021y / March / std::chrono::last };
+	fmt::print("sys_days: {0}, yearMonthDayLast: {1}\n", std::chrono::sys_days(yearMonthDayLast), yearMonthDayLast);
+
+	constexpr auto leapDate{ 2012y / February / std::chrono::last };
+	fmt::print("sys_days: {0}, yearMonthDayLast: {1}\n", std::chrono::sys_days(leapDate), leapDate);
+
+	fmt::print("is {} a leap year : {}\n", std::chrono::sys_days(leapDate), leapDate.year().is_leap());
 
 }
 
