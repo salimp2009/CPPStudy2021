@@ -111,7 +111,37 @@ inline void systemDaysExample()
 
 	fmt::print("is {} a leap year : {}\n", std::chrono::sys_days(leapDate), leapDate.year().is_leap());
 
+	std::chrono::sys_days start = 2021y / 1 / 5;
+	fmt::print("start: {}\n", start);
+	
+	// NOTE: Dont use moths and years with time_points and system clock since months / years use
+	// an average duration of a month therefore the type end and start is not exactly the same end has some fractions
+	// It is better to use weeks or days
+	auto end = start + months(1);  // end= 2021-02-04 10:29:06
+	fmt::print("end: {}\n", end);
+
+	auto end2 = start + weeks(4);
+	fmt::print("end2: {}\n", end2); // end2= 2021-02-02
 }
+
+inline void checkValidDates()
+{
+	std::printf("\n--checkValidDates--\n");
+	using namespace std::chrono_literals;
+	using namespace std::chrono;
+
+	std::chrono::day day31{ 32 };
+	fmt::print("day31==32 ok ?: {}, {}\n", day31 , day31.ok());
+
+	std::chrono::month monthDec{ 12 };
+	std::chrono::month checkMonth = monthDec + std::chrono::months(1);
+	fmt::print("monthDec ok ?: {}, monthDec +1 ok?: {}\n", monthDec.ok(), checkMonth);
+
+	std::chrono::month month13{ 13 };
+	fmt::print("month13 ok ? : {}, {}\n", month13, month13.ok());
+
+}
+
 
 
 

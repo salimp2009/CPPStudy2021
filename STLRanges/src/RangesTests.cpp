@@ -40,4 +40,5 @@ auto main()->int
 	calendarDates();
 	calendarDates2();
 	systemDaysExample();
+	checkValidDates();
 }
