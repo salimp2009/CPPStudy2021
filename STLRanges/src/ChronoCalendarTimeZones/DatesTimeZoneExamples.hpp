@@ -140,6 +140,18 @@ inline void checkValidDates()
 	std::chrono::month month13{ 13 };
 	fmt::print("month13 ok ? : {}, {}\n", month13, month13.ok());
 
+	std::chrono::year year2010{ 2010};
+	std::chrono::year yearNeg32768 { -32768 };
+	// The class year represents a year in the proleptic Gregorian calendar. Its range is [-32767, 32767].
+	fmt::print("year 2010 ok ?: {}, year -32768 ok ? : {}\n", year2010, yearNeg32768.ok());
+
+	constexpr year leapYear2010{ 2010 };
+	constexpr year leapYear2012{ 2012 };
+	constexpr year leapYear2013{ 2013};
+	constexpr year leapYear2023{ 2023};
+
+	fmt::print("leapYear2010 ?: {}, leapYear2012 ?: {}, leapYear2013 ?: {}, leapYear2023 ?: {}\n", leapYear2010.is_leap(), leapYear2012.is_leap(), leapYear2013.is_leap(), leapYear2023.is_leap());
+
 }
 
 
