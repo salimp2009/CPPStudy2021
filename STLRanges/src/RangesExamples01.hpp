@@ -116,6 +116,7 @@ inline void ViewsKeys_FunctCompose()
 
 	auto firstLetterW = [](const std::string& name) { return name[0] == 'w'; };
 
+	// use views::filter at the beginning of the pipe for the performance reason otherwise views::keys will be called twice for elements not filtered out
 	for (const auto& name : std::views::keys(freqWord2) | std::views::filter(firstLetterW))
 	{
 		fmt::print("{} ", name);

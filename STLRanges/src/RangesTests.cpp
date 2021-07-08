@@ -6,6 +6,7 @@
 #include "STLSpan/SpanStaticDynamic.hpp"
 #include "ContainerImprovements/ContImprovements.hpp"
 #include "ChronoCalendarTimeZones/DatesTimeZoneExamples.hpp"
+#include "FilterViewPerformanceIssue.hpp"
 
 
 auto main()->int
@@ -20,6 +21,8 @@ auto main()->int
 	//FilterRanges_PythonStyle();
 	//TransforMapRanges_PythonStyle();
 	//MapFilterRanges_PythonStyle();
+	FilterView_LazyEvaluation();
+	FilterView_PerformaceIssue();
 	//DynamicExtent_Span();
 	//StaticDynamicExtent_Span();
 	//spanTransform_ModifyElem();
@@ -33,12 +36,13 @@ auto main()->int
 	//stringPrefixSuffixCheck();
 	//safeIntegerComparision();
 	//mathConstants();
-	midPointLerp();
-	getEndian();
-	bitOperations();
-	timeofDay();
-	calendarDates();
-	calendarDates2();
+	//midPointLerp();
+	//getEndian();
+	//bitOperations();
+	//timeofDay();
+	//calendarDates();
+	//calendarDates2();
 	systemDaysExample();
 	checkValidDates();
+	querryCalendarDates();
 }

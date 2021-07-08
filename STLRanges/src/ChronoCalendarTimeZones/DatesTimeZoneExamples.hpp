@@ -151,8 +151,14 @@ inline void checkValidDates()
 	constexpr year leapYear2023{ 2023};
 
 	fmt::print("leapYear2010 ?: {}, leapYear2012 ?: {}, leapYear2013 ?: {}, leapYear2023 ?: {}\n", leapYear2010.is_leap(), leapYear2012.is_leap(), leapYear2013.is_leap(), leapYear2023.is_leap());
+}
+
+inline void querryCalendarDates()
+{
+	std::printf("\n--querryCalendarDates--\n");
 
 }
+
 
 
 
