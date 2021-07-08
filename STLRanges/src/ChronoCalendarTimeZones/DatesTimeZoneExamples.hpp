@@ -157,6 +157,33 @@ inline void querryCalendarDates()
 {
 	std::printf("\n--querryCalendarDates--\n");
 
+	using namespace std::chrono_literals;
+	using namespace std::chrono;
+
+	auto birthDay = 1972y / std::chrono::month(03)/27d;
+
+	if (not birthDay.ok())
+	{
+		fmt::print("not a valid date: {}\n", birthDay);
+		std::exit(EXIT_FAILURE);
+	}
+
+	fmt::print("birthday: {}\n", birthDay);
+
+	auto birthdayWeekday = std::chrono::year_month_weekday{ birthDay };
+
+	fmt::print("weekday of birthday({0}) : {1}\n", birthDay, birthdayWeekday.weekday());
+
+	// std::chrono::floor<days> rounds the given system_clock::now to days;; it is a rounding function
+	auto currentDate= std::chrono::year_month_day(std::chrono::floor<days>(std::chrono::system_clock::now()));
+	auto currentYear = currentDate.year();
+
+	auto age = std::chrono::duration_cast<years>(currentDate.year()- birthDay.year()).count();
+
+	//this is the way in the book 
+	auto age2 = (int)currentDate.year() - (int)birthDay.year();
+
+	fmt::print("age: {}, age2: {}\n", age, age2);
 }
 
 
