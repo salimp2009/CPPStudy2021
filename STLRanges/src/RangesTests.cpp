@@ -21,8 +21,8 @@ auto main()->int
 	//FilterRanges_PythonStyle();
 	//TransforMapRanges_PythonStyle();
 	//MapFilterRanges_PythonStyle();
-	FilterView_LazyEvaluation();
-	FilterView_PerformaceIssue();
+	//FilterView_LazyEvaluation();
+	//FilterView_PerformaceIssue();
 	//DynamicExtent_Span();
 	//StaticDynamicExtent_Span();
 	//spanTransform_ModifyElem();
@@ -44,5 +44,6 @@ auto main()->int
 	//calendarDates2();
 	systemDaysExample();
 	checkValidDates();
-	querryCalendarDates();
+	//querryCalendarDates();
+	calculateOrdinalDates();
 }

@@ -193,8 +193,31 @@ inline void querryCalendarDates()
 		fmt::print("\tweekday: {}\n", std::chrono::year_month_weekday{ NewBirthDay }.weekday());
 
 	}
+}
+
+inline void calculateOrdinalDates()
+{
+	std::printf("\n--calculateOrdinalDates--\n");
+
+	using namespace std::chrono_literals;
+	using namespace std::chrono;
+
+	const auto time = std::chrono::system_clock::now();
+	const auto daypoint = std::chrono::floor<days>(time);
+	const auto yearMonthday = std::chrono::year_month_day{ daypoint };
+
+	// calculate the year and day of the year
+
+	const auto currentYear = yearMonthday.year();
+	const auto year_Day = daypoint - std::chrono::sys_days{ currentYear / January / 0d };
+
+	fmt::print("currentYear: {0}, day_count: {1}\n", currentYear, year_Day.count());
+
+	// inverting the calculation to check
+	assert(yearMonthday == std::chrono::year_month_day{ std::chrono::sys_days{currentYear / January / 0} + year_Day});
 
 }
+
 
 
 
