@@ -180,10 +180,20 @@ inline void querryCalendarDates()
 
 	auto age = std::chrono::duration_cast<years>(currentDate.year()- birthDay.year()).count();
 
-	//this is the way in the book 
+	//this is the way in the book; less overhead
 	auto age2 = (int)currentDate.year() - (int)birthDay.year();
-
 	fmt::print("age: {}, age2: {}\n", age, age2);
+
+	puts("Next 10 birthdays and weekdays: ");
+	for (int i = 1, newYear = (int)currentYear; i <= 10; ++i)
+	{
+		fmt::print("Age: {}\n", ++age);
+		auto NewBirthDay = std::chrono::year{ ++newYear } / birthDay.month() / birthDay.day();
+		fmt::print("\tNew Birthday: {}\n", NewBirthDay);
+		fmt::print("\tweekday: {}\n", std::chrono::year_month_weekday{ NewBirthDay }.weekday());
+
+	}
+
 }
 
 

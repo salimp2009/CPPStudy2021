@@ -65,4 +65,29 @@ inline void FilterView_PerformaceIssue()
 	}
 
 	fmt::print("{}", coll);
+	puts("\n");
+
+	//views::take_while when combined / piped with other views it creates unncessary calls; try not to use with other views
+	for (auto x : std::views::iota(0, 20)
+		| std::views::take_while([](auto value)
+			{
+				fmt::print("take_While: {}\n", value);
+				return value * 2 < 10;
+			})
+		| std::views::transform([](auto value)
+			{
+				fmt::print("transform: {}\n", value);
+				return value / 2;
+			})
+				)
+	{
+		fmt::print("value: {}\n", x);
+	}
+	
+	// views::take_while better used like this without piping other views as explained above !
+	for (int year : std::views::iota(2017)
+		| std::views::take_while([](int y) { return y <= 2020; })) {
+		fmt::print("year: {} ", year);
+	}
+	puts("\n");
 }
