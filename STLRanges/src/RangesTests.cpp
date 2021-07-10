@@ -7,6 +7,7 @@
 #include "ContainerImprovements/ContImprovements.hpp"
 #include "ChronoCalendarTimeZones/DatesTimeZoneExamples.hpp"
 #include "FilterViewPerformanceIssue.hpp"
+#include "ChronoCalendarTimeZones/TimeZoneExamples.hpp"
 
 
 auto main()->int
@@ -46,4 +47,5 @@ auto main()->int
 	checkValidDates();
 	//querryCalendarDates();
 	calculateOrdinalDates();
+	localTimeTest1();
 }

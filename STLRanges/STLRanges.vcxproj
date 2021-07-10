@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ChronoCalendarTimeZones\DatesTimeZoneExamples.hpp" />
+    <ClInclude Include="src\ChronoCalendarTimeZones\TimeZoneExamples.hpp" />
     <ClInclude Include="src\CompilerModule.hpp" />
     <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsHeaderUnit</CompileAs>

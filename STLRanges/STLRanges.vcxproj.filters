@@ -53,5 +53,8 @@
     <ClInclude Include="src\FilterViewPerformanceIssue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChronoCalendarTimeZones\TimeZoneExamples.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
