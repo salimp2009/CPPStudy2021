@@ -48,4 +48,5 @@ auto main()->int
 	//querryCalendarDates();
 	calculateOrdinalDates();
 	localTimeTest1();
+	variousTimeZones();
 }

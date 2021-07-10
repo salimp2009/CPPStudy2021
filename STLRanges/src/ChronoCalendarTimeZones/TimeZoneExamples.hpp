@@ -20,4 +20,26 @@ inline void localTimeTest1()
 	auto offset = localTime.get_info().offset;
 	fmt::print("UTC offset : {}\n", std::chrono::duration_cast<hours>(offset));
 
+	auto timezoneHere = std::chrono::current_zone();
+	auto timezoneUTC = std::chrono::locate_zone("Europe/Istanbul");
+
+	fmt::print("timezoneHere (current_zone): {0} \nUTC; locate_zone: {1}\n", timezoneHere->name(), timezoneUTC->name());
 }
+
+template<typename ZonedTime>
+auto getMinutes(const ZonedTime& zonedTime)
+{
+	return std::chrono::floor<std::chrono::minutes>(zonedTime.get_local_time());
+}
+
+void printStartEndTimes(const std::chrono::local_days& localDay)
+{
+
+}
+
+inline void variousTimeZones()
+{
+	std::printf("\n--variousTimeZones--\n");
+
+}
+
