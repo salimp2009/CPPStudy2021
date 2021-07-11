@@ -108,6 +108,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>
     </ClInclude>
     <ClInclude Include="src\FilterViewPerformanceIssue.hpp" />
+    <ClInclude Include="src\Formatting\TextFormatExamples.hpp" />
     <ClInclude Include="src\RangesContainerView.hpp" />
     <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesFilterPythonStyle.hpp" />

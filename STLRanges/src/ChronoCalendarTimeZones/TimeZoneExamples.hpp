@@ -52,6 +52,7 @@ inline void variousTimeZones()
 	std::printf("\n--variousTimeZones_ClassTimes--\n");
 
 	using namespace std::string_literals;
+	using namespace std::string_view_literals;
 	using namespace std::chrono_literals;
 	using namespace std::chrono;
 
@@ -62,6 +63,7 @@ inline void variousTimeZones()
 					"Europe/London"s, "Europe/Istanbul"s, "Europe/Minsk"s, "Europe/Moscow"s,
 					"Asia/Kolkata"s, "Asia/Novosibirsk"s, "Asia/Singapore"s,
 					"Australia/Perth"s, "Australia/Sydney"s };
+
 	for (auto startTime : { 7h, 13h, 17h })
 	{
 		printStartEndTimes(std::chrono::local_days{ classDay }, startTime, durationClass, timeZones);

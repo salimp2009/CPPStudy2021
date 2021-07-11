@@ -8,6 +8,7 @@
 #include "ChronoCalendarTimeZones/DatesTimeZoneExamples.hpp"
 #include "FilterViewPerformanceIssue.hpp"
 #include "ChronoCalendarTimeZones/TimeZoneExamples.hpp"
+#include "Formatting/TextFormatExamples.hpp"
 
 
 auto main()->int
@@ -49,4 +50,5 @@ auto main()->int
 	calculateOrdinalDates();
 	localTimeTest1();
 	variousTimeZones();
+	oldwayFormatting();
 }
