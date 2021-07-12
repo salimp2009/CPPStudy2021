@@ -51,4 +51,5 @@ auto main()->int
 	localTimeTest1();
 	variousTimeZones();
 	oldwayFormatting();
+	FormatwithLocales();
 }
