@@ -60,9 +60,39 @@ inline void FormatwithLocales()
 	fmt::print("int-seperator format with locales:\n");
 	fmt::print("{}", std::format(locDE, "\t\t in DE: {:L}\n", i));
 	fmt::print("{}", std::format(locUS, "\t\t in US: {:L}\n", i));
+
+}
+
+inline void FormatFillAlign()
+{
+	std::printf("\n--FormatFillAlign--\n");
+
+	int num = 2021;
+
+	fmt::print("{}\n", std::format("{:6}", num));
+	fmt::print("{}\n", std::format("{:6}", 'x'));
+	fmt::print("{}\n", std::format("{:*<6}", 'x'));
+	fmt::print("{}\n", std::format("{:*>6}", 'x'));
+	fmt::print("{}\n", std::format("{:*^6}", 'x'));
+	fmt::print("{}\n", std::format("{:6d}",num));
+	
+	// converts 'x' into numeric via ASCI Code; 'x'=120
+	fmt::print("{}\n", std::format("{:6d}",'x'));  
+	fmt::print("{}\n", std::format("{:6}", true));
+}
+
+inline void FormatSign()
+{
+	std::printf("\n--FormatSign--\n");
+
+	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", 0));
+	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", -0));
+	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", 1));
+	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", -1));
 	
 
 }
+
 
 
 

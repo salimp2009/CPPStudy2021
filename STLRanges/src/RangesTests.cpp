@@ -52,4 +52,6 @@ auto main()->int
 	variousTimeZones();
 	oldwayFormatting();
 	FormatwithLocales();
+	FormatFillAlign();
+	FormatSign();
 }
