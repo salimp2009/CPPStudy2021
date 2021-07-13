@@ -1,6 +1,7 @@
 #pragma once
 #include "RangesPCH.hpp"
-
+//#include "Formatting/CustomFormatter.hpp"
+#include "Formatting/StockIndex.hpp"
 
 
 inline void oldwayFormatting()
@@ -90,8 +91,28 @@ inline void FormatSign()
 	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", 1));
 	fmt::print("{}\n", std::format("{0:}, {0:+}, {0:-}, {0: }", -1));
 	
+}
+
+inline void CustomFormat_V1()
+{
+	std::printf("\n--CustomFormat_V1--\n");
+
+	for (const auto& index : GetIndices())
+	{
+		//fmt::print("{}", std::format("{}\n", index));
+
+		//std::cout << std::format("{}\n", index);
+		std::cout << index.name() << " " << index.points() << "  "
+			<< index.pointsDiff() << "  " << index.pointsPercent()
+			<< '%' << '\n';
+	}
+
+	//for (const auto& index : GetIndices()) {
+	//	std::cout << std::format("{}\n", index);
+	//}
 
 }
+
 
 
 

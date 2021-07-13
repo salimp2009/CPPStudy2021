@@ -36,6 +36,10 @@
 #include <coroutine>
 #endif
 
+#if __has_include(<format>)
+#include <format>
+#endif
+
 #include <thread>
 #include <future>
 #include <execution>

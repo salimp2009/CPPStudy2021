@@ -54,4 +54,5 @@ auto main()->int
 	FormatwithLocales();
 	FormatFillAlign();
 	FormatSign();
+	CustomFormat_V1();
 }
