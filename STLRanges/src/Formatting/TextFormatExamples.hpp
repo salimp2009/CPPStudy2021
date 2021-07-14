@@ -108,8 +108,9 @@ inline void CustomFormat_V1()
 			<< '%' << '\n';
 	}
 
+	// Example from the book does not compile 
 	//for (const auto& index : GetIndices()) {
-	//	std::cout << std::format("{}\n", index);
+	//	std::cout <<"custom format revised:"<< std::format("{}\n", index);
 	//}
 
 }
@@ -119,10 +120,17 @@ inline void CustomFormat_Vector()
 	std::printf("\n-- CustomFormat_Vector--\n");
 
 	std::vector<int>myInts{ 1,2,3,4,5,6,7,8,9,10 };
+	
+	// used for testing purposes!!
 	//std::cout << std::format("{:}", myInts);
-	fmt::print("{}", fmt::format("{:}", myInts));
+	//std::cout << fmt::format("{:}\n", myInts);
+	fmt::print("{}", fmt::format("{:}\n", myInts));
 
-	std::cout << std::format("{} is {}\n", 42, Color::red);
+	// example from Nico's c++20 book
+	fmt::print("{}", std::format("{} is {}\n", 42, Color::red));
+
+	std::vector<std::string> myStrings{ "Only", "for", "test", "purposes" };
+	fmt::print("{}", fmt::format("{:}", myStrings));
 }
 
 

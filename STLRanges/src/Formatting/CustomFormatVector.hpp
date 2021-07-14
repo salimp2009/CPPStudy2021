@@ -32,7 +32,6 @@ struct std::formatter<std::vector<T>>
 	}
 };
 
-
 // EXAMPLE for Nico's c++20 book works
 enum class Color { red, green, blue };
 template<>
@@ -49,3 +48,5 @@ struct std::formatter<Color> : std::formatter<std::string_view> {
 		return std::formatter<std::string_view>::format("oops", ctx);
 	}
 };
+
+
