@@ -2,13 +2,10 @@
 #include "RangesPCH.hpp"
 #include "Formatting/StockIndex.hpp"
 
-
-
+// THIS DOES NOT COMPILE at all!!!!
 template<>
 struct std::formatter<StockIndex> {
-    std::string formatString;
-
-
+    
     constexpr auto parse(format_parse_context& ctx) 
     { return ctx.begin(); }
 
@@ -22,3 +19,5 @@ struct std::formatter<StockIndex> {
             index.pointsPercent());
     }
 };
+
+

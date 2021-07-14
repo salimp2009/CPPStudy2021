@@ -2,6 +2,7 @@
 #include "RangesPCH.hpp"
 //#include "Formatting/CustomFormatter.hpp"
 #include "Formatting/StockIndex.hpp"
+#include "Formatting/CustomFormatVector.hpp"
 
 
 inline void oldwayFormatting()
@@ -112,6 +113,18 @@ inline void CustomFormat_V1()
 	//}
 
 }
+
+inline void CustomFormat_Vector()
+{
+	std::printf("\n-- CustomFormat_Vector--\n");
+
+	std::vector<int>myInts{ 1,2,3,4,5,6,7,8,9,10 };
+	//std::cout << std::format("{:}", myInts);
+	fmt::print("{}", fmt::format("{:}", myInts));
+
+	std::cout << std::format("{} is {}\n", 42, Color::red);
+}
+
 
 
 

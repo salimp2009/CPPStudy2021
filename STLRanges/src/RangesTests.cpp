@@ -55,4 +55,5 @@ auto main()->int
 	FormatFillAlign();
 	FormatSign();
 	CustomFormat_V1();
+	CustomFormat_Vector();
 }
