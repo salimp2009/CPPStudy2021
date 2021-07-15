@@ -133,6 +133,39 @@ inline void CustomFormat_Vector()
 	fmt::print("{}", fmt::format("{:}", myStrings));
 }
 
+ inline void WidthPrecisionSpecifier()
+{
+	std::printf("\n--WidthPrecisionSpecifier--\n");
+	int i = 123456789;
+	double d = 123.456789;
+	fmt::print("---{}---\n", std::format("{}", i));
+	fmt::print("---{}---\n", std::format("{:15}", i));
+	fmt::print("---{}---\n", std::format("{:{}}", i, 15));
+	
+	fmt::print("---{}---\n", std::format("{}", d));
+	fmt::print("---{}---\n", std::format("{:15}", d));
+	fmt::print("---{}---\n", std::format("{:{}}", d, 15));
+
+	// width=10, precision=50
+	fmt::print("---{}---\n", std::format("{:10.50}", d));
+	fmt::print("---{}---\n", std::format("{:{}.{}}", d, 10, 50));
+
+	// width=10, precision=5
+	fmt::print("---{}---\n", std::format("{:10.5}", d));
+	fmt::print("---{}---\n", std::format("{:{}.{}}", d, 10, 5));
+
+	std::string s = "Onyl a test";
+
+	// precision = 500; no effect since it is bigger than the size of string
+	fmt::print("---{}---\n", std::format("{:.500}", s));
+	fmt::print("---{}---\n", std::format("{:.{}}", s, 500));
+
+	// precision for string truncates the display if precision < length of string
+	fmt::print("---{}---\n", std::format("{:.5}", s));
+	fmt::print("---{}---\n", std::format("{:.{}}", s, 5));
+
+
+}
 
 
 

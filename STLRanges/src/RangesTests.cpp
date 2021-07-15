@@ -56,4 +56,5 @@ auto main()->int
 	FormatSign();
 	CustomFormat_V1();
 	CustomFormat_Vector();
+	WidthPrecisionSpecifier();
 }

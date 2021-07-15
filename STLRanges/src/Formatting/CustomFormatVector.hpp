@@ -39,7 +39,7 @@ struct std::formatter<Color> : std::formatter<std::string_view> {
 	auto format(Color c, format_context& ctx) {
 		switch (c) {
 		case Color::red:
-			return std::formatter<std::string_view>::format("red", ctx);
+			return std::formatter<std::string_view>::format("red {}", ctx);
 		case Color::green:
 			return std::formatter<std::string_view>::format("green", ctx);
 		case Color::blue:
