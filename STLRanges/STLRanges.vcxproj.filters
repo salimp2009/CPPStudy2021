@@ -68,5 +68,8 @@
     <ClInclude Include="src\Formatting\CustomFormatVector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Formatting\CustomFormatterV2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
