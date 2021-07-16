@@ -2,6 +2,7 @@
 #include "RangesPCH.hpp"
 //#include "Formatting/CustomFormatter.hpp"
 //#include "Formatting/CustomFormatterV2.hpp"
+//#include "Formatting/CustFormatStockIndexV3.hpp"
 #include "Formatting/StockIndex.hpp"
 #include "Formatting/CustomFormatVector.hpp"
 

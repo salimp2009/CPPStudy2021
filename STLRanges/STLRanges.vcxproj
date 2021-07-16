@@ -108,6 +108,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>
     </ClInclude>
     <ClInclude Include="src\FilterViewPerformanceIssue.hpp" />
+    <ClInclude Include="src\Formatting\CustFormatStockIndexV3.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatter.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatterV2.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatVector.hpp" />

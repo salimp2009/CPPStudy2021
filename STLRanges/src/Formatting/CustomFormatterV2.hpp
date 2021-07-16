@@ -48,7 +48,7 @@ struct std::formatter<StockIndex>
         {
             const std::string fmt{ (IndexFormat::WithPlus == indexFormat)  
                                   ? "{:10} {:>8.2f} {:>+7.2f} {:+.2f}%"
-                                  : "{:10} {:>8.2f} {:>7.2f} {:.2f}%" };
+                                  : "{:10} {:>8.2f} {:>6.2f} {:.2f}%" };
             
             return std::format_to(ctx.out(), fmt, index.name(), index.points(), index.pointsDiff(), index.pointsPercent());
         }
