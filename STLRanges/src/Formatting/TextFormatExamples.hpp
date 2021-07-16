@@ -95,6 +95,7 @@ inline void FormatSign()
 	
 }
 
+// Not compiling the custom format because of the MSVC bug in std::format_to referring to function Grow() in fmt_buffer_iterator!!
 inline void CustomFormat_V1()
 {
 	std::printf("\n--CustomFormat_V1--\n");
@@ -168,6 +169,44 @@ inline void CustomFormat_Vector()
 
 }
 
+ // Not compiling the custom format because of the MSVC bug in std::format_to referring to function Grow() in fmt_buffer_iterator!!
+ //inline void CustomFormat_V2()
+ //{
+	// std::printf("\n--CustomFormat_V1--\n");
+
+	// auto tempVec = GetIndices();
+
+	// // regular print format with no plus sign
+	// for (const auto& index : tempVec)
+	// {
+	//	 fmt::print("{}\n", std::format("{}", index));
+	// }
+
+	// // custom format identifier 's' for a short form; only name and index printed
+	// for (const auto& index : tempVec)
+	// {
+	//	 fmt::print("{}\n", std::format("{:s}", index));
+	// }
+
+	// // custom format identifier 'p' for a long form with a Plus sign
+	// for (const auto& index : tempVec)
+	// {
+	//	 fmt::print("{}\n", std::format("{:p}", index));
+	// }
+ //}
+
+ inline void DecHexOctTypeSpecifier()
+ {
+	 std::printf("\n-DecHexOctTypeSpecifier-\n");
+
+	 int testnum = 2021;
+	 fmt::print("default: {}\n", std::format("{:}", testnum));
+	 fmt::print("decimal: {}\n", std::format("{:d}", testnum));
+	 fmt::print("binary: {}\n", std::format("{:#b}", testnum));
+	 fmt::print("hexadec: {}\n", std::format("{:#x}", testnum));
+	 fmt::print("octal: {}\n", std::format("{:o}", testnum));
+
+ }
 
 
 

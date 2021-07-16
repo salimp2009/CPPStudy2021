@@ -47,14 +47,15 @@ auto main()->int
 	systemDaysExample();
 	checkValidDates();
 	//querryCalendarDates();
-	calculateOrdinalDates();
-	localTimeTest1();
-	variousTimeZones();
-	oldwayFormatting();
-	FormatwithLocales();
-	FormatFillAlign();
-	FormatSign();
+	//calculateOrdinalDates();
+	//localTimeTest1();
+	//variousTimeZones();
+	//oldwayFormatting();
+	//FormatwithLocales();
+	//FormatFillAlign();
+	//FormatSign();
 	CustomFormat_V1();
 	CustomFormat_Vector();
 	WidthPrecisionSpecifier();
+	DecHexOctTypeSpecifier();
 }

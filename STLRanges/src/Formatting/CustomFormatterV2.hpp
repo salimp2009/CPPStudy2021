@@ -9,7 +9,7 @@ struct std::formatter<StockIndex>
     enum class IndexFormat {Normal, Short, WithPlus};
 
     IndexFormat indexFormat{ IndexFormat::Normal };
-
+    
     constexpr auto parse(std::format_parse_context& ctx)
     {
         auto it = ctx.begin();
