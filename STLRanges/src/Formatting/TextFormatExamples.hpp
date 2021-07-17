@@ -31,7 +31,6 @@ inline void oldwayFormatting()
 	// format_to_n specifies the number of args , it does not take account if there is more args; e.g prints only Hello (5 chars)
 	std::format_to_n(std::back_inserter(buffer), 5, "Hello std::format {}", " c++20!");
 	fmt::print("{}\n", buffer);
-	
 }
 
 inline void FormatwithLocales()
@@ -209,8 +208,40 @@ inline void CustomFormat_Vector()
 
  }
 
+ // Not compiling the custom format because of the MSVC bug in std::format_to referring to function Grow() in fmt_buffer_iterator!!
+ //inline void custformatStockIndex_V3()
+ //{
+	// std::printf("\n--custformatStockIndex_V3--\n");
 
+	// for (const auto& index : GetIndices())
+	// {
+	//	 fmt::print("{}\n", std::format("{:Ls}", index));
+	// }
 
+	// for (const auto& index : GetIndices())
+	// {
+	//	 fmt::print("{}\n", std::format("{:Lp}", index));
+	// }
+ //}
 
+ struct Share
+ {
+	 std::string name{};
+	 double price{};
+	 double priceDelta{};
+ };
 
+ inline void formatArgumentOrder()
+ {
+	 std::printf("\n--formatArgumentOrder--\n");
 
+	 std::vector<Share> myShares= { {"KOC", 220.22, 50.5} };
+
+	 auto locDE = std::locale("de_DE.UTF-8");
+
+	 for (const auto& share : myShares)
+	 {
+		 fmt::print("{}\n", std::format(locDE, "{1:10} {2:>8.2f}{0:} {3:>+8.2f}{0:}", "$", share.name, share.price, share.priceDelta));
+		
+	 }
+ }
