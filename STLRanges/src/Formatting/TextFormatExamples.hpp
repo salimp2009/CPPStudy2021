@@ -245,3 +245,30 @@ inline void CustomFormat_Vector()
 		
 	 }
  }
+
+ inline void customFormatBuffer()
+ {
+	 using namespace std::string_view_literals;
+	 std::printf("\n--formatArgumentOrder--\n");
+	
+	 constexpr std::string_view fmt{ "{}, {}" };
+	 
+	 const auto size = std::formatted_size(fmt, "Hello"sv, "World"sv);
+
+	 std::vector<char> buffer(size);
+
+	 std::format_to(buffer.begin(), "{}, {}", "Hello", "World");
+
+	 fmt::print("{}\n", std::basic_string_view{ buffer.data(), size });
+
+	 for (const auto& c : buffer)
+	 {
+		 fmt::print("{}", c);
+	 }
+	 puts(" ");
+
+	 std::format_to(buffer.begin(), "{}, {}", "Hello", "World");
+
+
+
+ }
