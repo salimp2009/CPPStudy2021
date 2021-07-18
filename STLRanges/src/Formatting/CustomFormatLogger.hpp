@@ -1,6 +1,6 @@
 #pragma once
 #include "RangesPCH.hpp"
-#include <type_traits>
+
 
 enum LogLevel {Info, Warning, Error};
 
@@ -24,3 +24,13 @@ void custLoggger(LogLevel level, std::string_view fmt, Args&&... args)
 	fmt::print("{} {} \n", std::format("{}!!", level), std::format(fmt, std::forward<Args>(args)...));
 }
 
+void vlog(LogLevel level, std::string_view fmt, std::format_args&& args )
+{
+	fmt::print("{}, {}\n", std::format("{}!!:", level), std::vformat(fmt, args));
+}
+
+template<typename... Args>
+void custLoggerV2(LogLevel level, std::string_view fmt, Args&&... args)
+{
+	vlog(level, fmt, std::make_format_args(std::forward<Args>(args)...));
+}

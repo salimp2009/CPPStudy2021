@@ -288,6 +288,7 @@ inline void CustomFormat_Vector()
  {
 	 std::printf("\n--customLogger--\n");
 
-	 custLoggger(LogLevel::Warning, "{}\n", "hello", "logger");
+	 custLoggger(LogLevel::Warning, "{}, {}\n", "hello", "logger"); 
+	 custLoggerV2(LogLevel::Error, "{}, {}\n", "hello", "logger");
 
  }
