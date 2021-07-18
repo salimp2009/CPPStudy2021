@@ -5,6 +5,7 @@
 //#include "Formatting/CustFormatStockIndexV3.hpp"
 #include "Formatting/StockIndex.hpp"
 #include "Formatting/CustomFormatVector.hpp"
+#include "Formatting/CustomFormatLogger.hpp"
 
 
 inline void oldwayFormatting()
@@ -259,7 +260,7 @@ inline void CustomFormat_Vector()
 
 	 std::format_to(buffer.begin(), "{}, {}", "Hello", "World");
 
-	 fmt::print("{}\n", std::basic_string_view{ buffer.data(), size });
+	 fmt::print("{}\n", std::string_view{ buffer.data(), size });
 
 	 for (const auto& c : buffer)
 	 {
@@ -269,6 +270,24 @@ inline void CustomFormat_Vector()
 
 	 std::format_to(buffer.begin(), "{}, {}", "Hello", "World");
 
+ }
 
+ inline void FormatTofixedSizedBuffer()
+ {
+	 using namespace std::string_view_literals;
+	 std::printf("\n-- FormatTofixedSizedBuffer--\n");
+
+	 std::array<char, 11>buffer{};
+
+	 std::format_to_n(buffer.data(), buffer.size(), "{} {}", "Hello", "World");
+
+	 fmt::print("{}\n", std::string_view{ buffer.data(), buffer.size() });
+ }
+
+ inline void customLogger()
+ {
+	 std::printf("\n--customLogger--\n");
+
+	 custLoggger(LogLevel::Warning, "{}\n", "hello", "logger");
 
  }

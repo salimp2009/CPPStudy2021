@@ -74,7 +74,7 @@
     <ClInclude Include="src\Formatting\CustFormatStockIndexV3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Formatting\CustomFormatBuffer.hpp">
+    <ClInclude Include="src\Formatting\CustomFormatLogger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

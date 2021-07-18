@@ -109,7 +109,7 @@
     </ClInclude>
     <ClInclude Include="src\FilterViewPerformanceIssue.hpp" />
     <ClInclude Include="src\Formatting\CustFormatStockIndexV3.hpp" />
-    <ClInclude Include="src\Formatting\CustomFormatBuffer.hpp" />
+    <ClInclude Include="src\Formatting\CustomFormatLogger.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatter.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatterV2.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatVector.hpp" />
