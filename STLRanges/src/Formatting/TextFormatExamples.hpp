@@ -291,4 +291,10 @@ inline void CustomFormat_Vector()
 	 custLoggger(LogLevel::Warning, "{}, {}\n", "hello", "logger"); 
 	 custLoggerV2(LogLevel::Error, "{}, {}\n", "hello", "logger");
 
+	 int x{ 4 };
+	 std::string share{ "Amazon" };
+	 double price{ 3'117.45 };
+
+	 custLoggerV2(LogLevel::Info, "Share price {0} is very high {1}", share, price);
+
  }

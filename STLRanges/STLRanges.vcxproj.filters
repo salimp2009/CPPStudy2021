@@ -77,5 +77,8 @@
     <ClInclude Include="src\Formatting\CustomFormatLogger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Formatting\CompileTimeFormatSpecifier.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
