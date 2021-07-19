@@ -67,6 +67,8 @@
 #include "spdlog/fmt/bundled/ranges.h"
 #include "spdlog/fmt/bundled/color.h"
 
+#include "plf_colony/plf_colony.h"
+
 #include <string>
 #include <vector>
 #include <array>

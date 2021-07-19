@@ -6,7 +6,7 @@
 #include "Formatting/StockIndex.hpp"
 #include "Formatting/CustomFormatVector.hpp"
 #include "Formatting/CustomFormatLogger.hpp"
-
+#include "Formatting/CompileTimeFormatSpecifier.hpp"
 
 inline void oldwayFormatting()
 {
@@ -296,5 +296,13 @@ inline void CustomFormat_Vector()
 	 double price{ 3'117.45 };
 
 	 custLoggerV2(LogLevel::Info, "Share price {0} is very high {1}", share, price);
+
+	 std::array<char, 4>testbrace{ "{} " };
+	 fmt::print("size: {1}, size of each elem: {2}, \nelems: {0} \n", testbrace, testbrace.size(), (sizeof testbrace[0]));
+
+	 for (const auto& c : testbrace)
+	 {
+		 fmt::print("{}", c);
+	 }
 
  }
