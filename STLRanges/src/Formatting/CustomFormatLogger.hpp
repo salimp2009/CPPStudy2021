@@ -26,7 +26,7 @@ void custLoggger(LogLevel level, std::string_view fmt, Args&&... args)
 
 void vlog(LogLevel level, std::string_view fmt, std::format_args&& args )
 {
-	fmt::print("{}, {}\n", std::format("{}!!:", level), std::vformat(fmt, args));
+	fmt::print("{}: {}\n", std::format("{}!!:", level), std::vformat(fmt, args));
 }
 
 template<typename... Args>

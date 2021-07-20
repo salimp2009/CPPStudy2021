@@ -33,3 +33,9 @@ constexpr auto makeBraces()
 }
 
 
+template<typename... Args>
+void custLoggerV3(LogLevel level, Args&&... args)
+{
+	constexpr auto fmt = makeBraces<sizeof...(Args)>();
+	vlog(level, std::string_view{ fmt.data(), fmt.size() }, std::make_format_args(std::forward<Args>(args)...));
+}

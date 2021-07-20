@@ -302,7 +302,8 @@ inline void CustomFormat_Vector()
 
 	 for (const auto& c : testbrace)
 	 {
-		 fmt::print("{}", c);
+		 fmt::print("{}\n", c);
 	 }
 
+	 custLoggerV3(LogLevel::Info , "Share price:", share, " very high: ", price);
  }
