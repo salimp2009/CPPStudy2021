@@ -89,5 +89,11 @@
     <ClInclude Include="src\Concepts\ConceptExamples3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EmptyBaseClassOptm\EmptyBaseClassOptimization.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EmptyBaseClassOptm\EmptyBaseClassOptTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

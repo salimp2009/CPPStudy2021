@@ -6,6 +6,7 @@
 #include "Concepts/ConceptExamples.hpp"
 #include "Concepts/ConceptExamples2.hpp"
 #include "Concepts/ConceptExamples3.hpp"
+#include "EmptyBaseClassOptm/EmptyBaseClassOptTests.hpp"
 
 int main()
 {
@@ -36,6 +37,7 @@ int main()
 	//PrintContainers_Concepts();
 	SignedUnSignedIntegral_Func();
 	RegularSemiRegular_Concepts();
+	EmptyBaseClassTest1();
 
 	return 0;
 }

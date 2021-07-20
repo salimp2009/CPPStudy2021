@@ -24,9 +24,19 @@ void custLoggger(LogLevel level, std::string_view fmt, Args&&... args)
 	fmt::print("{} {} \n", std::format("{}!!", level), std::format(fmt, std::forward<Args>(args)...));
 }
 
+
+auto GetTime()
+{
+	auto sysNow = std::chrono::system_clock::now();
+	return std::chrono::current_zone()->to_local(sysNow);
+}
+
+
 void vlog(LogLevel level, std::string_view fmt, std::format_args&& args )
 {
-	fmt::print("{}: {}\n", std::format("{}!!:", level), std::vformat(fmt, args));
+	auto timeNow = GetTime();
+	
+	fmt::print("{2:}, {0}: {1}\n", std::format("{}!!:", level), std::vformat(fmt, args), std::format("[{:%Y-%m-%d-%H:%M:%S}]", timeNow) );
 }
 
 template<typename... Args>
