@@ -131,6 +131,7 @@
     <ClInclude Include="src\RangesPCH.hpp" />
     <ClInclude Include="src\STLSpan\SpanStaticDynamic.hpp" />
     <ClInclude Include="src\Formatting\StockIndex.hpp" />
+    <ClInclude Include="src\ThreeWayComparision\ThreeWayCompareTests.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

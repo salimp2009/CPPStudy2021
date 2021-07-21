@@ -9,6 +9,7 @@
 #include "FilterViewPerformanceIssue.hpp"
 #include "ChronoCalendarTimeZones/TimeZoneExamples.hpp"
 #include "Formatting/TextFormatExamples.hpp"
+#include "ThreeWayComparision/ThreeWayCompareTests.hpp"
 
 
 auto main()->int
@@ -54,14 +55,15 @@ auto main()->int
 	//FormatwithLocales();
 	//FormatFillAlign();
 	//FormatSign();
-	CustomFormat_V1();
-	CustomFormat_Vector();
-	WidthPrecisionSpecifier();
-	DecHexOctTypeSpecifier();
-	formatArgumentOrder();
+	//CustomFormat_V1();
+	//CustomFormat_Vector();
+	//WidthPrecisionSpecifier();
+	//DecHexOctTypeSpecifier();
+	//formatArgumentOrder();
 	customFormatBuffer();
 	FormatTofixedSizedBuffer();
 	customLogger();
+	ThreeWayComparision_Test1();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

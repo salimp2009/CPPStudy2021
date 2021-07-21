@@ -36,7 +36,11 @@ void vlog(LogLevel level, std::string_view fmt, std::format_args&& args )
 {
 	auto timeNow = GetTime();
 	
-	fmt::print("{2:}, {0}: {1}\n", std::format("{}!!:", level), std::vformat(fmt, args), std::format("[{:%Y-%m-%d-%H:%M:%S}]", timeNow) );
+	// Original example used C-Api /POSIX date for localtime
+	//fmt::print("{2:}, {0}: {1}\n", std::format("{}!!:", level), std::vformat(fmt, args), std::format("[{:%Y-%m-%d-%H:%M:%S}]", timeNow) );
+
+	// the current calendar format for std::chrono / timenow is same above by default!
+	fmt::print("{2:}, {0}: {1}\n", std::format("{}!!:", level), std::vformat(fmt, args), std::format("[{}]", timeNow) );
 }
 
 template<typename... Args>
