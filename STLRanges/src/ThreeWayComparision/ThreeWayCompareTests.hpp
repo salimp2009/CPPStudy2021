@@ -1,20 +1,6 @@
 #pragma once
 #include "RangesPCH.hpp"
-
-struct MyInt
-{
-	int value;
-	explicit MyInt(int val) : value{ val } {}
-	bool  operator==(const MyInt&) const = default;
-	auto operator<=>(const MyInt& rhs) const { return value <=> rhs.value; }
-};
-
-struct MyDouble
-{
-	double value;
-	explicit constexpr MyDouble(double val) : value{ val } {}
-	auto  operator<=>(const MyDouble&) const = default;
-};
+#include "ThreewayComparisionUtils.hpp"
 
 inline void ThreeWayComparision_Test1()
 {
@@ -37,5 +23,25 @@ inline void ThreeWayComparision_Test1()
 	
 	fmt::print("20.25== 40.25: {}\n", (db1==db2)); 
 
+	VectorPointer vecptr1{ new std::vector<int>() };
+	VectorPointer vecptr2{ new std::vector<int>() };
+
+	fmt::print("vecptr1==vecptr2: {}\n", (vecptr1 == vecptr2));
+
+	String str1{ "Hello" };
+	String str2{ "C++20" };
+	String str3{ "Hello" };
+	String str4{ "hello" };
+
+	fmt::print("Hello == Hello: {}\n", (str1 == str3));
+	fmt::print("Hello == hello: {}\n", (str1 == str4));
+	fmt::print("Hello < C++20: {}\n", (str1 < str2));
+	fmt::print("Hello > C++20: {}\n", (str1 > str2));
+
+	char a = 'H';
+	char b = 'C';
+
+	fmt::print("H > C: {}\n", (a > b));
+	fmt::print("H < C: {}\n", (a < b));
 
 }
