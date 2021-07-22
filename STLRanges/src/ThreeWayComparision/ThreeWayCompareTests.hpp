@@ -60,5 +60,22 @@ void SpaceShipOperator_Test1()
 	int b{ 2021 };
 	auto result = a <=> b;
 	fmt::print("result : {}\n", (result < 0 ? "a<b" : (result == 0 ? "a==b" : "a>b")));
+	fmt::print("is_eq(a<=>b) : {}\n", std::is_eq(a<=>b));
+
+	std::string s1{ "2014" };
+	std::string s2{ "2011" };
+
+	auto result2 = s1 <=> s2;
+	fmt::print("result2 (2014<=>2011) : {}\n", (result2 < 0 ? "s1<s2" : (result2 == 0 ? "s1==s2" : "s1>s2")));
+
+	std::vector v1{ 1,2,3 };
+	std::vector v2{ 1,2,3 };
+	auto result3 = v1 <=> v2;
+
+	fmt::print("result3 (v1{{ 1,2,3 }}<=>v2{{ 1,2,3 }}) : {}\n", (result3 < 0 ? "v1<v2" : (result3 == 0 ? "v1==v2" : "v1>v2")));
+
+
+
+	
 }
 
