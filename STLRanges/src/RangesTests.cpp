@@ -64,6 +64,8 @@ auto main()->int
 	FormatTofixedSizedBuffer();
 	customLogger();
 	ThreeWayComparision_Test1();
+	StringComparision_Test1();
+	SpaceShipOperator_Test1();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

@@ -49,24 +49,49 @@ private:
 	const char* mData;
 	std::size_t mLen;
 
-	static std::weak_ordering Compare(const String& a, const String& b);
+	// example in book used weak_ordering but std::std::lexicographical_compare is case sensitive by default so h !=H therefore revised to strong ordering
+	static std::strong_ordering Compare(const String& a, const String& b);
 };
 
 
-std::weak_ordering String::Compare(const String& a, const String& b)
+std::strong_ordering String::Compare(const String& a, const String& b)
 {
 	
 		if (a.mLen == b.mLen &&
-			std::equal(a.begin(), a.end(), b.begin(), b.end())) {
-			return std::weak_ordering::equivalent;
+			std::equal(a.begin(), a.end(), b.begin(), b.end())) 
+		{
+			return std::strong_ordering::equal;
 		}
 
 		// lex_compare uses less<> funct by default so if it is true, a<b==true
-		if (std::lexicographical_compare(
-			a.begin(), a.end(), b.begin(), b.end())) {
-			return	std::weak_ordering::less;				
+		if (std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end())) 
+		{
+			return	std::strong_ordering::less;				
 		}
 
-		return std::weak_ordering::greater;
-
+		return std::strong_ordering::greater;
 }
+
+struct Strong 
+{ 
+	std::strong_ordering operator<=>(const Strong &) const = default;
+};
+
+struct Weak 
+{
+  std::weak_ordering operator<=>(const Weak &) const = default;
+};
+
+struct Partial 
+{
+  std::partial_ordering operator<=>(const Partial &) const = default;
+};
+
+struct StrongWeakPartial
+{
+	Strong	mStrong;
+	Weak	mWeak;
+	Partial mPartial;
+
+	auto operator<=>(const StrongWeakPartial&) const = default;
+};
