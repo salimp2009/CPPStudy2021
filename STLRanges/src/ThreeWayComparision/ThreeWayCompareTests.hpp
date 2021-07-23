@@ -14,12 +14,15 @@ inline void ThreeWayComparision_Test1()
 	MyInt int1{ 2017 };
 	MyInt int2{ 2021 };
 
-	MyDouble db1{ 20.25 };
-	MyDouble db2{ 40.25 };
+	constexpr MyDouble db1{ 20.25 };
+	constexpr MyDouble db2{ 40.25 };
 
 	fmt::print("2017 < 2021: {}\n", isLessThan(int1, int2));
 	fmt::print("2017 == 2021: {}\n", (int1==int2)); // does not compile if operator == is not defined!!!
 	
+	// spaceship operator is constexpr and MyDouble has also constepxr constructor so if the values are known
+	// at compile time and then check is also compile time as above
+	static_assert(db1 != db2);
 	
 	fmt::print("20.25== 40.25: {}\n", (db1==db2)); 
 

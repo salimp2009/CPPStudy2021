@@ -5,7 +5,7 @@
 struct MyInt
 {
 	int value;
-	explicit MyInt(int val) : value{ val } {}
+	explicit constexpr MyInt(int val) : value{ val } {}
 	bool  operator==(const MyInt&) const = default;
 	auto operator<=>(const MyInt& rhs) const { return value <=> rhs.value; }
 };
@@ -95,3 +95,31 @@ struct StrongWeakPartial
 
 	auto operator<=>(const StrongWeakPartial&) const = default;
 };
+
+
+// example Binary Coded Digit = BCD; by <=> we dont need to write comparisions for each member value
+
+class BCD
+{
+public:
+	constexpr BCD(int v, int Significance) : mSignificance{ Significance }, mValue{Adjust(v)} {}
+
+	constexpr operator int() const { return mValue; }
+	
+	// already constexpr 
+	auto operator<=>(const BCD&) const = default;
+
+
+private:
+	int mSignificance;
+	int mValue;
+
+	static constexpr int Adjust(int v);
+
+};
+
+constexpr int BCD::Adjust(int v)
+{
+	if (v > 9 || v < 0) { return 0; }
+	return v;
+}
