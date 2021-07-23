@@ -86,5 +86,8 @@
     <ClInclude Include="src\ThreeWayComparision\ThreewayComparisionUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ThreeWayComparision\ThreewayComparisionUtils2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

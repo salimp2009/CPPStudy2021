@@ -1,6 +1,7 @@
 #pragma once
 #include "RangesPCH.hpp"
 #include "ThreewayComparisionUtils.hpp"
+#include "ThreewayComparisionUtils2.hpp"
 
 inline void ThreeWayComparision_Test1()
 {
@@ -33,7 +34,7 @@ inline void ThreeWayComparision_Test1()
 
 }
 
-void StringComparision_Test1()
+inline void StringComparision_Test1()
 {
 	String str1{ "Hello" };
 	String str2{ "C++20" };
@@ -55,7 +56,7 @@ void StringComparision_Test1()
 
 }
 
-void SpaceShipOperator_Test1()
+inline void SpaceShipOperator_Test1()
 {
 	std::printf("\n-SpaceShipOperator_Test1-\n");
 
@@ -76,9 +77,16 @@ void SpaceShipOperator_Test1()
 	auto result3 = v1 <=> v2;
 
 	fmt::print("result3 (v1{{ 1,2,3 }}<=>v2{{ 1,2,3 }}) : {}\n", (result3 < 0 ? "v1<v2" : (result3 == 0 ? "v1==v2" : "v1>v2")));
-
-
-
-	
 }
+
+inline void AddressSort()
+{
+	std::printf("\n-AddressSort-\n");
+
+	Address address1{ "Istanbul", "Seyrantepe", 34710 };
+	Address address2{ "Istanbul", "Kadikoy", 35710 };
+	auto result = address1 <=> address2;
+	fmt::print("address1 > address2 (expected:true) : {}\n", (result < 0 ? "address1<address2" : (result == 0 ? "address1==address2" : "address1>address2")));
+}
+
 
