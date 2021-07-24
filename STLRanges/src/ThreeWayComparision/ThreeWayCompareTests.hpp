@@ -89,4 +89,20 @@ inline void AddressSort()
 	fmt::print("address1 > address2 (expected:true) : {}\n", (result < 0 ? "address1<address2" : (result == 0 ? "address1==address2" : "address1>address2")));
 }
 
+inline void BinaryCodedDigit()
+{
+	std::printf("\n-BinaryCodedDigit-\n");
+
+	constexpr BCD binarycodeDigit1{ 10, 1 };
+	constexpr BCD binarcodeDigit2{ 0, 2 };
+	constexpr int value = binarycodeDigit1;
+	static_assert(value == 0);
+	static_assert(binarycodeDigit1 != binarcodeDigit2);
+	static_assert(value == binarycodeDigit1);
+	static_assert(value == binarcodeDigit2);
+}
+
+
+
+
 

@@ -8,7 +8,7 @@ struct Address
 	std::string street;
 	std::int32_t streetNo;
 
-	auto operator<=>(const Address& rhs) const
+	constexpr auto operator<=>(const Address& rhs) const
 	{
 		if (const auto& cmp = city <=> rhs.city; cmp != 0)
 		{
@@ -25,3 +25,14 @@ struct Address
 
 	bool operator==(const Address&) const = default;
 };
+
+struct Legacy
+{
+	int a;
+
+	// pre c++20 these define weak_order
+	bool operator==(const Legacy&) const { return true; }
+	bool operator<(const Legacy&) const { return true; }
+};
+
+
