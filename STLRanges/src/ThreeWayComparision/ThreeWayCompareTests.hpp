@@ -102,6 +102,19 @@ inline void BinaryCodedDigit()
 	static_assert(value == binarcodeDigit2);
 }
 
+inline void LegacyWrapCompare()
+{
+	std::printf("\n-LegacyWrapCompare()-\n");
+
+	LegacyWrap lWrap1{ 2,3 };
+	LegacyWrap lWrap2{ 2,3 };
+	LegacyWrap lWrap3{ 4,5 };
+
+	assert(lWrap1== lWrap2);
+	assert(lWrap3 > lWrap2);
+	assert(!(lWrap3 < lWrap2));
+}
+
 
 
 

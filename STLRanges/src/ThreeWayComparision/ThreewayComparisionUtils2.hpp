@@ -31,8 +31,19 @@ struct Legacy
 	int a;
 
 	// pre c++20 these define weak_order
-	bool operator==(const Legacy&) const { return true; }
-	bool operator<(const Legacy&) const { return true; }
+	bool operator==(const Legacy& rhs) const { return a==rhs.a; }
+	bool operator<(const Legacy& rhs) const { return a< rhs.a; }
+};
+
+class LegacyWrap
+{
+public:
+	LegacyWrap(int a, int b) :mA{ a }, mB{ b } {}
+
+	std::weak_ordering operator<=>(const LegacyWrap&) const = default;
+
+private:
+	Legacy mA, mB;
 };
 
 
