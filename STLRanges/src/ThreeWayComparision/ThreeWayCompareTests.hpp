@@ -125,6 +125,25 @@ inline void LegacyWrapCompare()
 	fmt::print("res: {0}, val: {1}", res, val);
 }
 
+inline void LexicographicalComparision()
+{
+	std::printf("\n-LexicographicalComparision-\n");
+
+	constexpr Bases b1{ {22, 'c', 32.45f, 44.45},			// Basics class 
+						{{1},								// Arrays; ai
+						{'b', 'd'},							// ac
+						{32.45f, 33.45f, 34.45f}, 
+						{{2.2,2.3}, {2.4, 2.5}}} };
+
+	constexpr Bases b2{ {22, 'c', 32.45f, 44.45},		// Basics class 
+					{{1},								// Arrays; ai
+					{'b', 'd'},							// ac
+					{32.45f, 33.45f, 34.45f},
+					{{2.2,2.3}, {2.4, 2.5}}} };
+
+	static_assert(b1 == b2);
+
+}
 
 
 

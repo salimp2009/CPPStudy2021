@@ -58,7 +58,6 @@ struct A
 	// The right way to write so it works OK!!!
 	//bool operator==(const B&) const { return true; }
 
-
 };
 
 struct B
@@ -66,4 +65,26 @@ struct B
 	bool operator==(const A&) const { return false; }
 };
 
+struct Basics
+{
+	int i;
+	char c;
+	float f;
+	double d;
+	auto operator<=>(const Basics&) const = default;
+};
 
+struct Arrays
+{
+	int		ai[1];
+	char	ac[2];
+	float	af[3];
+	double	ad[2][2];
+
+	auto operator<=>(const Arrays&) const = default;
+};
+
+struct Bases : Basics, Arrays
+{
+	auto operator<=>(const Bases&) const = default;
+};
