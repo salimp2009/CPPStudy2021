@@ -46,4 +46,24 @@ private:
 	Legacy mA, mB;
 };
 
+struct B;
+
+
+struct A
+{
+	// this needs to be const B so that it works correctly in c++20; works OK in c++17 but 
+	// c++20 needs consistency therefore it gives the wrong output; given as an example !!!!
+	bool operator==(B&) const { return true; }
+
+	// The right way to write so it works OK!!!
+	//bool operator==(const B&) const { return true; }
+
+
+};
+
+struct B
+{
+	bool operator==(const A&) const { return false; }
+};
+
 

@@ -104,7 +104,7 @@ inline void BinaryCodedDigit()
 
 inline void LegacyWrapCompare()
 {
-	std::printf("\n-LegacyWrapCompare()-\n");
+	std::printf("\n-LegacyWrapCompare-\n");
 
 	LegacyWrap lWrap1{ 2,3 };
 	LegacyWrap lWrap2{ 2,3 };
@@ -113,6 +113,16 @@ inline void LegacyWrapCompare()
 	assert(lWrap1== lWrap2);
 	assert(lWrap3 > lWrap2);
 	assert(!(lWrap3 < lWrap2));
+
+	B b{};
+	const A a;
+	const auto res = (a == b);
+	const auto val = (b == a);
+	// if compiled with c++17 val becomes false but with c++20 it becomes true
+	// since operator== need to reverse the operand order when needed both definitions has
+	// to be consisten but struct A operator== is missing const in the input value therefore 
+	// when the compiler revers eq for the val it uses a better match and gives wrong result !!
+	fmt::print("res: {0}, val: {1}", res, val);
 }
 
 
