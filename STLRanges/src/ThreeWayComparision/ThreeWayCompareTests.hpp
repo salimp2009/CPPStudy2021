@@ -166,6 +166,30 @@ inline void reWriteCompareExpressions()
 
 }
 
+inline void userDefinedvsAutoComparisions()
+{
+	std::printf("\n-  userDefinedvsAutoComparisions-\n");
+	constexpr MyInt3 myInt2011{ 2011 };
+	constexpr MyInt3 myInt2021{ 2021 };
+
+	constexpr int int2011{ 2011 };
+
+	myInt2011 == myInt2021;
+	myInt2011 < myInt2021;
+
+	myInt2011 != myInt2021;
+	
+	auto val1 = myInt2011 <= myInt2021;
+	auto val2 =myInt2011 > myInt2021;
+	auto val3 = myInt2011 >= myInt2021;
+
+	fmt::print("val1: {0}, val2: {1}, val3: {2}\n", val1, val2, val3);
+
+	auto val = myInt2011 > int2011;
+	fmt::print("val: {}", val);
+}
+
+
 
 
 
