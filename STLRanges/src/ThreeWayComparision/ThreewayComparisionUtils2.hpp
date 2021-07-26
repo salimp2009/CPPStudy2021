@@ -88,3 +88,19 @@ struct Bases : Basics, Arrays
 {
 	auto operator<=>(const Bases&) const = default;
 };
+
+
+class MyInt2
+{
+public:
+	// if explicit is used ; we need to extra comparision for any other value than the class since implicit conversion will be disabled
+	constexpr explicit MyInt2(int val) : value{ val } {}
+	auto operator<=>(const MyInt2&) const = default;
+	
+	constexpr auto operator<=>(const int& rhs) const
+	{
+		return value <=> rhs;
+	}
+private:
+	int value;
+};

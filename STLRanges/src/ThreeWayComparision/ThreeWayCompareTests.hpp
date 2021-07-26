@@ -138,10 +138,31 @@ inline void LexicographicalComparision()
 	constexpr Bases b2{ {22, 'c', 32.45f, 44.45},		// Basics class 
 					{{1},								// Arrays; ai
 					{'b', 'd'},							// ac
-					{32.45f, 33.45f, 34.45f},
-					{{2.2,2.3}, {2.4, 2.5}}} };
+					{32.45f, 33.45f, 34.45f},			// af
+					{{2.2,2.3}, {2.4, 2.5}}} };			// ad
 
 	static_assert(b1 == b2);
+
+}
+
+inline void reWriteCompareExpressions()
+{
+	std::printf("\n- reWriteCompareExpressions-\n");
+
+	constexpr MyInt2 myInt2011{2011};
+	constexpr MyInt2 myInt2021{2021};
+
+	constexpr int int2011{ 2011 };
+	constexpr int int2021{ 2021 };
+
+	if (myInt2011 < myInt2021)	{ fmt::print("myInt2011 < myInt2021 \n"); }
+	if((myInt2011<=>myInt2021)<0) { fmt::print("myInt2011 < myInt2021 \n\n"); }
+	
+	if (myInt2011 < int2021)	{ fmt::print("myInt2011 < int2021 \n"); }
+	if((myInt2011<=>int2021)<0) { fmt::print("myInt2011 < int2021 \n\n"); }
+
+	if (int2011 < myInt2021)		{ fmt::print("int2011 < myInt2021 \n"); }
+	if(0<(myInt2021 <=> int2011))	{ fmt::print("int2011 < myInt2021 \n"); }
 
 }
 
