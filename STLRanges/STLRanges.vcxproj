@@ -117,6 +117,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsHeaderUnit</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>
     </ClInclude>
+    <ClInclude Include="src\DesignatedInitialization\AggregateInitiliazation.hpp" />
+    <ClInclude Include="src\DesignatedInitialization\DesignatedInitializationTests.hpp" />
     <ClInclude Include="src\FilterViewPerformanceIssue.hpp" />
     <ClInclude Include="src\Formatting\CompileTimeFormatSpecifier.hpp" />
     <ClInclude Include="src\Formatting\CustFormatStockIndexV3.hpp" />

@@ -177,7 +177,7 @@ inline void userDefinedvsAutoComparisions()
 	myInt2011 == myInt2021;
 	myInt2011 < myInt2021;
 
-	myInt2011 != myInt2021;
+	[[maybe_unused]] auto res= myInt2011 != myInt2021;
 	
 	auto val1 = myInt2011 <= myInt2021;
 	auto val2 =myInt2011 > myInt2021;

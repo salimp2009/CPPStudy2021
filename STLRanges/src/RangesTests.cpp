@@ -10,6 +10,7 @@
 #include "ChronoCalendarTimeZones/TimeZoneExamples.hpp"
 #include "Formatting/TextFormatExamples.hpp"
 #include "ThreeWayComparision/ThreeWayCompareTests.hpp"
+#include "DesignatedInitialization/DesignatedInitializationTests.hpp"
 
 
 auto main()->int
@@ -45,8 +46,8 @@ auto main()->int
 	//timeofDay();
 	//calendarDates();
 	//calendarDates2();
-	systemDaysExample();
-	checkValidDates();
+	//systemDaysExample();
+	//checkValidDates();
 	//querryCalendarDates();
 	//calculateOrdinalDates();
 	//localTimeTest1();
@@ -71,6 +72,7 @@ auto main()->int
 	LexicographicalComparision();
 	reWriteCompareExpressions();
 	userDefinedvsAutoComparisions();
+	AggregateIinitialization();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();
