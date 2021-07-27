@@ -187,6 +187,8 @@ inline void userDefinedvsAutoComparisions()
 
 	auto val = myInt2011 > int2011;
 	fmt::print("val: {}", val);
+
+	
 }
 
 

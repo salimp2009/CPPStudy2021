@@ -19,4 +19,18 @@ inline void AggregateIinitialization()
 	fmt::print(" namedpoint1; name: {0}, Point: [{1}, {2}, {3}]\n", namedpoint1.name, namedpoint1.pt.x, namedpoint1.pt.y, namedpoint1.pt.z);
 	fmt::print(" namedpoint2; name: {0}, Point: [{1}, {2}, {3}]\n", namedpoint2.name, namedpoint2.pt.x, namedpoint2.pt.y, namedpoint2.pt.z);
 
+	// Brace initialization ensure members are default initialized; in this case all zero
+	// Brace initiliazation also prevents narrowing
+	// Brace initialization also prevent vertex parsing; e.g : const Point3 pt3(); is seen as a function that return const Point3 with no arguments
+	Point3D pt3DTwo{};
+	fmt::print(" pt3DTwo: x:{}, y: {}, z:{}\n", pt3DTwo.x, pt3DTwo.y, pt3DTwo.z);
+
+	// testing RVO for NonCopy or Movable class
+
+	auto myVal =Use();
+	myVal.x = 25;
+
+	fmt::print("Test call site Use creates NonCopyableorMovable x: {}\n", myVal.x);
+
+
 }
