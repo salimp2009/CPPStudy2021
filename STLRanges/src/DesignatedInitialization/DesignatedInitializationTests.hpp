@@ -44,8 +44,10 @@ inline void ReturnValueOptimization()
 		fmt::print("[{}, {}, {}]\n", Point.x, Point.y, Point.z);
 	}
 
-
 	FileAccess({ .open = true });
-
+	
+	AddToPoint({.X=20}, 10);
+	AddToPoint({.x=20,}, 10);
+	//AddToPoint({ .y = 15 }, 10); // will not compile; it is ambiguous both Point and Point2D has .y but .X vs .x makes the difference
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "STLpch.h"
 
 using PtrSize			= std::size_t;
 using difference_type	= std::ptrdiff_t;

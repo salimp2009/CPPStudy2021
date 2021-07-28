@@ -45,7 +45,7 @@ NonCopyableorMovable RVOfunc()
 	return {};
 }
 
-auto Use()
+inline auto Use()
 {
 	// Since RVOfunc returns a nonmovable or copyable type normally it should fails
 	// but compiler creates this not on the stack ; right at the call stack so it does not move or copy it and compiles
@@ -54,7 +54,7 @@ auto Use()
 	return RVOfunc();
 }
 
-auto GetVectorPoint3d()
+inline auto GetVectorPoint3d()
 {
 	std::vector<Point3D> vec3d;
 
@@ -73,7 +73,24 @@ struct FileAccessParameters
 	bool readonly;
 };
 
-void FileAccess(const FileAccessParameters& params)
+inline void FileAccess(const FileAccessParameters& params)
 {
-	fmt::print("open: {}, close: {}, readonly: {}", params.open, params.close, params.readonly);
+	fmt::print("open: {}, close: {}, readonly: {}\n", params.open, params.close, params.readonly);
+}
+
+struct  Point
+{
+	int X;
+	int y;
+};
+
+inline void AddToPoint(Point2D point, int value)
+{
+
+	fmt::print("Add Point2D: result: x: {}, y:{}\n", point.x + value, point.y + value);
+}
+
+inline void AddToPoint(Point point, int value)
+{
+	fmt::print("Add Point; result: x: {}, y:{}\n", point.X + value, point.y + value);
 }
