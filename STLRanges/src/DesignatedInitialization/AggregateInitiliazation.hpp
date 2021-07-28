@@ -53,3 +53,27 @@ auto Use()
 	fmt::print("Use creates NonCopyableorMovable x: {}\n", myVal.x);
 	return RVOfunc();
 }
+
+auto GetVectorPoint3d()
+{
+	std::vector<Point3D> vec3d;
+
+	vec3d.emplace_back(Point3D{ .x = 10, .y = 20, .z = 30 });
+	vec3d.emplace_back(Point3D{ .y = 20, .z = 30 });
+	vec3d.emplace_back(15, 25, 35);
+
+	return vec3d;
+}
+
+
+struct FileAccessParameters
+{
+	bool open;
+	bool close;
+	bool readonly;
+};
+
+void FileAccess(const FileAccessParameters& params)
+{
+	fmt::print("open: {}, close: {}, readonly: {}", params.open, params.close, params.readonly);
+}

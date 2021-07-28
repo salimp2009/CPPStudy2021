@@ -27,10 +27,25 @@ inline void AggregateIinitialization()
 
 	// testing RVO for NonCopy or Movable class
 
-	auto myVal =Use();
+}
+
+inline void ReturnValueOptimization()
+{
+	std::printf("\n- ReturnValueOptimization-\n");
+	auto myVal = Use();
 	myVal.x = 25;
 
 	fmt::print("Test call site Use creates NonCopyableorMovable x: {}\n", myVal.x);
 
+	auto resVec = GetVectorPoint3d();
+	std::puts("vec3d: ");
+	for (const auto& Point : resVec)
+	{
+		fmt::print("[{}, {}, {}]\n", Point.x, Point.y, Point.z);
+	}
+
+
+	FileAccess({ .open = true });
 
 }
+
