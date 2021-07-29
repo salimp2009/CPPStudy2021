@@ -94,3 +94,15 @@ inline void AddToPoint(Point point, int value)
 {
 	fmt::print("Add Point; result: x: {}, y:{}\n", point.X + value, point.y + value);
 }
+
+struct Nested
+{
+	int i;
+	Point mpoint;
+};
+
+
+struct LifeTimeExtension
+{
+	int&& r;
+};

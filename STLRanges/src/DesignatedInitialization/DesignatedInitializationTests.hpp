@@ -49,5 +49,35 @@ inline void ReturnValueOptimization()
 	AddToPoint({.X=20}, 10);
 	AddToPoint({.x=20,}, 10);
 	//AddToPoint({ .y = 15 }, 10); // will not compile; it is ambiguous both Point and Point2D has .y but .X vs .x makes the difference
+
+	
 }
+
+
+inline void DirectInitializeAggregates()
+{
+	std::printf("\n- DirectInitializeAggregates-\n");
+	// this works in c++20 but not in c++17;
+	// in c++17 you have to make ; std::make_unique<Point>(Point2D{20, 40});
+	// This works as if braced initialized except it allows narrawing
+	auto ptrPoint = std::make_unique<Point>(20, 40);
+
+	// this compiled but a smart compiler gives warning for conversion / loss of data!
+	//auto ptrPoint2 = std::make_unique<Point>(20.5, 40);
+
+	Nested mynested{ 20, {20, 15} };
+	Nested mynested2{ .i = 25, .mpoint{.X = 20} };
+
+	int bArray[]{ 20,30,40 };
+	int bArray2[](20, 30, 40); // since c++20
+
+	LifeTimeExtension bTemporary{ 55 };	 // Not sure why this is OK not Dangling !!!!
+	LifeTimeExtension pTemporary(20);    // Dangling reference 
+	fmt::print("bTemp: {}, pTemp: {}\n", bTemporary.r, pTemporary.r);
+
+	const auto& val = LifeTimeExtension(20); // extended lifetime ; no more dangling
+	fmt::print("val: {}\n", val.r);
+}
+
+
 
