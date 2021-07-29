@@ -79,5 +79,18 @@ inline void DirectInitializeAggregates()
 	fmt::print("val: {}\n", val.r);
 }
 
+inline void AggregatesWithDefaultConstrctor()
+{
+	std::printf("\n-AggregatesWithDefaultConstrctor-\n");
+	// This compiles in C++17 but not in C++20
+
+#if ! _HAS_CXX20
+	NotDefaultConstructible nt1{};
+#endif //  _HAS_CXX20
+
+	 
+}
+
+
 
 

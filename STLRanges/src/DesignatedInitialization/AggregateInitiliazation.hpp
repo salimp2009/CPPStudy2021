@@ -106,3 +106,10 @@ struct LifeTimeExtension
 {
 	int&& r;
 };
+
+struct NotDefaultConstructible
+{
+	int x;
+private:
+	NotDefaultConstructible() = delete;
+};
