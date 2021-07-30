@@ -113,6 +113,8 @@
     <ClInclude Include="src\ChronoCalendarTimeZones\DatesTimeZoneExamples.hpp" />
     <ClInclude Include="src\ChronoCalendarTimeZones\TimeZoneExamples.hpp" />
     <ClInclude Include="src\CompilerModule.hpp" />
+    <ClInclude Include="src\ConstEvalConstInit\ConstEvalConsInit.hpp" />
+    <ClInclude Include="src\ConstEvalConstInit\ConstEvalConstInitTests.hpp" />
     <ClInclude Include="src\ContainerImprovements\ContImprovements.hpp">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsHeaderUnit</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsHeaderUnit</CompileAs>

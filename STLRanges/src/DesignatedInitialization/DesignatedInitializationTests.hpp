@@ -50,7 +50,6 @@ inline void ReturnValueOptimization()
 	AddToPoint({.x=20,}, 10);
 	//AddToPoint({ .y = 15 }, 10); // will not compile; it is ambiguous both Point and Point2D has .y but .X vs .x makes the difference
 
-	
 }
 
 

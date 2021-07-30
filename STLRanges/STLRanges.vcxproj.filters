@@ -95,5 +95,11 @@
     <ClInclude Include="src\DesignatedInitialization\DesignatedInitializationTests.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConstEvalConstInit\ConstEvalConstInitTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConstEvalConstInit\ConstEvalConsInit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

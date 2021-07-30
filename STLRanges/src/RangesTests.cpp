@@ -11,6 +11,7 @@
 #include "Formatting/TextFormatExamples.hpp"
 #include "ThreeWayComparision/ThreeWayCompareTests.hpp"
 #include "DesignatedInitialization/DesignatedInitializationTests.hpp"
+#include "ConstEvalConstInit/ConstEvalConstInitTests.hpp"
 
 
 auto main()->int
@@ -76,6 +77,7 @@ auto main()->int
 	ReturnValueOptimization();
 	DirectInitializeAggregates();
 	AggregatesAndCTAD();
+	constEvalSqr();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();
