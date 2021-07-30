@@ -91,6 +91,14 @@ inline void AggregatesWithDefaultConstrctor()
 	 
 }
 
+inline void AggregatesAndCTAD()
+{
+	std::printf("\n-AggregatesAndCTAD-\n");
+
+	auto [returntype, err] = OpenFile("mytext.txt");
+	fmt::print("returntype: {}, err: {}\n", returntype, err);
+}
+
 
 
 

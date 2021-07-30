@@ -5,6 +5,8 @@
 // no virtual members functions
 // no private or protected non-static data members
 // no private virtual, private or protected base classes; only public base classes
+#include <cerrno>
+
 
 struct Point2D
 {
@@ -113,3 +115,31 @@ struct NotDefaultConstructible
 private:
 	NotDefaultConstructible() = delete;
 };
+
+
+// Used for an POSIX file open system 
+// errno is a preprocessor macro used for error indication. see https://en.cppreference.com/w/cpp/error/errno
+int open(const char*)
+{
+	return 1;
+}
+
+template<typename T>
+struct ReturnCode
+{
+	T returnCode;
+	int err;
+};
+
+// Deduction guide needed in C++17
+// But C++20 can deduce type with CTAD for Aggregates as well so no need
+#if !  _HAS_CXX20
+	template<typename T>
+	ReturnCode(T, int)->ReturnCode<int>;
+#endif 
+
+
+auto OpenFile(const char* fileName)
+{
+	return ReturnCode{ open(fileName), errno};
+}
