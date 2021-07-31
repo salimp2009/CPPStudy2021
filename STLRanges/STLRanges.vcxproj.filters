@@ -24,6 +24,12 @@
     <ClCompile Include="src\RangesPythonStyle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ConstEvalConstInit\staticOrderFiasco.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConstEvalConstInit\StaticInitOrderFiasco.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\RangesPCH.hpp">

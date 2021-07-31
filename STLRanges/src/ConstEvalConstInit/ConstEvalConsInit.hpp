@@ -21,3 +21,5 @@ constexpr int sqrCompileOrRunTime(int n)
 	return n * n;
 }
 
+
+

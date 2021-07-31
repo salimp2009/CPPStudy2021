@@ -100,6 +100,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ConstEvalConstInit\StaticInitOrderFiasco.cpp" />
+    <ClCompile Include="src\ConstEvalConstInit\staticOrderFiasco.cpp" />
     <ClCompile Include="src\RangesPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">RangesPCH.hpp</PrecompiledHeaderFile>

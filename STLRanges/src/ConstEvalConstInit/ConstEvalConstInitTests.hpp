@@ -60,3 +60,15 @@ inline void constEvalInitExprSqr()
 	int prod4 = sqrCompileTime(x2);
 	int prod5 = sqrCompileTime(x3);
 }
+
+
+extern int staticValB;
+extern int staticValB2;
+
+inline void staticInitializationFiasco()
+{
+	std::printf("\n-staticInitializationFiasco-\n");
+
+	std::printf("initialized with a static local variable inside a function: %d\n", staticValB);
+	std::printf("initialized with C++20 constinit: %d\n", staticValB2);
+}
