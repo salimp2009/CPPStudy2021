@@ -12,6 +12,7 @@
 #include "ThreeWayComparision/ThreeWayCompareTests.hpp"
 #include "DesignatedInitialization/DesignatedInitializationTests.hpp"
 #include "ConstEvalConstInit/ConstEvalConstInitTests.hpp"
+#include "NonTypeTemplateParams/NTTPTests.hpp"
 
 
 auto main()->int
@@ -73,13 +74,15 @@ auto main()->int
 	//LexicographicalComparision();
 	//reWriteCompareExpressions();
 	//userDefinedvsAutoComparisions();
-	AggregateIinitialization();
-	ReturnValueOptimization();
-	DirectInitializeAggregates();
-	AggregatesAndCTAD();
-	constEvalSqr();
-	constEvalInitExprSqr();
+	//AggregateIinitialization();
+	//ReturnValueOptimization();
+	//DirectInitializeAggregates();
+	//AggregatesAndCTAD();
+	//constEvalSqr();
+	//constEvalInitExprSqr();
 	staticInitializationFiasco();
+	floatingPointNTTP();
+	classTypeNTTP();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

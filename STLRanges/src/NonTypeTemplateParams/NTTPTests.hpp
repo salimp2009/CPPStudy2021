@@ -20,7 +20,18 @@ inline void floatingPointNTTP()
 	static_assert(std::is_same_v<ADouble<0.1 + 0.1>, ADouble<0.2>>);
 
 	static_assert(+0.1+0.1 == 0.2);
-
-
 }
+
+inline void classTypeNTTP()
+{
+	std::printf("\n-classTypeNTTP-\n");
+
+	fixed_string st1{ "hello classtype NTTP" };
+
+	fmt::print("class literal fixed_string: {}\n", st1.data);
+
+	printString<"hello fixed string">();
+}
+
+
 
