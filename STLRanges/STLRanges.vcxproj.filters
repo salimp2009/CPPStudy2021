@@ -107,5 +107,11 @@
     <ClInclude Include="src\ConstEvalConstInit\ConstEvalConsInit.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NonTypeTemplateParams\NTTPTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NonTypeTemplateParams\NonTypeTemplateParams.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

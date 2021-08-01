@@ -131,6 +131,8 @@
     <ClInclude Include="src\Formatting\CustomFormatterV2.hpp" />
     <ClInclude Include="src\Formatting\CustomFormatVector.hpp" />
     <ClInclude Include="src\Formatting\TextFormatExamples.hpp" />
+    <ClInclude Include="src\NonTypeTemplateParams\NonTypeTemplateParams.hpp" />
+    <ClInclude Include="src\NonTypeTemplateParams\NTTPTests.hpp" />
     <ClInclude Include="src\RangesContainerView.hpp" />
     <ClInclude Include="src\RangesExamples01.hpp" />
     <ClInclude Include="src\RangesFilterPythonStyle.hpp" />
