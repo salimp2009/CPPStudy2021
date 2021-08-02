@@ -21,5 +21,24 @@ struct fixed_string
 template<fixed_string Str>
 void printString()
 {
-	fmt::print("{}", Str.data);
+	fmt::print("{}\n", Str.data);
 }
+
+
+template<fixed_string Str>
+struct FixedStringContainer
+{
+	void print()
+	{
+		fmt::print("{}\n", Str.data);
+	}
+};
+
+template<fixed_string Str>
+struct FormatString
+{
+	static constexpr auto fmt = Str;
+	static constexpr auto numArgs = std::ranges::count(Str.data, '%');
+	operator const auto* ()const { return fmt.data; }
+
+};

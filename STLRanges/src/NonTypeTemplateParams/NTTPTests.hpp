@@ -31,6 +31,9 @@ inline void classTypeNTTP()
 	fmt::print("class literal fixed_string: {}\n", st1.data);
 
 	printString<"hello fixed string">();
+
+	FixedStringContainer<"hello fixedstring container">fstrCont{};
+	fstrCont.print();
 }
 
 
