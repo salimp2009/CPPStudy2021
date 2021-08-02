@@ -42,3 +42,30 @@ struct FormatString
 	operator const auto* ()const { return fmt.data; }
 
 };
+
+
+template<typename... TArgs>
+void print(auto fmt, const TArgs&... args)
+{
+	
+	std::printf(fmt, args...);
+}
+
+
+template<fixed_string Str>
+constexpr auto operator"" _fs()
+{
+	return FormatString<Str>{};
+}
+
+
+template<typename... TArgs>
+void print2(auto str, const TArgs&... args)
+{
+	FormatString<str>fmt{};
+	std::printf(fmt, args...);
+}
+
+
+
+

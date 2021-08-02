@@ -36,5 +36,14 @@ inline void classTypeNTTP()
 	fstrCont.print();
 }
 
+inline void FormatWithSpecifierCount()
+{
+	std::printf("\n-FormatWithSpecifierCount-\n");
+
+	print(FormatString<"%s, %s\n">{}, "Hello", "FormatString");
+	print("%s, %s\n"_fs, "Hello", "FormatString");
+
+}
+
 
 
