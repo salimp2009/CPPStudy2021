@@ -45,10 +45,10 @@ struct FormatString
 
 
 template<typename... TArgs>
-void print(auto fmt, const TArgs&... args)
+void print(auto formt, const TArgs&... args)
 {
-	
-	std::printf(fmt, args...);
+	static_assert(formt.numArgs == sizeof...(TArgs));
+	std::printf(formt, args...);
 }
 
 
@@ -59,12 +59,6 @@ constexpr auto operator"" _fs()
 }
 
 
-template<typename... TArgs>
-void print2(auto str, const TArgs&... args)
-{
-	FormatString<str>fmt{};
-	std::printf(fmt, args...);
-}
 
 
 
