@@ -80,5 +80,32 @@ constexpr static bool match(const char c)
 	return false;
 }
 
+template<typename T>
+concept match_as = plain_same_v<int, T> || plain_same_v<char, T> || plain_same_v<double, T>
+				|| (plain_same_v<char, std::remove_all_extents_t<T>> && std::is_array_v<T>)
+				|| (plain_same_v<char*, std::remove_all_extents_t<T>> && std::is_pointer_v<T>);
 
+template<int I, typename CharT>
+constexpr auto get(const std::span<const CharT>& str)
+{
+	// auto decays the constness but we need to change start and fix the end iterator
+	auto start = std::begin(str);
+	const auto end = std::end(str);
 
+	for (int i = 0; i <= I; ++i)
+	{
+		start = std::ranges::find(start, end, '%');
+		++start;
+	}
+
+	return *start;
+}
+
+template<typename CharT, typename... Ts>
+constexpr bool IsMatching(std::span<const CharT> str)
+{
+	return[&]<std::size_t... I>(std::index_sequence<I...>)
+	{
+		return ((match<Ts>(get<I>(str))) && ...);
+	}(std::make_index_sequence <sizeof... (Ts)> {});
+}

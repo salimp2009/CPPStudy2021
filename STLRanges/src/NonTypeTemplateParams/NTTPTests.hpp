@@ -43,6 +43,7 @@ inline void FormatWithSpecifierCount()
 	print(FormatString<"%s, %s\n">{}, "Hello", "FormatString");
 	print("%s, %s\n"_fs, "Hello", "FormatString");
 
+	// test to check match function woks as intended ; to be used in print function implementation
 	static_assert(match<char*>('s'));
 	static_assert(match<int>('d'));
 	static_assert(match<double>('f'));
