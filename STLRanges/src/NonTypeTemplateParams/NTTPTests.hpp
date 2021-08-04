@@ -43,6 +43,10 @@ inline void FormatWithSpecifierCount()
 	print(FormatString<"%s, %s\n">{}, "Hello", "FormatString");
 	print("%s, %s\n"_fs, "Hello", "FormatString");
 
+	static_assert(match<char*>('s'));
+	static_assert(match<int>('d'));
+	static_assert(match<double>('f'));
+	fmt::print("match : {}", match<int>('d'));
 }
 
 

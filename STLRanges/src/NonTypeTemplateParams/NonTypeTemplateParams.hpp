@@ -59,7 +59,26 @@ constexpr auto operator"" _fs()
 }
 
 
+template<typename T, typename U>
+constexpr bool plain_same_v = std::is_same_v<std::remove_cvref_t<T>, std::remove_cvref_t<U>>;
 
+template<typename T, typename U>
+concept plain_same =plain_same_v<T, U> && plain_same_v<U, T>;
+
+template<typename T>
+constexpr static bool match(const char c)
+{
+	switch (c)
+	{
+		case 'd': return plain_same_v<int, T>;
+		case 'c': return plain_same_v<char, T>;
+		case 'f': return plain_same_v<double, T>;
+		case 's': return (plain_same_v<char, std::remove_all_extents_t<T>> && std::is_array_v<T>)
+					  || (plain_same_v<char*, std::remove_all_extents_t<T>> && std::is_pointer_v<T>) ;
+	}
+
+	return false;
+}
 
 
 
