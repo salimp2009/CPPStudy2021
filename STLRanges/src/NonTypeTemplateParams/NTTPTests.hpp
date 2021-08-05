@@ -48,6 +48,17 @@ inline void FormatWithSpecifierCount()
 	static_assert(match<int>('d'));
 	static_assert(match<double>('f'));
 	fmt::print("match : {}", match<int>('d'));
+
+	auto formt = "%s, %s\n"_fs;
+
+	// compile error I needs to be expanded in paramater pack
+	//IsMatching<char, decltype("Hello"), decltype("Mornig")>(formt.fmt.data);
+
+	// Does not compile with MSVC ON VS Studio but compiles with MSVC, Clang12.01 and GCC11.01 no godbolt
+	// 	https://godbolt.org/z/rrGsWW53r
+	//print2("%s, %s\n"_fs, "Hello", "FormatString");
+	
+
 }
 
 

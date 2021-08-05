@@ -38,7 +38,7 @@ template<fixed_string Str>
 struct FormatString
 {
 	static constexpr auto fmt = Str;
-	static constexpr auto numArgs = std::ranges::count(Str.data, '%');
+	static constexpr auto numArgs = std::ranges::count(fmt.data, '%');
 	operator const auto* ()const { return fmt.data; }
 
 };
@@ -88,24 +88,46 @@ concept match_as = plain_same_v<int, T> || plain_same_v<char, T> || plain_same_v
 template<int I, typename CharT>
 constexpr auto get(const std::span<const CharT>& str)
 {
-	// auto decays the constness but we need to change start and fix the end iterator
-	auto start = std::begin(str);
+	auto       start = std::begin(str);
 	const auto end = std::end(str);
 
-	for (int i = 0; i <= I; ++i)
-	{
+	for (int i = 0; i <= I; ++i) { 
+	  
 		start = std::ranges::find(start, end, '%');
-		++start;
+		// iterate the start to see next % sign
+		++start; 
 	}
 
-	return *start;
+	return *start; 
 }
 
 template<typename CharT, typename... Ts>
 constexpr bool IsMatching(std::span<const CharT> str)
 {
-	return[&]<std::size_t... I>(std::index_sequence<I...>)
+	return[&]<size_t... I>(std::index_sequence<I...>)
 	{
 		return ((match<Ts>(get<I>(str))) && ...);
-	}(std::make_index_sequence <sizeof... (Ts)> {});
+	}
+	(std::make_index_sequence<sizeof...(Ts)>{});
 }
+
+
+template<typename... TArgs>
+void print2(auto formt, const TArgs&... args)
+{
+	// check the number of args
+	static_assert(formt.numArgs == sizeof...(TArgs));
+
+	// check the types  of args vs specifiers
+	static_assert
+	(
+		IsMatching<std::decay_t<decltype(formt.fmt.data[0])>, TArgs...>(formt.fmt.data)
+	);
+
+	std::printf(formt, args...);
+
+}
+
+
+
+
