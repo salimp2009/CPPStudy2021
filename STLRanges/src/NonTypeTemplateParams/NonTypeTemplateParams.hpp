@@ -104,7 +104,7 @@ constexpr auto get(const std::span<const CharT>& str)
 template<typename CharT, typename... Ts>
 constexpr bool IsMatching(std::span<const CharT> str)
 {
-	return[&]<size_t... I>(std::index_sequence<I...>)
+	return[&]<std::size_t... I>(std::index_sequence<I...>)
 	{
 		return ((match<Ts>(get<I>(str))) && ...);
 	}
@@ -127,6 +127,25 @@ void print2(auto formt, const TArgs&... args)
 	std::printf(formt, args...);
 
 }
+
+
+template<typename... TArgs>
+void print2(char* s, const TArgs... ts)
+{
+	std::printf(s, ts...);
+}
+
+
+template<typename... Ts>
+constexpr bool always_false_v = false;
+
+template<typename... TArgs>
+void print2(const char* s, TArgs&&... ts)
+{
+	static_assert(always_false_v<TArgs...>, "Use user defined liter _fs");
+}
+
+
 
 
 

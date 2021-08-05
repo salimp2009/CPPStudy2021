@@ -47,7 +47,7 @@ inline void FormatWithSpecifierCount()
 	static_assert(match<char*>('s'));
 	static_assert(match<int>('d'));
 	static_assert(match<double>('f'));
-	fmt::print("match : {}", match<int>('d'));
+	fmt::print("match : {}\n", match<int>('d'));
 
 	auto formt = "%s, %s\n"_fs;
 
@@ -57,9 +57,18 @@ inline void FormatWithSpecifierCount()
 	// Does not compile with MSVC ON VS Studio but compiles with MSVC, Clang12.01 and GCC11.01 no godbolt
 	// 	https://godbolt.org/z/rrGsWW53r
 	//print2("%s, %s\n"_fs, "Hello", "FormatString");
-	
 
+
+	// overloaded version of print2 that accepts char* ; char[]; array name converts itself to char*
+	char fmt[]{ "Hello, %s" };
+	print2(fmt, "C++20");
+
+	// this wont compile on purpose since we want the user to use user defined string literal
+	// static_assert will give error on this overload
+	const char* fmt2 = "% s, % s";
+	//print2(fmt2, "hello", "c++20");
 }
+
 
 
 
