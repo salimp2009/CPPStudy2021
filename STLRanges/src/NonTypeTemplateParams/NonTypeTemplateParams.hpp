@@ -145,8 +145,19 @@ void print2(const char* s, TArgs&&... ts)
 	static_assert(always_false_v<TArgs...>, "Use user defined liter _fs");
 }
 
+// Examples from Rainer Grim's C++20 book
+struct ClassTypes
+{
+	constexpr ClassTypes(int n) :value{ n } {}
+	int value;
+};
 
+// class type NTTP
+template <ClassTypes cl>
+inline constexpr auto getClassType() { return cl; }
 
+template<double val>
+inline constexpr auto getDoubleValue() { return val; }
 
 
 

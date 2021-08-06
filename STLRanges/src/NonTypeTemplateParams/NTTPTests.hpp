@@ -93,6 +93,19 @@ inline void ConditionalExplicitConstructor()
 
 }
 
+inline void classTypeDoubleNTTP2()
+{
+	std::printf("\n-classTypeDoubleNTTP2-\n");
+
+	constexpr auto classTypeVal = getClassType<ClassTypes(2021)>();
+	static_assert(classTypeVal.value == 2021);
+
+	static_assert(getDoubleValue<555.55>() == 555.55);
+	static_assert(getDoubleValue<6.5>() == 6.5);
+
+}
+
+
 
 
 
