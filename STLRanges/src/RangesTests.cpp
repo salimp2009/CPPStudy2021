@@ -84,6 +84,7 @@ auto main()->int
 	floatingPointNTTP();
 	classTypeNTTP();
 	FormatWithSpecifierCount();
+	ConditionalExplicitConstructor();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

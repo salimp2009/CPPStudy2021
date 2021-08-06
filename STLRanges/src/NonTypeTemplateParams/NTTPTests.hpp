@@ -1,6 +1,7 @@
 #pragma once
 #include "RangesPCH.hpp"
 #include "NonTypeTemplateParams.hpp"
+#include "ConditionalExplicitConstructor.hpp"
 
 
 inline void floatingPointNTTP()
@@ -68,6 +69,31 @@ inline void FormatWithSpecifierCount()
 	const char* fmt2 = "% s, % s";
 	//print2(fmt2, "hello", "c++20");
 }
+
+inline void ConditionalExplicitConstructor()
+{
+	std::printf("\n-ConditionalExplicitConstructor-\n");
+	
+	MyBool myBool1{ true };
+	MyBool myBool2 = false;
+	
+	//will not compile due to explicit constructor cond applied if the type is other than bool
+	//MyBool myBool3=  1;
+	
+	// integer is implicitly converted to bool; this is C++ standart bug and will be changed in C++23
+	MyBool myBool4{ 1 };
+
+	auto needBool = [](MyBool b) {};
+
+	// will not compile since expliciti constructor condition it can not be converted to type bool
+	//needBool(5);
+	needBool(true);
+	// will not compile 
+	//needBool("true");
+
+}
+
+
 
 
 
