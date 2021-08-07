@@ -13,6 +13,7 @@
 #include "DesignatedInitialization/DesignatedInitializationTests.hpp"
 #include "ConstEvalConstInit/ConstEvalConstInitTests.hpp"
 #include "NonTypeTemplateParams/NTTPTests.hpp"
+#include "LambdaImprovementC20/LambdaImprovementsTest.hpp"
 
 
 auto main()->int
@@ -87,6 +88,7 @@ auto main()->int
 	ConditionalExplicitConstructor();
 	classTypeDoubleNTTP2();
 	stringLiteralNTTP2();
+	LambdaCapturesInClass();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

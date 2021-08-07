@@ -115,6 +115,8 @@
     <ClInclude Include="src\ChronoCalendarTimeZones\DatesTimeZoneExamples.hpp" />
     <ClInclude Include="src\ChronoCalendarTimeZones\TimeZoneExamples.hpp" />
     <ClInclude Include="src\CompilerModule.hpp" />
+    <ClInclude Include="src\LambdaImprovementC20\LambdaImprovements.hpp" />
+    <ClInclude Include="src\LambdaImprovementC20\LambdaImprovementsTest.hpp" />
     <ClInclude Include="src\NonTypeTemplateParams\ConditionalExplicitConstructor.hpp" />
     <ClInclude Include="src\ConstEvalConstInit\ConstEvalConsInit.hpp" />
     <ClInclude Include="src\ConstEvalConstInit\ConstEvalConstInitTests.hpp" />

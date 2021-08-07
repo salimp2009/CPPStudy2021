@@ -57,6 +57,7 @@ inline void FormatWithSpecifierCount()
 
 	// Does not compile with MSVC ON VS Studio but compiles with MSVC, Clang12.01 and GCC11.01 no godbolt
 	// 	https://godbolt.org/z/rrGsWW53r
+	// 	https://arxiv.org/abs/2107.14210
 	//print2("%s, %s\n"_fs, "Hello", "FormatString");
 
 

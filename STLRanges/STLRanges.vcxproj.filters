@@ -116,5 +116,11 @@
     <ClInclude Include="src\NonTypeTemplateParams\ConditionalExplicitConstructor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LambdaImprovementC20\LambdaImprovementsTest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LambdaImprovementC20\LambdaImprovements.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
