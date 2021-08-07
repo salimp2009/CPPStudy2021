@@ -102,7 +102,15 @@ inline void classTypeDoubleNTTP2()
 
 	static_assert(getDoubleValue<555.55>() == 555.55);
 	static_assert(getDoubleValue<6.5>() == 6.5);
+}
 
+inline void stringLiteralNTTP2()
+{
+	std::printf("\n- stringLiteralNTTP2()-\n");
+	[[maybe_unused]] ClassTemplate<StringLiteral("MyStringLiteral")> cls1;
+
+	// tried to test StringLiteral itself as a type; not quite achieved that way but this works to too
+	static_assert(std::is_same_v<ClassTemplate<StringLiteral("")>::Type, decltype(StringLiteral(""))>);
 }
 
 

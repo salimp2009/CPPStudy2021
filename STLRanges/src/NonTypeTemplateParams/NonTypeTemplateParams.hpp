@@ -1,5 +1,6 @@
 #pragma once
 
+// floating point NTTP are new in c++20
 template<double T>
 struct ADouble;
 
@@ -158,6 +159,31 @@ inline constexpr auto getClassType() { return cl; }
 
 template<double val>
 inline constexpr auto getDoubleValue() { return val; }
+
+// all members have to public
+template<int N>
+class StringLiteral
+{
+public:
+	constexpr StringLiteral(char const (&str)[N])
+	{
+		std::ranges::copy(str, data);
+	}
+	char data[N];
+};
+
+template<StringLiteral str>
+class ClassTemplate 
+{
+public:
+	using Type = typename decltype(StringLiteral(str));
+};
+
+template<StringLiteral str>
+inline void FunctionTemplate()
+{
+	fmt::print("{}\n", str.data);
+}
 
 
 
