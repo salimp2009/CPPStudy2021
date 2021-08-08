@@ -30,3 +30,25 @@ auto compare = [](const Book& a, const Book& b) { return a.isbn > b.isbn; };
 
 template<typename VALUE>
 using MapBookSortedbyISBN = std::map<Book, VALUE, decltype(compare)>;
+
+struct Magazine
+{
+	std::string name;
+	std::string isbn;
+};
+
+template<typename T>
+concept HasISBN = requires(T a)
+{
+	{a.isbn};
+};
+
+struct BookNoISBN
+{
+	std::string title;
+	//std::string isbn;
+};
+
+auto compareISBN = []<HasISBN T>(T&& a, T&& b) { return a.isbn > b.isbn; };
+template<typename KEY, typename VALUE>
+using MapSortedbyISBN = std::map<KEY, VALUE, decltype(compareISBN)>;

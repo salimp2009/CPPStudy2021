@@ -32,3 +32,41 @@ inline void DefaultConstructibleLambdas()
 	}
 }
 
+inline void LambdasInGenericCode()
+{
+	std::printf("\n-LambdasInGenericCode-\n");
+
+	const Book effectiveCpp{ "Effective C++", "978-3-16-148410-0" };
+	const Book functProgCpp{ "Functional Programming in C++", "978-3-20-148410-0" };
+
+	const Price normal{ 34.95 };
+	const Price reduced{ 24.95 };
+
+	MapSortedbyISBN < Book, Price> book2Price = { {effectiveCpp, normal}, {functProgCpp, reduced} };
+
+	for (const auto& [book, price] : book2Price)
+	{
+		fmt::print("book name: {}, ISBN: {}, Price: {}\n", book.title, book.isbn, price.amount);
+	}
+
+	// Testing NoISBN and concept
+	const BookNoISBN effectiveCpp2{ "Effective C++" };
+	const BookNoISBN functProgCpp2{ "Functional Programming in C++" };
+
+	// Tested with NoIsBN does not compile as expected 
+	//MapSortedbyISBN < BookNoISBN, Price> book3Price = { {effectiveCpp2, normal}, {functProgCpp2, reduced} };
+
+	const Magazine ix{ "iX", "978-3-16-148410-0" };
+	const Magazine overload{ "overload", "978-3-20-148410-0" };
+
+	MapSortedbyISBN<Magazine, Price> magazine2Price{ {ix, reduced}, {overload, normal} };
+
+	for (const auto& [magazine, price] : magazine2Price)
+	{
+		fmt::print("magazine name: {}, ISBN: {}, Price: {}\n",magazine.name, magazine.isbn, price.amount);
+	}
+
+	// Testing HasISBN concept
+	static_assert(HasISBN<Magazine>);
+	static_assert(!HasISBN<BookNoISBN>);
+}
