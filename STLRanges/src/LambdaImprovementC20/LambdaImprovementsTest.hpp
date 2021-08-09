@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "RangesPCH.hpp"
 #include "LambdaImprovements.hpp"
 
@@ -70,3 +70,17 @@ inline void LambdasInGenericCode()
 	static_assert(HasISBN<Magazine>);
 	static_assert(!HasISBN<BookNoISBN>);
 }
+
+
+// Does not compile with MSVC; MSVC Bug When there 2 variadic arguments in Lambda Capture ; it does not work; compİLES WİTH gcc / clang
+inline void LambdasWithVariadicCapture()
+{
+	std::printf("\n- LambdasWithVariadicCapture-\n");
+#if not defined(_MSC_VER)
+	auto steeringLogger = getNamedLogger("steering");
+	steeringLogger("angle", 90);
+#endif
+}
+
+
+

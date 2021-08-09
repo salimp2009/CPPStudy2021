@@ -81,16 +81,17 @@ auto main()->int
 	//AggregatesAndCTAD();
 	//constEvalSqr();
 	//constEvalInitExprSqr();
-	staticInitializationFiasco();
-	floatingPointNTTP();
-	classTypeNTTP();
-	FormatWithSpecifierCount();
-	ConditionalExplicitConstructor();
-	classTypeDoubleNTTP2();
-	stringLiteralNTTP2();
-	LambdaCapturesInClass();
+	//staticInitializationFiasco();
+	//floatingPointNTTP();
+	//classTypeNTTP();
+	//FormatWithSpecifierCount();
+	//ConditionalExplicitConstructor();
+	//classTypeDoubleNTTP2();
+	//stringLiteralNTTP2();
+	//LambdaCapturesInClass();
 	DefaultConstructibleLambdas();
 	LambdasInGenericCode();
+	LambdasWithVariadicCapture();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

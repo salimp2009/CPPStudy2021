@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // [=] the implicit capture of this is depreciated in c++20 and will probably be removed in c++23;
 // so use this to pass the object as pointer or *this as a copy in lambdas inside a class that needs to access member variables
@@ -52,3 +52,34 @@ struct BookNoISBN
 auto compareISBN = []<HasISBN T>(T&& a, T&& b) { return a.isbn > b.isbn; };
 template<typename KEY, typename VALUE>
 using MapSortedbyISBN = std::map<KEY, VALUE, decltype(compareISBN)>;
+
+
+template<typename... Origins, typename... Ts>
+void printLog(Origins&&... origins, Ts&&... args)
+{
+	(fmt::print("origin: {}, args: {}", origins, args), ...);
+}
+
+// Does not compile with MSVC; MSVC Bug When there 2 variadic arguments in Lambda Capture ; it does not work; compİLES WİTH gcc / clang
+template<typename... Origins>
+auto getNamedLogger(Origins&&... origins)
+{
+	// lambda with variadic capture
+	auto logger = [..._origins = std::forward<Origins>(origins)]<typename... Ts>(Ts... args)
+	{
+		printLog(_origins... , std::forward<Ts>(args)...);
+	};
+
+	return logger;
+}
+
+// from Andreas Fertig book to test MSVC bug; both this and my version did not work with MSVC
+
+//template < typename... Origins>
+//auto getNamedLogger(Origins... origins)
+//{
+//	 return[... _origins = std::forward<Origins>(origins)]<typename... Ts>(Ts... args)
+//	{
+//		printLog(_origins..., std::forward<Ts>(args)...);
+//	};
+//}
