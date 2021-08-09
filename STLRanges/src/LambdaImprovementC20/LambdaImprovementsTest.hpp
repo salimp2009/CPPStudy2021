@@ -75,12 +75,21 @@ inline void LambdasInGenericCode()
 // Does not compile with MSVC; MSVC Bug When there 2 variadic arguments in Lambda Capture ; it does not work; compİLES WİTH gcc / clang
 inline void LambdasWithVariadicCapture()
 {
+	using namespace std::string_literals;
 	std::printf("\n- LambdasWithVariadicCapture-\n");
 #if not defined(_MSC_VER)
 	auto steeringLogger = getNamedLogger("steering");
 	steeringLogger("angle", 90);
 #endif
 }
+
+inline void GenericLambdasWithConcepts()
+{
+	std::printf("\n- GenericLambdasWithConcepts-\n");
+	using namespace std::string_literals;
+
+}
+
 
 
 

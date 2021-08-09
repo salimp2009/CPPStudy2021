@@ -65,12 +65,11 @@ template<typename... Origins>
 auto getNamedLogger(Origins&&... origins)
 {
 	// lambda with variadic capture
-	auto logger = [..._origins = std::forward<Origins>(origins)]<typename... Ts>(Ts... args)
+	return [..._origins = std::forward<Origins>(origins)]<typename... Ts>(Ts... args)
 	{
 		printLog(_origins... , std::forward<Ts>(args)...);
 	};
 
-	return logger;
 }
 
 // from Andreas Fertig book to test MSVC bug; both this and my version did not work with MSVC
@@ -83,3 +82,18 @@ auto getNamedLogger(Origins&&... origins)
 //		printLog(_origins..., std::forward<Ts>(args)...);
 //	};
 //}
+
+
+
+template<typename... Origins>
+auto getNamedLogger2(Origins&&... origins)
+{
+	// lambda with requires ; // Example scenario; not to accept Origins as pointers and also the args not floating points
+	return [..._origins = std::forward<Origins>(origins)]<typename... Ts>requires(not std::disjunction_v<std::is_floating_point<Ts>...>)
+	(Ts... args) requires(not std::disjunction_v<std::is_pointer<Origins>...>)
+	{
+		printLog(_origins..., std::forward<Ts>(args)...);
+	};
+
+	
+}
