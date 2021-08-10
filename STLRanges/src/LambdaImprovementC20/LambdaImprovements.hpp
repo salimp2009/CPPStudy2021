@@ -72,18 +72,6 @@ auto getNamedLogger(Origins&&... origins)
 
 }
 
-// from Andreas Fertig book to test MSVC bug; both this and my version did not work with MSVC
-
-//template < typename... Origins>
-//auto getNamedLogger(Origins... origins)
-//{
-//	 return[... _origins = std::forward<Origins>(origins)]<typename... Ts>(Ts... args)
-//	{
-//		printLog(_origins..., std::forward<Ts>(args)...);
-//	};
-//}
-
-
 
 template<typename... Origins>
 auto getNamedLogger2(Origins&&... origins)
@@ -108,3 +96,40 @@ auto getNamedLogger2A(Origins&&... origins)
 		printLog(_origins..., std::forward<Ts>(args)...);
 	};
 }
+
+// this may cause undefined behaviour due to lifetime of the struct ; it goes out out of scope and lambda calls a member variable of a class that goes out of scope
+struct LambdaFactory
+{
+	auto foo()
+	{
+		return [=]() { std::printf("%s \n", s.c_str()); };
+	}
+
+	std::string s = "Lamda Factory";
+	~LambdaFactory() { std::puts("Goodbye from Lmbda Factory"); }
+};
+
+
+inline auto makeLambda()
+{
+	LambdaFactory lambdafactory;
+	return lambdafactory.foo();
+}
+
+struct LambdaFactory2
+{
+	auto foo()
+	{
+		return [*this]() { std::printf("%s \n", s.c_str()); };
+	}
+
+	std::string s = "Lambda Factory2";
+	~LambdaFactory2() { std::puts("Goodbye from Lambda Factory2"); }
+};
+
+inline auto makeLambda2()
+{
+	LambdaFactory2 lambdafactory2;
+	return lambdafactory2.foo();
+}
+

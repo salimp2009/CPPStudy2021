@@ -30,6 +30,9 @@
     <ClCompile Include="src\ConstEvalConstInit\StaticInitOrderFiasco.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LambdaImprovementC20\LambdasUnEvaluatedContextTest.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\RangesPCH.hpp">
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LambdaImprovementC20\LambdaImprovements.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LambdaImprovementC20\LambdasUnEvaluatedContext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

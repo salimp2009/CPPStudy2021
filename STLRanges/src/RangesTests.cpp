@@ -14,6 +14,7 @@
 #include "ConstEvalConstInit/ConstEvalConstInitTests.hpp"
 #include "NonTypeTemplateParams/NTTPTests.hpp"
 #include "LambdaImprovementC20/LambdaImprovementsTest.hpp"
+#include "LambdaImprovementC20/LambdasUnEvaluatedContextTest.hpp"
 
 
 auto main()->int
@@ -93,6 +94,8 @@ auto main()->int
 	LambdasInGenericCode();
 	LambdasWithVariadicCapture();
 	GenericLambdasWithConcepts();
+	ClassLambdasWithVariableCapture();
+	unEvaluatedContext();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();

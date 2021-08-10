@@ -88,7 +88,24 @@ inline void GenericLambdasWithConcepts()
 	std::printf("\n- GenericLambdasWithConcepts-\n");
 	using namespace std::string_literals;
 
+	// incomplete due to MSVC bug with more than one variadic arguments in lambdas
 }
+
+inline void ClassLambdasWithVariableCapture()
+{
+	std::printf("\n-ClassLambdasWithVariableCapture-\n");
+
+	// when the lambda captures by [=] it implicity captures this and + C++20 gives you of warning of depreciated but MSVC does not
+	// this is undefine behaviour since we are returning a lambda that return the a variable of struct that goes out of scope when we call better to capture [*this]
+	//auto lambdaFunct = makeLambda();
+	//lambdaFunct();
+
+	// this one use capture [*this] therefore lambda return a copy and it works correctly as expected
+	auto lambdaFunct2 = makeLambda2();
+	lambdaFunct2();
+
+}
+
 
 
 
