@@ -94,6 +94,17 @@ auto getNamedLogger2(Origins&&... origins)
 	{
 		printLog(_origins..., std::forward<Ts>(args)...);
 	};
+}
 
-	
+template<typename T>
+concept NotFloatingPoint = not std::is_floating_point_v<T>;
+
+template<typename... Origins>
+auto getNamedLogger2A(Origins&&... origins)
+{
+	// added the  concept NotFloatingPoint in the template typename in lambda
+	return[..._origins = std::forward<Origins>(origins)]<NotFloatingPoint... Ts> (Ts... args) requires(not std::disjunction_v<std::is_pointer<Origins>...>)
+	{
+		printLog(_origins..., std::forward<Ts>(args)...);
+	};
 }
