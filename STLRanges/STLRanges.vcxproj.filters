@@ -128,5 +128,8 @@
     <ClInclude Include="src\LambdaImprovementC20\LambdasUnEvaluatedContext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Attributes\AtttributesTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

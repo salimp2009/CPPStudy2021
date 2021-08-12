@@ -15,6 +15,7 @@
 #include "NonTypeTemplateParams/NTTPTests.hpp"
 #include "LambdaImprovementC20/LambdaImprovementsTest.hpp"
 #include "LambdaImprovementC20/LambdasUnEvaluatedContextTest.hpp"
+#include "Attributes/AtttributesTests.hpp"
 
 
 auto main()->int
@@ -90,12 +91,14 @@ auto main()->int
 	//classTypeDoubleNTTP2();
 	//stringLiteralNTTP2();
 	//LambdaCapturesInClass();
-	DefaultConstructibleLambdas();
-	LambdasInGenericCode();
-	LambdasWithVariadicCapture();
-	GenericLambdasWithConcepts();
-	ClassLambdasWithVariableCapture();
+	//DefaultConstructibleLambdas();
+	//LambdasInGenericCode();
+	//LambdasWithVariadicCapture();
+	//GenericLambdasWithConcepts();
+	//ClassLambdasWithVariableCapture();
 	unEvaluatedContext();
+	lambdasUnEvalContext();
+	AttributesTest1();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();
