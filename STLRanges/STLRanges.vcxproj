@@ -113,6 +113,7 @@
     <ClCompile Include="src\RangesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Attributes\AttributesCpp20.hpp" />
     <ClInclude Include="src\Attributes\AtttributesTests.hpp" />
     <ClInclude Include="src\ChronoCalendarTimeZones\DatesTimeZoneExamples.hpp" />
     <ClInclude Include="src\ChronoCalendarTimeZones\TimeZoneExamples.hpp" />
