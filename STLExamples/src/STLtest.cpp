@@ -19,6 +19,7 @@ import LLVMTestModule;      // this .cppm file and vs studio sees this as a regu
 #include "Experimental/ExperimentalTests.h"
 #include "Experimental/IntrusiveSharedPtrImpl.hpp"
 #include "cpp17features/VariantExamples.h"
+#include "AttributesCPP20/AtttributesTests.hpp"
 
 
 
@@ -426,6 +427,8 @@ int main(int argc, char* argv[])
 
 	/* Module function using a cppn file not .ixx file!*/
 	llvmPrint2();
+
+	AttributesTest1();
 
 	return 0;
 

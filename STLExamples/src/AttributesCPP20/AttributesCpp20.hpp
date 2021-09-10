@@ -1,13 +1,13 @@
 #pragma once
-#include "RangesPCH.hpp"
+#include "STLpch.h"
 
-struct  Mytype
+struct Mytype
 {
-	[[nodiscard("Implicitly ignoring!!!!")]] Mytype(int, bool) {}
+	[[nodiscard("Implicitly destroying of temp MyInt")]] Mytype(int, bool) {}
 };
 
 template <typename T, typename... Args>
-[[nodiscard("Dont Disgard; Memory Leak!!!")]] T* create(Args&&... args)
+[[nodiscard("Memory Leak:Dont Discard!!!")]] T* create(Args&&... args)
 {
 	return new T(std::forward<Args>(args)...);
 }

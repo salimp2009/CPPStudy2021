@@ -6,8 +6,13 @@ inline void AttributesTest1()
 {
 	std::printf("\n-AttributesTest1-\n");
 
+	// this should create a Warning since it has been changed in C++20 ; added [[nodiscard]] attribute so it does not become a blocking function
+	std::future<int> f1 = std::async(std::launch::async, []() { return 8; });
+
 	int* val = create<int>(5);
 	delete val;
+
+	//auto futval = f1.get();
 
 	// memory leak
 	create<int>(5);
@@ -15,10 +20,5 @@ inline void AttributesTest1()
 	errorProneFunction();
 
 	Mytype(5, true);
-
-	std::printf("\n-AttributesTest2-\n");
-	std::printf("\n-AttributesTest3-\n");
-
-	
 
 }

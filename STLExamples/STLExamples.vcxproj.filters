@@ -110,5 +110,11 @@
     <ClInclude Include="src\cpp17features\StateMachineExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\AttributesCPP20\AttributesCpp20.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AttributesCPP20\AtttributesTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
