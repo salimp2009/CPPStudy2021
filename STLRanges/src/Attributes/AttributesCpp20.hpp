@@ -21,3 +21,17 @@ enum class [[nodiscard("Dont Ignore the Error!!!")]] ErrorCode
 };
 
 ErrorCode errorProneFunction() { return ErrorCode::Fatal; }
+
+struct Empty {};
+
+struct NoUniqueAddress
+{
+	int d{};
+	[[no_unique_address]] Empty e;
+};
+
+struct UniqueAddress
+{
+	int d{};
+	Empty e;
+};

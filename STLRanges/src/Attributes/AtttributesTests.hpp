@@ -20,5 +20,19 @@ inline void AttributesTest1()
 	errorProneFunction();
 
 	Mytype(5, true);
+//
+}
+
+inline void NoUniqueAddressTest()
+{
+	std::printf("\n-NoUniqueAddress-\n");
+
+	fmt::print("size of empty: {}\n", sizeof(Empty));
+	fmt::print("size of int: {}\n", sizeof(int));
+
+	fmt::print("size of NoUniqueAddress=sizeof(int): {}\n", sizeof(NoUniqueAddress));
+	fmt::print("size of UniqueAddress=sizeof(int): {}\n", sizeof(UniqueAddress));
+
+
 
 }
