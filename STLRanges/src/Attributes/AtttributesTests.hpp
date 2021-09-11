@@ -30,9 +30,23 @@ inline void NoUniqueAddressTest()
 	fmt::print("size of empty: {}\n", sizeof(Empty));
 	fmt::print("size of int: {}\n", sizeof(int));
 
+	// MSVC Bug; no_unique_address give the same sizeof whereas GCC and clang not ; 
 	fmt::print("size of NoUniqueAddress=sizeof(int): {}\n", sizeof(NoUniqueAddress));
 	fmt::print("size of UniqueAddress=sizeof(int): {}\n", sizeof(UniqueAddress));
 
+	NoUniqueAddress NoUnique;
+
+	// MSVC Bug; no_unique_address give different addresses but GCC & Clang gives same address ; 
+	fmt::print("address of NoUnique: {}\n",(const void*) &NoUnique.d);
+	fmt::print("address of NoUnique: {}\n", (const void*)&NoUnique.e);
+
+
+	UniqueAddress Unique;
+
+	// works as expected different address for the variables of same struct
+	// (const void*) cast is rquired by fmt to print the address of pointer
+	fmt::print("address of Unique: {}\n", (const void*)&Unique.d);
+	fmt::print("address of Unique: {}\n", (const void*)&Unique.e);
 
 
 }

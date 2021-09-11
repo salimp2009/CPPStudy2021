@@ -16,6 +16,7 @@
 #include "LambdaImprovementC20/LambdaImprovementsTest.hpp"
 #include "LambdaImprovementC20/LambdasUnEvaluatedContextTest.hpp"
 #include "Attributes/AtttributesTests.hpp"
+#include "Attributes/VolatileChangesTests.hpp"
 
 
 auto main()->int
@@ -100,6 +101,7 @@ auto main()->int
 	lambdasUnEvalContext();
 	AttributesTest1();
 	NoUniqueAddressTest();
+	VolatileChanges();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();
