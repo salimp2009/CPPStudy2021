@@ -17,6 +17,10 @@ inline void VolatileChanges()
 	// OK; not depreciated
 	dinasor = dinasor+neck;
 	//
+
+	jurassic();
+
+	trex(20, 30);
 	
 }
 
