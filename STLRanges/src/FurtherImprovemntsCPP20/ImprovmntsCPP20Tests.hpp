@@ -1,5 +1,6 @@
 #pragma once
 #include "RangesPCH.hpp"
+#include "ImprovementsCPP20.hpp"
 
 inline void RangeBasedForLoopInitialize()
 {
@@ -24,4 +25,20 @@ inline void RangeBasedForLoopInitialize()
 		std::printf("%d ", elem);
 	}
 	std::puts(" ");
+	
 }
+
+inline void VirtualConstExprFunction()
+{
+	std::printf("\n-VirtualConstExprFunction-\n");
+
+	constexpr X2 x2;
+	constexpr X3 x3;
+	constexpr auto val = x2.f();
+	static_assert(x2.f() == 2);
+	
+	X1* xx1 = new X4;
+	std::printf("x1: %d ", xx1->f());
+	
+}
+
