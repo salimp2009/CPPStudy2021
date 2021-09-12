@@ -140,5 +140,11 @@
     <ClInclude Include="src\Attributes\VolatileChangesTests.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\FurtherImprovemntsCPP20\ImprovementsCPP20.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FurtherImprovemntsCPP20\ImprovmntsCPP20Tests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

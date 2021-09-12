@@ -17,6 +17,7 @@
 #include "LambdaImprovementC20/LambdasUnEvaluatedContextTest.hpp"
 #include "Attributes/AtttributesTests.hpp"
 #include "Attributes/VolatileChangesTests.hpp"
+#include "FurtherImprovemntsCPP20/ImprovmntsCPP20Tests.hpp"
 
 
 auto main()->int
@@ -102,6 +103,7 @@ auto main()->int
 	AttributesTest1();
 	NoUniqueAddressTest();
 	VolatileChanges();
+	RangeBasedForLoopInitialize();
 	
 	// NOT COMPILING due to MSVC Bug in std::format_to() function when used for customizing std::formatter!!
 	//custformatStockIndex_V3();
