@@ -23,6 +23,22 @@ struct X4 : public X3
 
 struct NonconstExpr
 {
-
 	int f() const { return 400; }
 };
+
+enum class ColorMe
+{
+	Red, Blue, Green
+};
+
+std::string_view toString(ColorMe color)
+{
+	switch (color)
+	{
+		using enum ColorMe;
+		case Red: return "red";
+		case Blue: return "red";
+		case Green: return "red";
+	}
+	return "unknown";
+}

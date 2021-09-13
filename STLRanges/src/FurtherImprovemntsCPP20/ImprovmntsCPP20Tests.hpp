@@ -70,7 +70,15 @@ inline void Char8Strings()
 	
 	std::printf("char8String2.size(): %zd \n", char8String2.size());
 
-
 }
+
+inline void usingEnumLocalScope()
+{
+	std::printf("\n- usingEnumLocalScope-\n");
+	
+	fmt::print("toString(Color::Red): {} \n", toString(ColorMe::Red));
+}
+
+
 
 

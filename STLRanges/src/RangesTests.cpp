@@ -106,4 +106,5 @@ auto main()->int
 	RangeBasedForLoopInitialize();
 	VirtualConstExprFunction();
 	Char8Strings();
+	usingEnumLocalScope();
 }
