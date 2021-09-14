@@ -107,4 +107,5 @@ auto main()->int
 	VirtualConstExprFunction();
 	Char8Strings();
 	usingEnumLocalScope();
+	bitFieldInitialization();
 }

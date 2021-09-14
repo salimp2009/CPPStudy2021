@@ -42,3 +42,23 @@ std::string_view toString(ColorMe color)
 	}
 	return "unknown";
 }
+
+struct Class11
+{
+	int i = 1;
+	int j = 2;
+	int k = 3;
+	int l = 4;
+	int m = 5;
+	int n = 6;
+};
+
+struct BitField20
+{
+	int i:3 = 1;
+	int j:4 = 2;
+	int k:5 = 3;
+	int l:6 = 4;
+	int m:7 = 5;
+	int n:7 = 6;
+};

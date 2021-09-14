@@ -79,6 +79,15 @@ inline void usingEnumLocalScope()
 	fmt::print("toString(Color::Red): {} \n", toString(ColorMe::Red));
 }
 
+inline void bitFieldInitialization()
+{
+	std::printf("\n- bitFieldInitialization-\n");
+
+	std::printf("sizeof (Class11): %zd \n", sizeof(Class11));
+	std::printf("sizeof (BitField20): %zd \n", sizeof(BitField20));
+}
+
+
 
 
 
