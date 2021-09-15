@@ -87,6 +87,33 @@ inline void bitFieldInitialization()
 	std::printf("sizeof (BitField20): %zd \n", sizeof(BitField20));
 }
 
+inline void IsConstEval()
+{
+	std::printf("\n-IsConstEval-\n");
+
+	constexpr double kilo1 = power(10.0, 3);
+ 
+	static_assert(kilo1 == 1000);
+
+	std::printf("kilo1: %f \n", kilo1);
+
+	int n = 3;
+	double kilo2 = power(10.0, 3);
+	
+	// does not compile since it is run time
+	//static_assert(kilo2 == 1000);
+
+	std::printf("kilo2: %f \n", kilo2);
+
+	const int y = 2;
+	const auto result1 = std::is_constant_evaluated() ? y : 0;
+	static_assert(result1 == y);
+	
+	const auto result2 = std::is_constant_evaluated() ? 5 : 0;
+	static_assert(result2 == 5);
+}
+
+
 
 
 

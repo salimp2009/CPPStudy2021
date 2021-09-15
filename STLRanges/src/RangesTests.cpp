@@ -108,4 +108,5 @@ auto main()->int
 	Char8Strings();
 	usingEnumLocalScope();
 	bitFieldInitialization();
+	IsConstEval();
 }

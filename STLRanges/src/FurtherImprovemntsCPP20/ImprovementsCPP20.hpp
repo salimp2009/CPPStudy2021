@@ -62,3 +62,27 @@ struct BitField20
 	int m:7 = 5;
 	int n:7 = 6;
 };
+
+
+constexpr double power(double b, int x)
+{
+	if (std::is_constant_evaluated() && !(b == 0.0 && x < 0))
+	{
+		if (x == 0) return 1;
+		double r = 1.0;
+		double p = x > 0 ? b : 1.0 / b;
+		auto u = unsigned(x > 0 ? x : -x);
+		while (u != 0)
+		{
+			if (u & 1) r *= p;
+			u /= 2;
+			p *= p;
+		}
+		return r;
+	}
+	else
+	{
+		return std::pow(b, double(x));
+	}
+
+}
