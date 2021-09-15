@@ -113,6 +113,14 @@ inline void IsConstEval()
 	static_assert(result2 == 5);
 }
 
+inline void logSourceLocation()
+{
+	std::printf("\n-logSourceLocation-\n");
+	log("logging my message");
+}
+
+
+
 
 
 

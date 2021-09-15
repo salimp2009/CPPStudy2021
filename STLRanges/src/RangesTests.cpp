@@ -109,4 +109,5 @@ auto main()->int
 	usingEnumLocalScope();
 	bitFieldInitialization();
 	IsConstEval();
+	logSourceLocation();
 }

@@ -40,6 +40,10 @@
 #include <format>
 #endif
 
+#if __has_include(<source_location>)
+#include <source_location>
+#endif
+
 #include <thread>
 #include <future>
 #include <execution>

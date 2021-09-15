@@ -86,3 +86,8 @@ constexpr double power(double b, int x)
 	}
 
 }
+
+void log(std::string_view message, const std::source_location& location = std::source_location::current())
+{
+	fmt::print("log info: file name= {0}, line= {1}, message= {2} \n", location.file_name(), location.line(), message);
+}
