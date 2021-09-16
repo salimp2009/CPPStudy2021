@@ -1,6 +1,7 @@
 #pragma once
 #include "RangesPCH.hpp"
 #include "ImprovementsCPP20.hpp"
+#include <iostream>
 
 inline void RangeBasedForLoopInitialize()
 {
@@ -43,6 +44,8 @@ inline void VirtualConstExprFunction()
 	X4 x4;
 	X1& xx2 = x4;
 	std::printf("xx2: %d \n", xx2.f());
+
+	delete xx1;
 }
 
 inline void Char8Strings()
@@ -118,6 +121,35 @@ inline void logSourceLocation()
 	std::printf("\n-logSourceLocation-\n");
 	log("logging my message");
 }
+
+inline void toAddressTest()
+{
+	std::printf("\n-toAddressTest-\n");
+
+	int myInt{ 5 };
+	int* myIntPtr{ &myInt };
+
+	// the address of the myInt
+	fmt::print("address of myInt: {} \n",(void*) &myInt);
+	
+	// address of the pointer that points to myInt (not the address of myInt; the value of the pointer is the address of the myInt)
+	fmt::print("address of myIntPtr: {} \n", (void*)&myIntPtr);
+
+
+	// the address of the myInt
+	std::cout << "address of myInt: " << &myInt << '\n';
+	
+
+	// address of the pointer that points to myInt (not the address of myInt; the value of the pointer is the address of the myInt)
+	std::cout << "address of myIntPtr: " << &myIntPtr <<'\n';
+
+	// address of object that pointer points to (address myInt)
+	std::cout << "to_address(myIntPtr): " << std::to_address(myIntPtr)<< '\n';
+
+	
+	
+}
+
 
 
 

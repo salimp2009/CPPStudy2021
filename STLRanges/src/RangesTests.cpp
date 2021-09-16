@@ -110,4 +110,5 @@ auto main()->int
 	bitFieldInitialization();
 	IsConstEval();
 	logSourceLocation();
+	toAddressTest();
 }
