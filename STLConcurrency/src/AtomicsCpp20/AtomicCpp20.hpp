@@ -1,7 +1,7 @@
 #pragma once
 #include "ConcurrencyPCH.h"
 
-struct ExpensiveToCopy
+struct ExpensiveToCopy2
 {
 	int counter{};
 };
@@ -16,10 +16,12 @@ int getRandom(int begin, int end)
 	return uniformDist(engine);
 }
 
-void count(ExpensiveToCopy& exp)
+void count(ExpensiveToCopy2& exp)
 {
 	std::vector<std::thread> v;
-	std::atomic<int> counter{ exp.counter };
+	//std::atomic<int> counter{ exp.counter };  // this copies ex.counter therfore we cannot access the value and not desirable if it is expensive to copy
+
+	std::atomic_ref<int>counter{ exp.counter };
 
 	for (int n = 0; n < 10; ++n)
 	{
@@ -37,4 +39,11 @@ void count(ExpensiveToCopy& exp)
 	{
 		thread.join();
 	}
+
 }
+
+struct Counters
+{
+	int a;
+	int b;
+};
