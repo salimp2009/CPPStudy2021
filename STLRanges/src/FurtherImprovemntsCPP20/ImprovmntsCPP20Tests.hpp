@@ -146,6 +146,18 @@ inline void toAddressTest()
 	// address of object that pointer points to (address myInt)
 	std::cout << "to_address(myIntPtr): " << std::to_address(myIntPtr)<< '\n';
 
+	auto uniquePtr = std::make_unique<int>(5);
+	auto uniquePtr2 = std::make_unique<int>(5);
+
+	std::cout << "to_address(uniqueptr): " << std::to_address(uniquePtr) << '\n';
+	std::cout << "to_address(uniqueptr.get()): " << std::to_address(uniquePtr.get()) << '\n';
+
+	std::cout << "to_address(uniqueptr2): " << std::to_address(uniquePtr2) << '\n';
+	std::cout << "to_address(uniqueptr2.get()): " << std::to_address(uniquePtr2.get()) << '\n';
+	
+
+
+
 	
 	
 }

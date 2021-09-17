@@ -15,6 +15,8 @@
 #include "Coroutines/CortnWithMemoryPool.hpp"
 #include "Coroutines/CortnPMRmemoryPool.hpp"
 #include "Coroutines/CortnParserExceptions.hpp"
+#include "AtomicsCpp20/AtomicCpp20Tests.hpp"
+
 
 int main()
 {
@@ -78,6 +80,7 @@ int main()
 	//StreamParser_MemoryPool();
 	//StreamParser_PMRMemoryPool();
 	StreamParser_CortnExceptions();
+	AtomicRef();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	

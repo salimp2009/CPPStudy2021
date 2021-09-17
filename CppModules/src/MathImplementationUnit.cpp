@@ -1,10 +1,12 @@
 module;
+
 #include <numeric>
 
 module math;
-/* the example shows numeric to be here but then it does not compile because this is the field export / import 
-	and standart library is not modularized ; maybe in c++23
+/* the example shows numeric to be here but then it does compile with a warning because this is the field export / import 
+	and standart library is not modularized ; might be a false warning !!!!
 */
+//#include <numeric>
 
 namespace math
 {

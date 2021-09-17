@@ -155,6 +155,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AtomicsCpp20\AtomicCpp20.hpp" />
+    <ClInclude Include="src\AtomicsCpp20\AtomicCpp20Tests.hpp" />
     <ClInclude Include="src\Coroutines\ByteStreamParserOLDWay.hpp" />
     <ClInclude Include="src\Coroutines\CoroutineExamples.hpp" />
     <ClInclude Include="src\Coroutines\CoroutineFactoryBasics.hpp" />

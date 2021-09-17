@@ -92,5 +92,11 @@
     <ClInclude Include="src\Coroutines\CortnParserExceptions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\AtomicsCpp20\AtomicCpp20Tests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AtomicsCpp20\AtomicCpp20.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
