@@ -27,3 +27,36 @@ inline void AtomicRef()
 	fmt::print("Counters is_lock_free(): {}", atmCounters.is_lock_free());
 
 }
+
+inline void AtomicSharedPointer()
+{
+	std::printf("\n--AtomicSharedPointer--\n");
+
+	std::atomic<std::shared_ptr<std::string>> sharedString(std::make_shared<std::string>("Zero"));
+
+	std::thread t1([&sharedString]() 
+	{
+			// that is a very very expensive copy !!!
+			sharedString.store(std::make_shared<std::string>(*sharedString.load() + "One"));
+	});
+
+	std::thread t2([&sharedString]()
+		{
+			// that is a very very expensive copy !!!
+			sharedString.store(std::make_shared<std::string>(*sharedString.load() + "Two"));
+		});
+	
+	std::thread t3([&sharedString]()
+		{
+			// that is a very very expensive copy !!!
+			sharedString.store(std::make_shared<std::string>(*sharedString.load() + "Three"));
+		});
+
+	t1.join();
+	t2.join();
+	t3.join();
+
+	fmt::print("sharedString: {} \n", *sharedString.load());
+
+
+}

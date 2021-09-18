@@ -81,6 +81,7 @@ int main()
 	//StreamParser_PMRMemoryPool();
 	StreamParser_CortnExceptions();
 	AtomicRef();
+	AtomicSharedPointer();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
