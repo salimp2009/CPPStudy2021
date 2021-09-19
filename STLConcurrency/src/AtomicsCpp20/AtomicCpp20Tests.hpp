@@ -57,6 +57,38 @@ inline void AtomicSharedPointer()
 	t3.join();
 
 	fmt::print("sharedString: {} \n", *sharedString.load());
+}
 
+inline void AtomicFlag()
+{
+	std::printf("\n-AtomicFlag--\n");
 
+	std::vector<int> myVec{};
+
+// ATOMIC_FLAG_INIT is depreciated in C++20 and default constructor initializes since C++20 and it is constexpr
+// https://en.cppreference.com/w/cpp/atomic/atomic_flag/atomic_flag
+	std::atomic_flag atomicFlag{};
+
+	auto prepareWork = [&myVec, &atomicFlag]()
+	{
+		myVec.insert(myVec.end(), { 0,1,0,3 });
+		std::puts("Sender:Data prepared");
+		atomicFlag.test_and_set(std::memory_order_release);
+		atomicFlag.notify_one();
+	};
+
+	auto completeWork = [&myVec, &atomicFlag]()
+	{
+		std::puts("Waiter: waiting for work!!");
+		atomicFlag.wait(false, std::memory_order_acquire);
+		myVec[2] = 200;
+		std::puts("Waiter:Completed Work!!");
+		fmt::print("myVec: {}", myVec);
+	};
+
+	std::thread t1(prepareWork);
+	std::thread t2(completeWork);
+
+	t1.join();
+	t2.join();
 }

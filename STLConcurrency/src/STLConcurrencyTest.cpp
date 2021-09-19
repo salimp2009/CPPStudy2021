@@ -82,6 +82,7 @@ int main()
 	StreamParser_CortnExceptions();
 	AtomicRef();
 	AtomicSharedPointer();
+	AtomicFlag();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
