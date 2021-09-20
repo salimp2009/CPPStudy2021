@@ -83,12 +83,9 @@ inline void AtomicFlag()
 		atomicFlag.wait(false, std::memory_order_acquire);
 		myVec[2] = 200;
 		std::puts("Waiter:Completed Work!!");
-		fmt::print("myVec: {}", myVec);
+		fmt::print("myVec: {}\n", myVec);
 	};
 
-	std::thread t1(prepareWork);
-	std::thread t2(completeWork);
-
-	t1.join();
-	t2.join();
+	std::jthread t1(prepareWork);
+	std::jthread t2(completeWork);
 }

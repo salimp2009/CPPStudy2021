@@ -184,5 +184,45 @@ inline void Barrier_Example()
 	th6.join();
 }
 
+inline void BinarySemaphore_Example()
+{
+	std::printf("\n-BinarySemaphore_Example--\n");
+
+	// C++20 has std::binary_semaphore which also does the same below
+	using BinarySemaphore = std::counting_semaphore<1>;
+
+	// initializing zero sets the counter to zero; mean not locked !!
+	BinarySemaphore smphSignalMainToThread(0), smphSignalThreadToMain(0);
+
+	auto ThreadProducer = [&smphSignalMainToThread, &smphSignalThreadToMain]()
+	{
+		// waiting the main to release and increment the counter
+		// worker will then lock and decreases the counter to Zero if it is more than zero; if the counter zero Thread waits and blocks here
+		smphSignalMainToThread.acquire();
+		std::puts("thread : Got the signal!!!");
+
+		// simulate work for 3 secs
+		using namespace std::literals;
+		std::this_thread::sleep_for(3s); 
+		std::puts("thread: Work completed !!!");
+		smphSignalThreadToMain.release();
+	};
+
+
+	std::jthread threadWorker(ThreadProducer);
+
+	std::puts("Main: Sending the signal to threadWorker !!");
+
+	// initially counter is zero so worker will wait until main release and increase the counter to 1
+	smphSignalMainToThread.release();
+
+
+	// wait until the worker is done and sets the counter to 1
+	smphSignalThreadToMain.acquire();
+
+	std::puts("Main: Got the work from the Worker !!!");
+}
+
+
 
 #endif

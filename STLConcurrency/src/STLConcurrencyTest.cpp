@@ -83,6 +83,7 @@ int main()
 	AtomicRef();
 	AtomicSharedPointer();
 	AtomicFlag();
+	BinarySemaphore_Example();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
