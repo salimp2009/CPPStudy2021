@@ -66,17 +66,18 @@ inline void Latch_Example()
 	/* ALTERNATIVE USING A BOSS to send all workers home*/
 	//std::latch goHome(1);
 
-	/* this is used only not to cause interleaving output; alternative might be c++20 new aysnch stream*/
-	std::mutex coutMutex; 
+	// NOTE: not needed since it is used in the lambda and each thread gets a copy of its own lambda; no need lock or asynch stream 
+	//std::mutex coutMutex; 
 
 
 	auto synchronizedOut = [&](std::string_view sv)
 	{
-		std::lock_guard<std::mutex> lockedOut{ coutMutex };
+		// lock not needed as each thread get its own copy of the lambda
+		//std::lock_guard<std::mutex> lockedOut{ coutMutex };
 		fmt::print("{}\n", sv);
 	};
 
-	auto Worker = [&](std::string name)
+	auto Worker = [&](const std::string& name)
 	{
 		/* notify when the work is done!!!*/
 		synchronizedOut(name + "; " + "Work Done!");
@@ -223,6 +224,59 @@ inline void BinarySemaphore_Example()
 	std::puts("Main: Got the work from the Worker !!!");
 }
 
+inline void LatchExample2()
+{
+	std::printf("\n-LatchExample2--\n");
 
+	struct job 
+	{
+		const std::string name;
+		std::string product{ "not worked" };
+		std::thread action{};
+	} jobs[] = { {"annika"}, {"salim"}, {"chucky"}};
+
+	// thread may lock down until the latch counter reaches to zero
+	// https://en.cppreference.com/w/cpp/thread/latch   
+	// MSVC implementation needs some memory_order release and acquire changes (TRANSITION, GH-1133:); 
+	std::latch workDone{ std::size(jobs) };
+	std::latch startCleanUp{ 1 };
+
+	auto work = [&](job& myjob)
+	{
+		myjob.product = myjob.name + " worked!";
+		// all jobs will decrement the counter 
+		workDone.count_down();
+		// blocks until the counter is zero; can be release from any other call site that has access the latch
+		startCleanUp.wait();
+		myjob.product = myjob.name + " cleaned!";
+	};
+
+	std::puts("Work starting....!");
+	for (auto& job : jobs)
+	{
+		job.action = std::thread{ work, std::ref(job) };
+	}
+
+	// blocks until counters is zero; each job in each thread will decrement the counter and when it reaches to zero this will be release
+	workDone.wait();
+	std::puts("done: ");
+	for (const auto& job : jobs)
+	{
+		fmt::print("{} \n", job.product);
+	}
+
+	std::puts("Workers cleaning up...!");
+	startCleanUp.count_down();
+	for (auto& job : jobs)
+	{
+		job.action.join();
+	}
+
+	std::puts("All Done...!");
+	for (const auto& job : jobs)
+	{
+		fmt::print("{} \n", job.product);
+	}
+}
 
 #endif

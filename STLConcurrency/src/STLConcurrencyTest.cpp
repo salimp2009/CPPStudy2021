@@ -42,7 +42,7 @@ int main()
 
 #if _HAS_CXX20
 	//Semaphore_Example();
-	//Latch_Example();
+	Latch_Example();
 	//Barrier_Example();
 	//StopToken_Example();
 	//StopToken_ConditionVar();
@@ -83,7 +83,8 @@ int main()
 	AtomicRef();
 	AtomicSharedPointer();
 	AtomicFlag();
-	BinarySemaphore_Example();
+	//BinarySemaphore_Example();
+	LatchExample2();
 
 	/* C++17 add to optimize the cached either for one thread sees one cache or multiple threads see the see same cache */
 	
